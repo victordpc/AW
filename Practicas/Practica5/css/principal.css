@@ -1,0 +1,55 @@
+/* *{
+background: transparent;
+border: dotted 1px red;
+} */
+.contenedor{
+    display: flex;
+    margin: 5%;
+}
+
+.contactos {
+    /* order: 2; para cambiar el orden de como aparecen,
+    ahora los contactos aparecerían en la derecha*/
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    background-color: lightgray;
+    width: 25%;
+}
+
+.contacto{
+    display: flex;
+    flex-direction: row;
+    margin: 5px;      
+}
+.datos{
+    margin-top:30px;
+    /* flex-direction: column; */
+    flex-grow: 1; /* para que ocupe lo que le queda de espacio y así 
+    poder poner la linea que ocupa el ancho de los datos*/
+    text-align: left;
+    /* margin-left: 10%; */
+    border-bottom: solid 1px grey;
+}
+.conversaciones{
+    width: 75%;
+    flex-grow: 3;
+    background: url(../img/bla.png) repeat transparent 80%;/*el transparent hace que la imagen se vea posicionada diferente
+    por ej la imagen no comienza por bla sino por a cortada*/
+    
+}
+.foto{
+    border-radius: 50%;  
+    margin: 5px 10px;   
+}
+.nombre{
+    display: inline; /* para que se ajuste al tamaño y al pasar el cursor cambiarlo de aspecto*/
+    font-weight: bolder;
+}
+.nombre:hover{/*acción al pasar el cursor por encima*/
+    cursor: pointer;
+    color:red;
+}
+
+
+    

@@ -1,0 +1,43 @@
+@import "https://fonts.googleapis.com/css?family=Reenie+Beanie";
+
+*{
+    background: transparent;
+    border: dotted 1px red;
+}
+.contenedor {
+    width: 800px;
+    /* height: 200px; */
+    display: grid;
+    border: solid 10px #9a8b51;
+    grid-template-rows: 200px 200px;
+    grid-template-columns: 200px 200px 200px 200px; 
+    margin: 10px;
+    padding: 10px;
+    /* display: inline-block; */
+}
+.elemento{
+    font-size: 18px;
+    font-family: 'Reenie Beanie';
+    display:  flex;
+    justify-content:  center;
+}
+.elemento p{
+    padding-top: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 10px;
+    overflow: hidden;
+}
+
+.amarillo{
+    background: url(../img/p_amarillo.png);
+    background-size: cover;
+}
+.beige{
+    background: url(../img/p_beige.png);
+    background-size: cover;
+}
+.verde{
+    background: url(../img/p_verde.png);
+    background-size: cover;
+}

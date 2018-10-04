@@ -1,0 +1,99 @@
+*{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin:0;
+    padding: 0;
+    /* border: 2px dotted fuchsia; */
+} 
+html{
+    background: url(../img/topgrnd.jpg) repeat-x top;
+    background-color:#E7D8AF;   
+}
+body{
+    margin: 0 auto;
+    width: 60%;
+    background: url(../img/btmgrnd.jpg) no-repeat bottom left;
+}
+#nav{
+    float:left;
+    width: 30%;
+}
+#nav .imagen{
+    background: transparent url(../img/comida.jpg) no-repeat top left; 
+    width:210px; 
+	height: 169px; 
+}
+#nav a{
+    text-decoration: none;
+    color: red;
+}
+.titulo{
+    color:transparent;
+    background: transparent url(../img/favicon.png) no-repeat top right; 
+    width: 800px; 
+	height: 500px
+}
+.menu{
+    display: block;
+    line-height:18px;
+	background-image:url(../img/linklist_bk.gif);
+	background-repeat:repeat-y;
+	background-position:left;
+    width: 222px;
+    text-align: center;
+}
+.negrita{
+    font-weight: bolder;
+    font-size: 15pt;
+}
+
+.contenido{
+    float: right;
+    width: 68%;
+}
+.imagenLateral{
+    display:inline-block;
+    border: 3px solid black;
+}
+.payaso , .plantaazul{
+    height: 113px;
+}
+h2{
+    color:red;
+    text-decoration: underline;
+}
+.amarillo{
+    color: red;
+}
+li{
+    font-style:italic; 
+}
+ul{
+    padding-left: 40px;
+    list-style-type: armenian;
+}
+table{
+    margin:5px 0;
+    border:3px dashed red;
+}
+td{
+    border:1px dotted red;
+}
+td,th{
+    text-align: center;
+}
+#footer{
+    text-align: right;
+    clear: both;  
+    background-color:#E7D8AF; 
+    padding-top: 5px;  
+}
+#footer a{
+    margin-left: 40px;
+    text-decoration: none;
+    color: red;
+    font-weight: bolder;
+}
+a:hover, a:active {
+    text-decoration: underline;
+    color: #3B6132;
+}

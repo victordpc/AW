@@ -1,0 +1,91 @@
+@import "https://fonts.googleapis.com/css?family=Indie+Flower";
+*{
+    border: dotted fuchsia 2px;
+}
+*{
+    margin:0;
+    padding: 0;
+    background: black;
+}
+html{
+    font-family: 'Indie Flower';
+}
+#header{
+    position:fixed;
+    width: 100%;
+    top:0px
+}
+#nav{
+    width: 90%;
+    margin:0 auto;
+}
+.menu{
+    display:inline-block;
+    padding: 10px 20px;
+    background: linear-gradient(to bottom, green, greenyellow ,green);
+}
+.titulo{
+    background: url(../img/cesped.png);
+    background-repeat: repeat;
+    background-color: greenyellow;
+    text-align: center;
+}
+.contenido{
+    width: 90%;
+    margin: 100px auto;
+}
+#nav a{
+    font-weight: bolder;
+    text-decoration: none;
+background: transparent;
+}
+ul{
+    padding-left: 40px;
+}
+.texto{
+    float: left;
+    width: 75%;
+}
+.contenido h2{
+    color: darkgreen;
+}
+.sidebar{
+    float: right;
+    width: 20%;
+}
+#footer{
+    background: darkgreen;
+    clear: both;
+}
+#footer a{
+    margin-left: 40px;
+    background: transparent;
+}
+
+.blanco{
+    color:white;
+}
+.amarillo{
+    color: yellow;
+}
+.negro{
+    color:black;
+}
+
+/* 
+p.flotante_izq {
+    float: left;
+    width: 40%;
+    background-color: #FFA000;
+}
+
+p.flotante_dch {
+    float: right;
+    width: 40%;
+    background-color: #FFA000;
+}
+p.pequeño{
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+} */

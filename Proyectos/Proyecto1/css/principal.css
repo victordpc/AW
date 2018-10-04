@@ -1,0 +1,83 @@
+@import "https://fonts.googleapis.com/css?family=Permanent+Marker";
+@import "https://fonts.googleapis.com/css?family=Gudea";
+@import "https://fonts.googleapis.com/css?family=Monoton";
+*{
+    border: dotted fuchsia 2px;
+}
+*{
+    margin:0;
+    padding: 0;
+}
+html{
+    font-family: 'Gudea';
+}
+.titulo{
+    font-family: 'Monoton';
+    font-size: 60pt;
+    /* font-family: 'Permanent Marker', cursive; */
+}
+.escudo{
+    border-radius: 200px 200px 200px 200px;
+    -moz-border-radius: 200px 200px 200px 200px;
+    -webkit-border-radius: 200px 200px 200px 200px;
+    width: 150px;
+    height: 150px;
+
+    background-color: black;
+}
+.header{
+    display: grid;
+    grid-template-rows: 160px;
+    grid-template-columns: 50% 50%; 
+    position:fixed;
+    top:0px; 
+    width: 100%;
+    background: url(../img/fondoTitulo.png) repeat-x top;
+
+    /* background: url(../img/cesped.png); */
+    /* background-repeat: repeat; */
+    background-color: greenyellow;
+
+}
+.cabecera{
+    display: grid;
+    grid-template-rows: 100%;
+    grid-template-columns: 25% 75%; 
+}
+.datosUsuario{
+    display: grid;
+    grid-template-rows: 50% 50%;
+    grid-template-columns: 50% 50%; 
+}
+.fotoPerfil{
+    grid-row-start: 1;
+    grid-row-end: 3;
+    width: 100px;
+    height: 100px;
+}
+.contenido{
+    margin: 160px auto;
+    width: 80%;
+}
+.tarea{
+    border: 2px black solid;
+    background-color: green;
+    margin: 10px 0;
+    display:grid;
+    grid-template-rows: 100%;
+    grid-template-columns: 80% 20%; 
+}
+.tarea a, p{
+    display: inline-block;
+}
+.tag{
+    border: white 2px solid;
+    border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    
+    margin: 5px;
+    padding: 5px;
+    text-align: center;
+
+}

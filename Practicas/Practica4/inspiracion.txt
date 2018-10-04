@@ -1,0 +1,6 @@
+http://www.csszengarden.com/199/
+
+Hemos utilizado los estilos de esta pagina por que simulaban un juego de accion bélica
+
+Hemos utilizado una imagen de cabecera como hacen ellos con un fondo repetido para no tener una imagen que pese demasiado.
+Hemos aplicado un fondo a todo el cuerpo para integrar todos los elementos, así como las imagenes del menú y pié de página.

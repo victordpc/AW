@@ -1,0 +1,28 @@
+* {
+    border: 1px dashed black;
+}
+
+body{
+    background: #d7acf2;
+    color:greenyellow;
+    text-align: right;
+}
+
+em{
+    text-decoration: underline;
+    color: black;
+}
+
+h1{
+      font-family: 'Source Sans Pro',sans-serif;
+      background: #d7acf2;
+      border-radius: 10px 10px 10px 10px;
+      -moz-border-radius: 10px 10px 10px 10px;
+      -webkit-border-radius: 10px 10px 10px 10px;
+      border: 1px solid #000000;
+}
+  
+h3{
+    border: 4px dotted red;
+  }
+
