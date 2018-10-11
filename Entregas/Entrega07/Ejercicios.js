@@ -56,7 +56,13 @@ function sequence1(funs, x) {
     // console.log(resultado);
 }
 
+resultado = sequence1(
+    [x => x - 3,
+    x => Math.sqrt(x),
+    x => Math.log(x)]
+    , 2);
 
+console.log(resultado);
 
 // 2 Implementar la función sequence2 para que, en el caso en que una función del array devolviera el valor undefined, 
 // la función sequence2 devuelva directamente undefined sin seguir ejecutando las funciones restantes.
@@ -75,6 +81,13 @@ function sequence2(funs, x) {
     // console.log(resultado);
 }
 
+resultado = sequence2(
+    [x => x - 3,
+    x => Math.sqrt(x),
+    x => Math.log(x)]
+    , 2);
+
+console.log(resultado);
 
 
 // 3 Implementar la función sequence3 para que reciba un tercer parámetro opcional (right), cuyo valor por defecto será false. 
@@ -92,7 +105,7 @@ function sequence3(funs, x, right = false) {
             }
         }
     } else {
-        for (let i = funs.length - 1; i > 0; i++) {
+        for (let i = funs.length - 1; i > 0; i--) {
             resultado = funs[i](x);
             if (resultado == undefined) {
                 return undefined;
@@ -104,6 +117,13 @@ function sequence3(funs, x, right = false) {
 }
 
 
+resultado = sequence3(
+    [x => x - 3,
+    x => Math.sqrt(x),
+    x => Math.log(x)]
+    , 2,true);
+
+console.log(resultado);
 
 
 
