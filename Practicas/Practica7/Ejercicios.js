@@ -84,9 +84,6 @@ function sequence2(funs, x) {
 
 
 function sequence3(funs, x, right = false) {
-    // funs.array.forEach(element => {
-    //  resultado = element(x);
-    // });
     if (!right) {
         for (let i = 0; i < funs.length; i++) {
             resultado = funs[i](x);
@@ -115,49 +112,68 @@ function sequence3(funs, x, right = false) {
 
 // Ejercicio 3
 
-// 1 Escribir una función pluck(objects, fieldName) que devuelva el atributo de nombre fieldName de cada uno de los objetos contenidos en el array objects de entrada. Se devolverá un array con los valores correspondientes. Por ejemplo:
+// 1 Escribir una función pluck(objects, fieldName) que devuelva el atributo de nombre fieldName de cada uno de los objetos contenidos 
+//   en el array objects de entrada. Se devolverá un array con los valores correspondientes. Por ejemplo:
 
-// let personas = [
-// {nombre: "Ricardo", edad: 63},
-// {nombre: "Paco", edad: 55},
-// {nombre: "Enrique", edad: 32},
-// {nombre: "Adrián", edad: 34}
-// ];
-// pluck(personas, "nombre") // Devuelve: ["Ricardo", "Paco", "Enrique", "Adrián"]
-// pluck(personas, "edad") // Devuelve: [63, 55, 32, 34]
+let personas = [
+    { nombre: "Ricardo", edad: 63 },
+    { nombre: "Paco", edad: 55 },
+    { nombre: "Enrique", edad: 32 },
+    { nombre: "Adrián", edad: 34 }
+];
+console.log(pluck(personas, "nombre")) // Devuelve: ["Ricardo", "Paco", "Enrique", "Adrián"]
+console.log(pluck(personas, "edad")) // Devuelve: [63, 55, 32, 34]
 
-
-
-
-
-
-
-
-
-// 2 Implementar una función partition(array, p) que devuelva un array con dos arrays. El primero contendrá los elementos x de array tales que p(x) devuelve true. Los restantes elementos se añadirán al segundo array. Por ejemplo:
-
-// partition(personas, pers => pers.edad >= 60)
-// // Devuelve:
-// // [
-// // [ {nombre: "Ricardo", edad: 63} ],
-// // [ {nombre: "Paco", edad: 55}, {nombre: "Enrique", edad: 32},
-// // {nombre: "Adrián", edad: 34} ]
-// // ]
+function pluck(objects, fieldName) {
+    let resultado = []
+    objects.forEach(element => {
+        resultado.push(element[fieldName]);
+    });
+    return resultado;
+}
 
 
 
+// 2 Implementar una función partition(array, p) que devuelva un array con dos arrays. El primero contendrá los elementos
+//  x de array tales que p(x) devuelve true. Los restantes elementos se añadirán al segundo array. Por ejemplo:
+
+resultado = partition(personas, pers => pers.edad >= 60)
+
+console.log(resultado)
+// Devuelve:
+// [
+// [ {nombre: "Ricardo", edad: 63} ],
+// [ {nombre: "Paco", edad: 55}, {nombre: "Enrique", edad: 32}, {nombre: "Adrián", edad: 34} ]
+// ]
+
+function partition(objects, p) {
+    let resultado = [];
+    resultado[0] = objects.filter(p);
+    // resultado[1] = objects.filter(nop);
+    resultado[1] = [];
+    objects.forEach(element => {
+        if (!p(element)) {
+            resultado[1].push(element);
+        }
+    });
+
+    return resultado;
+}
 
 
 
 
 
 
-// 3 Implementar una función groupBy(array, f) que reciba un array, una función clasificadora f, y reparta los elementos del array de entrada en distintos arrays, de modo que dos elementos pertenecerán al mismo array si la función clasificadora devuelve el mismo valor para ellos. Al final se obtendrá un objeto cuyos atributos son los distintos valores que ha devuelto la función clasificadora, cada uno de ellos asociado a su array correspondiente. Ejemplo:
 
-// groupBy(["Mario", "Elvira", "María", "Estela", "Fernando"],
-// str => str[0]) // Agrupamos por el primer carácter
-// // Devuelve el objeto:
-// // { "M" : ["Mario", "María"], "E" : ["Elvira", "Estela"], "F" : ["Fernando"] }
+// 3 Implementar una función groupBy(array, f) que reciba un array, una función clasificadora f, y reparta los elementos del array
+// de entrada en distintos arrays, de modo que dos elementos pertenecerán al mismo array si la función clasificadora devuelve el mismo
+//  valor para ellos. Al final se obtendrá un objeto cuyos atributos son los distintos valores que ha devuelto la función clasificadora,
+//  cada uno de ellos asociado a su array correspondiente. Ejemplo:
+
+// groupBy(["Mario", "Elvira", "María", "Estela", "Fernando"],str => str[0]) // Agrupamos por el primer carácter
+// Devuelve el objeto:
+// { "M" : ["Mario", "María"], "E" : ["Elvira", "Estela"], "F" : ["Fernando"] }
 
 
 
