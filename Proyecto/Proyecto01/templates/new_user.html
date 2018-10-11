@@ -10,15 +10,32 @@
 </head>
 
 <body>
-  <div class="header">
-      <div class="titulo">
-        <h1>PHYSICBOOK</h1>
-      </div>
-      <div class="menu">
-          <a href="login.html">Entrar</a>
-          <a href="new_user.html">Nuevo Usuario</a>
-      </div>
-  </div>   
+    <div class="header">
+        <div class="titulo">
+            <h1>PHYSICBOOK</h1>
+        </div>
+        <div class="menu">
+            <a href="login.html">Entrar</a>
+            <a href="new_user.html">Nuevo Usuario</a>
+        </div>
+    </div>
+    <div class="contenido">
+        <h2>NUEVO USUARIO</h2>
+        <div class="createUser">
+            <form id="form_createUser" method="POST" name="form_createUser">
+                <label for="email">E-Mail: </label>
+                <input type="text" name="email" id="email" placeholder="pepito@physicbook.com " />
+                <label for="password">Contraseña: </label>
+                <input type="password" name="password" id="password" placeholder="············">
+                <label for="nombreCompleto">Nombre Completo: </label>
+                <input type="text" name="nombreCompleto" id="nombreCompleto" />
+                <input type="button" name="conectar" id="conectar" value="Conectar">
+
+            </form>
+        </div>
+
+    </div>
 
 </body>
+
 </html>
