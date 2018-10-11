@@ -1,0 +1,12 @@
+@import "https://fonts.googleapis.com/css?family=Permanent+Marker";
+@import "https://fonts.googleapis.com/css?family=Gudea";
+@import "https://fonts.googleapis.com/css?family=Monoton";
+@import "https://fonts.googleapis.com/css?family=Dosis:800";
+
+*{
+    border: dotted fuchsia 2px;
+}
+*{
+    margin:0;
+    padding: 0;
+}
