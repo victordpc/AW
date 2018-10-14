@@ -1,21 +1,23 @@
 @import "https://fonts.googleapis.com/css?family=Frijole";
 @import "https://fonts.googleapis.com/css?family=Chicle";
 
-*{
+* {
     border: dotted fuchsia 2px;
-    
+
 }
-*{
-    margin:0;
+
+* {
+    margin: 0;
     padding: 0;
 }
+
 @font-face {
     font-family: "Scorched";
     src: url("../font/ScorchedEarth/ScorchedEarthDEMO-KCFonts.ttf");
     font-style: normal;
 }
 
-.escudo{
+.escudo {
     border-radius: 200px 200px 200px 200px;
     -moz-border-radius: 200px 200px 200px 200px;
     -webkit-border-radius: 200px 200px 200px 200px;
@@ -25,50 +27,56 @@
     /* background-color: black; */
 }
 
-.header{
-    position:fixed;
-    top:0px;
+.header {
+    position: fixed;
+    top: 0px;
     width: 100%;
     height: 500px;
     margin-bottom: 10px;
-    
+
     background: url(../img/gradient.png) repeat-x top;
 
     /* background: url(../img/cesped.png); */
     /* background-repeat: repeat; */
-   
+
 }
-.cabecera{
+
+.cabecera {
     display: grid;
     grid-template-rows: 100%;
     grid-template-columns: 160px auto;
 }
-.titulo{
-   display: inline-block;
-   margin-top: 45px;
-   font-family: 'Scorched',sans-serif;
-   font-size: 60pt;
+
+.titulo {
+    display: inline-block;
+    margin-top: 45px;
+    font-family: 'Scorched', sans-serif;
+    font-size: 60pt;
 }
-.menu a{
-   
-   font-size: 25px;
-   font-family: 'chicle';
-    padding: 10px; 
+
+.menu a {
+
+    font-size: 25px;
+    font-family: 'chicle';
+    padding: 10px;
 }
-h2{
+
+h2 {
     align-self: center;
     font-family: chicle;
     color: black;
     margin-top: 50px;
-   
+
 }
-.contenedor{
+
+.contenedor {
     display: flex;
     flex-direction: column;
     padding-top: 190px;
-   
+
 }
-.login{
+
+.login {
     color: white;
     width: 400px;
     align-self: center;
@@ -76,29 +84,35 @@ h2{
     background-image: linear-gradient(315deg, #e84393 0%, #000000 74%);
     border-radius: 15px 0 15px 0;
 }
-.PForm{
+
+.PForm {
     display: flex;
-    margin-top: 10px;   
+    margin-top: 10px;
     margin-bottom: 10px;
 }
-.PForm label{
+
+.PForm label {
     width: 200px;
     font-display: center;
     margin-left: 25px;
 }
-.PForm input{
-border-radius: 5px 5px 5px 5px;
+
+.PForm input {
+    border-radius: 5px 5px 5px 5px;
 }
-.PForm #email, #password{
+
+.PForm #email,
+#password {
     width: 70%;
     margin-right: 25px;
 }
-.PForm #conectar{
+
+.PForm #conectar {
     margin-left: auto;
     margin-right: auto;
     border-radius: 13px 13px 13px 13px;
-     /* width: 200px;  */
+    /* width: 200px;  */
     font-size: 25px;
     font-family: 'chicle';
-     padding: 10px; 
-  }
+    padding: 10px;
+}

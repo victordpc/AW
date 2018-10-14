@@ -1,15 +1,14 @@
-
 @font-face {
     font-family: "Scorched Earth";
     src: url("font/ScorchedEarth/ScorchedEarthDEMO-KCFonts.eot");
-    src: 
-    url("font/ScorchedEarth/ScorchedEarthDEMO-KCFonts.woff") format("woff"),
-    url("font/ScorchedEarth/ScorchedEarthDEMO-KCFonts.otf") format("opentype"),
-    url("font/ScorchedEarth/ScorchedEarthDEMO-KCFonts.svg#filename") format("svg"),
-    url("font/ScorchedEarth/ScorchedEarthDEMO-KCFonts.ttf") format('truetype');   
+    src:
+        url("font/ScorchedEarth/ScorchedEarthDEMO-KCFonts.woff") format("woff"),
+        url("font/ScorchedEarth/ScorchedEarthDEMO-KCFonts.otf") format("opentype"),
+        url("font/ScorchedEarth/ScorchedEarthDEMO-KCFonts.svg#filename") format("svg"),
+        url("font/ScorchedEarth/ScorchedEarthDEMO-KCFonts.ttf") format('truetype');
 }
 
-h1{
+h1 {
     font-family: "Scorched Earth";
-  
+
 }
