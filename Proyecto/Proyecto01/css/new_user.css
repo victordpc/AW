@@ -1,0 +1,48 @@
+@import "https://fonts.googleapis.com/css?family=Frijole";
+*{
+    border: dotted fuchsia 2px;
+    
+}
+*{
+    margin:0;
+    padding: 0;
+}
+h2{
+    align-self: center; 
+}
+.contenedor{
+display: flex;
+flex-direction: column;
+}
+
+.createUser{
+    width: 600px;
+    align-self: center;
+    background-color: #0BF;
+    border-radius: 15px 0 15px 0;
+}
+.PForm{
+    display: flex;
+}
+.PForm label{
+    width: 200px;
+}
+.PForm input{
+border-radius: 5px 5px 5px 5px;
+
+}
+.PForm #conectar{
+   margin-left: auto;
+   margin-right: auto;
+   border-radius: 13px 13px 13px 13px;
+  /* height: 40px;
+  width: 80px; */
+  font-family: 'Frijole';
+  font-size: 16px;
+  padding: 5px;
+}
+
+
+
+
+
