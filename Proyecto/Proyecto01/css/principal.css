@@ -1,12 +1,15 @@
-@import "https://fonts.googleapis.com/css?family=Permanent+Marker";
-@import "https://fonts.googleapis.com/css?family=Gudea";
-@import "https://fonts.googleapis.com/css?family=Monoton";
-@import "https://fonts.googleapis.com/css?family=Dosis:800";
 
-*{
-    border: dotted fuchsia 2px;
+@font-face {
+    font-family: "Scorched Earth";
+    src: url("font/ScorchedEarth/ScorchedEarthDEMO-KCFonts.eot");
+    src: 
+    url("font/ScorchedEarth/ScorchedEarthDEMO-KCFonts.woff") format("woff"),
+    url("font/ScorchedEarth/ScorchedEarthDEMO-KCFonts.otf") format("opentype"),
+    url("font/ScorchedEarth/ScorchedEarthDEMO-KCFonts.svg#filename") format("svg"),
+    url("font/ScorchedEarth/ScorchedEarthDEMO-KCFonts.ttf") format('truetype');   
 }
-*{
-    margin:0;
-    padding: 0;
+
+h1{
+    font-family: "Scorched Earth";
+  
 }
