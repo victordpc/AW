@@ -58,9 +58,9 @@ function sequence1(funs, x) {
 
 resultado = sequence1(
     [x => x - 3,
-    x => Math.sqrt(x),
-    x => Math.log(x)]
-    , 2);
+        x => Math.sqrt(x),
+        x => Math.log(x)
+    ], 2);
 
 console.log(resultado);
 
@@ -83,9 +83,9 @@ function sequence2(funs, x) {
 
 resultado = sequence2(
     [x => x - 3,
-    x => Math.sqrt(x),
-    x => Math.log(x)]
-    , 2);
+        x => Math.sqrt(x),
+        x => Math.log(x)
+    ], 2);
 
 console.log(resultado);
 
@@ -119,9 +119,9 @@ function sequence3(funs, x, right = false) {
 
 resultado = sequence3(
     [x => x - 3,
-    x => Math.sqrt(x),
-    x => Math.log(x)]
-    , 2,true);
+        x => Math.sqrt(x),
+        x => Math.log(x)
+    ], 2, true);
 
 console.log(resultado);
 
@@ -135,11 +135,22 @@ console.log(resultado);
 // 1 Escribir una función pluck(objects, fieldName) que devuelva el atributo de nombre fieldName de cada uno de los objetos contenidos 
 //   en el array objects de entrada. Se devolverá un array con los valores correspondientes. Por ejemplo:
 
-let personas = [
-    { nombre: "Ricardo", edad: 63 },
-    { nombre: "Paco", edad: 55 },
-    { nombre: "Enrique", edad: 32 },
-    { nombre: "Adrián", edad: 34 }
+let personas = [{
+        nombre: "Ricardo",
+        edad: 63
+    },
+    {
+        nombre: "Paco",
+        edad: 55
+    },
+    {
+        nombre: "Enrique",
+        edad: 32
+    },
+    {
+        nombre: "Adrián",
+        edad: 34
+    }
 ];
 console.log(pluck(personas, "nombre")) // Devuelve: ["Ricardo", "Paco", "Enrique", "Adrián"]
 console.log(pluck(personas, "edad")) // Devuelve: [63, 55, 32, 34]
@@ -181,11 +192,6 @@ function partition(objects, p) {
 }
 
 
-
-
-
-
-
 // 3 Implementar una función groupBy(array, f) que reciba un array, una función clasificadora f, y reparta los elementos del array
 // de entrada en distintos arrays, de modo que dos elementos pertenecerán al mismo array si la función clasificadora devuelve el mismo
 //  valor para ellos. Al final se obtendrá un objeto cuyos atributos son los distintos valores que ha devuelto la función clasificadora,
@@ -194,13 +200,6 @@ function partition(objects, p) {
 // groupBy(["Mario", "Elvira", "María", "Estela", "Fernando"],str => str[0]) // Agrupamos por el primer carácter
 // Devuelve el objeto:
 // { "M" : ["Mario", "María"], "E" : ["Elvira", "Estela"], "F" : ["Fernando"] }
-
-
-
-
-
-
-
 
 
 // 4 Escribir una función where(array, modelo) que reciba un array de objetos y un objeto modelo. La función ha de devolver aquellos objetos del array que contengan todos los atributos contenidos en modelo con los mismos valores. Ejemplo:
@@ -213,4 +212,64 @@ function partition(objects, p) {
 
 // where(personas, { nombre: "Adrián", edad: 21 })
 // // devuelve []
+
+
+
+
+
+// Ejercicio 4
+
+// 1 Escribir una función pluck(objects, fieldName) que devuelva el atributo de nombre fieldName de cada uno de los objetos contenidos 
+//   en el array objects de entrada. Se devolverá un array con los valores correspondientes. Por ejemplo:
+
+let transformado = personas.map(elemento => elemento.nombre)
+
+console.log(transformado)
+
+
+
+// 2 Implementar una función partition(array, p) que devuelva un array con dos arrays. El primero contendrá los elementos
+//  x de array tales que p(x) devuelve true. Los restantes elementos se añadirán al segundo array. Por ejemplo:
+
+let filtrado = []
+filtrado[0] = personas.filter(elemento =>
+    elemento.edad >= 50
+)
+
+filtrado[1] = personas.filter(elemento =>
+    elemento.edad < 50
+)
+
+filtrado.forEach((elem, ww) =>
+    elem.forEach(valor =>
+        console.log(valor.nombre + " del subarray " + ww)
+    )
+)
+
+// Ejercicio 5
+
+// Escribir una función concatenar que permita concatenar un número no predefinido de cadenas de 
+// caracteres utilizando un carácter separador.El primer parámetro de la función es el carácter 
+// separador.Este parámetro va seguido de las cadenas que se concatenarán.Se espera el siguiente 
+// comportamiento de la función:
+
+concatenar() // Devuelve la cadena vacía
+concatenar("-") // Devuelve la cadena vacía
+concatenar("-", "uno") // Devuelve “uno-”
+concatenar("-", "uno", "dos", "tres") // Devuelve “uno-dos-tres-”
+
+
+
+function concatenar() {
+    var args = Array.prototype.slice.call(arguments);
+    args.shift();
+
+    let separador = arguments[0];
+
+    let resultado = args.reduceRight(
+        (acumulado, actual) =>  actual+ separador +acumulado
+        , "")
+        resultado=resultado.substring(0, resultado.length-1)
+    console.log(resultado);
+}
 
