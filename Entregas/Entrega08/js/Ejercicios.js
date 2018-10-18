@@ -7,25 +7,29 @@
 // Si x e y son vectores de la misma longitud, se calculará el producto escalar de ambos.
 // En cualquier otro caso, se lanzará una excepción.
 
-function producto(x, y) {
-
-    if (typeof (x) == "number" && typeof (y) == "number") {
-        resultado = x * y;
-    } else if (x instanceof Array && y instanceof Array && x.length == y.length) {
-        resultado = 0;
+function multiplicaVectorVector(x,y) {
         for (var i = 0; i < x.length; i++) {
             resultado += x[i] * y[i];
         }
-    } else if (typeof (x) == "number") {
+        return resultado;
+    }
+
+    function multiplicaNumeroVector(x,y) {
         for (var i = 0; i < y.length; i++) {
             y[i] = y[i] * x;
         }
-        resultado = y;
-    } else if (typeof (y) == "number") {
-        for (var i = 0; i < x.length; i++) {
-            x[i] = x[i] * y;
-        }
-        resultado = x;
+        return i;
+    }
+
+function producto(x, y) {
+    if (!isNaN(x) && !isNaN(y)) {
+        resultado = x * y;
+    } else if (x instanceof Array && y instanceof Array && x.length == y.length) {
+        resultado = multiplicaVectorVector(x,y);
+    } else if (!isNaN(x)) {
+        resultado = multiplicaNumeroVector(x,y);
+    } else if (!isNaN(y)) {
+        resultado = multiplicaNumeroVector(y,x);
     } else {
         throw ("Excepcion parametros no contemplados");
     }
@@ -46,14 +50,10 @@ function producto(x, y) {
 // 1 Implementar la función sequence1 suponiendo que ninguna de las funciones del array recibido devuelve el valor undefined.
 
 function sequence1(funs, x) {
-    // funs.array.forEach(element => {
-    //  resultado = element(x);
-    // });
     for (let i = 0; i < funs.length; i++) {
         resultado = funs[i](x);
     }
     return resultado;
-    // console.log(resultado);
 }
 
 resultado = sequence1(
@@ -68,9 +68,6 @@ console.log(resultado);
 // la función sequence2 devuelva directamente undefined sin seguir ejecutando las funciones restantes.
 
 function sequence2(funs, x) {
-    // funs.array.forEach(element => {
-    //  resultado = element(x);
-    // });
     for (let i = 0; i < funs.length; i++) {
         resultado = funs[i](x);
         if (resultado == undefined) {
@@ -78,7 +75,6 @@ function sequence2(funs, x) {
         }
     }
     return resultado;
-    // console.log(resultado);
 }
 
 resultado = sequence2(
@@ -124,9 +120,6 @@ resultado = sequence3(
     ], 2, true);
 
 console.log(resultado);
-
-
-
 
 
 
@@ -180,7 +173,6 @@ console.log(resultado)
 function partition(objects, p) {
     let resultado = [];
     resultado[0] = objects.filter(p);
-    // resultado[1] = objects.filter(nop);
     resultado[1] = [];
     objects.forEach(element => {
         if (!p(element)) {
@@ -212,8 +204,6 @@ function partition(objects, p) {
 
 // where(personas, { nombre: "Adrián", edad: 21 })
 // // devuelve []
-
-
 
 
 
@@ -253,10 +243,12 @@ filtrado.forEach((elem, ww) =>
 // separador.Este parámetro va seguido de las cadenas que se concatenarán.Se espera el siguiente 
 // comportamiento de la función:
 
+console.log('Inicio Ejercicio 5')
 concatenar() // Devuelve la cadena vacía
 concatenar("-") // Devuelve la cadena vacía
 concatenar("-", "uno") // Devuelve “uno-”
 concatenar("-", "uno", "dos", "tres") // Devuelve “uno-dos-tres-”
+console.log('Fin Ejercicio 5')
 
 
 
@@ -267,9 +259,7 @@ function concatenar() {
     let separador = arguments[0];
 
     let resultado = args.reduceRight(
-        (acumulado, actual) =>  actual+ separador +acumulado
-        , "")
-        resultado=resultado.substring(0, resultado.length-1)
-    console.log(resultado);
+        (acumulado, actual) => actual + separador + acumulado, "")
+        resultado = resultado.substring(0, resultado.length - 1)
+        console.log(resultado);
 }
-
