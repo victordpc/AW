@@ -9,6 +9,7 @@
 * {
     margin: 0;
     padding: 0;
+    color: white;
 }
 
 @font-face {
@@ -17,12 +18,12 @@
     font-style: normal;
 }
 
-h2 {
+/* h2 {
     align-self: center;
     font-family: chicle;
-    color: black;
     margin-top: 50px;
-}
+
+} */
 
 .panelFormulario {
     display: grid;
@@ -30,15 +31,15 @@ h2 {
     grid-template-columns: 33% 34% 33%;
     grid-row-gap: 10px;
     padding: 10px;
-}
-
-.panelFormulario {
     color: white;
     background-color: #e84393;
     background-image: linear-gradient(315deg, #e84393 0%, #000000 74%);
     border-radius: 15px 0 15px 0;
     text-align: right;
+    width: 420px;
+    margin-left: 400px;
 }
+
 
 .panelFormulario label {
     margin: 5px 10px;
@@ -48,11 +49,12 @@ h2 {
     grid-column-start: 2;
     grid-column-end: 3;
     border-radius: 13px 0px 13px 0px;
-    font-size: 25px;
-    font-family: 'chicle';
     padding: 10px;
     width: 200px;
     margin: 0 auto;
+    align-content: center;
+    background-image: linear-gradient(to right, black,rgb(54, 4, 33),rgb(177, 9, 107),rgb(243, 26, 134),rgb(247, 19, 152),rgb(243, 26, 134),rgb(177, 9, 107),rgb(54, 4, 33), black);   
+  
 }
 
 .panelFormulario #mail {
@@ -66,9 +68,9 @@ h2 {
 }
 
 .contenedor {
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     width: 600px;
     margin: 0 auto;
-    padding-top: 220px;
+    padding-top: 220px; */
 }

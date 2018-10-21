@@ -10,44 +10,11 @@
     margin: 0;
     padding: 0;
     border: 1px dotted red;
-    font-family: 'chicle';
+    /* font-family: 'chicle'; */
     color: white;
 }
 
-.escudo {
-    border-radius: 200px 200px 200px 200px;
-    -moz-border-radius: 200px 200px 200px 200px;
-    -webkit-border-radius: 200px 200px 200px 200px;
-    width: 150px;
-    height: 150px;
-    margin: 5px;
-    
-}
 
-.header {
-    position: fixed;
-    width: 100%;
-    height: 220px;
-    background: url(../img/gradient.png) repeat-x top;
-    background-color: black;
-}
-
-.cabecera {
-    display: grid;
-    grid-template-rows: 2fr 50px;
-    grid-template-columns: 160px 3fr 1fr;
-    /* grid-row-gap: 20px; */
-}
-
-.titulo {
-    display: inline-block;
-    margin-top: 45px;
-    font-family: 'Scorched', sans-serif;
-    font-size: 60pt;
-    color: black;
-    text-shadow: white 0.1em 0.1em 0.2em,
-        white -0.01em -0.01em 0.2em;
-}
 
 .menu {
  grid-column-start: 2;
@@ -83,16 +50,20 @@
 }
 .contenedor {
     margin: 0 auto;
+    padding-top: 200px;
+    /* padding-top: 220px; */
+    /* 
+      padding-top: 220px;
     padding-top: 220px;
         height: 1000px;
         width: 1000px;
         background: url(../img/RugbyKids.jpg) ;
         background-repeat: round;
-        background-size: 150px 150px;
+        background-size: 150px 150px; */
 }
 
 .panelPerfil {
-    margin: auto;
+    margin-left: 300px;
     display: grid;
     width: 500px;
     grid-template-rows: 3fr 1fr;
@@ -107,8 +78,6 @@
 .calavera{
     grid-column: 2;
     border-radius: 200px 200px 200px 200px;
-    -moz-border-radius: 200px 200px 200px 200px;
-    -webkit-border-radius: 200px 200px 200px 200px;
     width: 150px;
     height: 150px;
     margin: AUTO; 
@@ -136,22 +105,17 @@ margin: auto;
     grid-row: 2;
     grid-column: 2;
     border-radius: 13px 0px 13px 0px;
-    font-size: 25px;
-    font-family: 'chicle';
+    /* font-size: 25px; */
+    /* font-family: 'chicle'; */
     padding: 10px;
     width: 200px;
     margin: 0 auto;
     align-content: center;
-    background-image: linear-gradient(to right, black,rgb(54, 4, 33),rgb(177, 9, 107),rgb(243, 26, 134),rgb(247, 19, 152),rgb(243, 26, 134),rgb(177, 9, 107),rgb(54, 4, 33), black); 
-  
+    background-image: linear-gradient(to right, black,rgb(54, 4, 33),rgb(177, 9, 107),rgb(243, 26, 134),rgb(247, 19, 152),rgb(243, 26, 134),rgb(177, 9, 107),rgb(54, 4, 33), black);   
     
 }
 .panelPerfil #modificarPerfil:hover{
     background-image: linear-gradient(to right,rgb(247, 19, 152),rgb(243, 26, 134),rgb(177, 9, 107),rgb(54, 4, 33), black,rgb(54, 4, 33),rgb(177, 9, 107),rgb(243, 26, 134),rgb(247, 19, 152)); 
     
 }
-h2 {
-    text-align: center;
-    color: black;
-    font-size: 50px;
-}
+
