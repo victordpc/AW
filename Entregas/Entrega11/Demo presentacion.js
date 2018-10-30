@@ -18,6 +18,16 @@ console.log(fruits)
 console.log(nuevo)
 
 
+
+
+
+
+
+
+
+
+
+
 //Demo slice
 let weatherConditions = ['rain', 'snow', 'sleet', 'hail', 'clear'];
 let todaysWeather = weatherConditions.slice(1, 3);
