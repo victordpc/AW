@@ -2,6 +2,9 @@
 
 var fruits = ["Banana", "Orange", "Apple", "Mango"];
 
+function mySplice2() {
+  nuevo=  fruits.splice(2, 1);
+}
 function mySplice() {
   nuevo=  fruits.splice(2, 1, "Lemon", "Kiwi");
 }
