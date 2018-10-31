@@ -1,3 +1,8 @@
+
+/**
+ * @param {string} cadena cadena a comprobar si tiene los paréntesis correctos
+ * @author chiquitin
+ */
 function parentesisBalanceados(cadena) {
     var pila = [];
     let resultado = true;
