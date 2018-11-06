@@ -10,7 +10,29 @@
 "use strict";
 const fs = require("fs");
 
-function freeplace(fichero, buscar, sustituir, callback) {
+// function freeplace(fichero, buscar, sustituir, callback) {
+//     fs.readFile(fichero, {}, function pepe(err, contenido) {
+//         if (err) {
+//             console.log("Se ha producido un error:");
+//             console.log(err.message);
+//         } else {
+//             let cadena = contenido.toString();
+//             cadena = cadena.replace(buscar, sustituir);
+//             fs.writeFile(fichero, cadena, {}, callback);
+//         }
+//     });
+
+// }
+
+
+function freeplace2(fichero, buscar, sustituir,
+    callback = function (err) {
+        if (err) {
+            console.log("cb_defecto: " + err);
+        } else {
+            console.log("cb_defecto: Sustitución realizada con éxito");
+        }
+    }) {
     fs.readFile(fichero, {}, function pepe(err, contenido) {
         if (err) {
             console.log("Se ha producido un error:");
@@ -24,8 +46,34 @@ function freeplace(fichero, buscar, sustituir, callback) {
 
 }
 
+
+function freeplace(fichero, buscar, sustituir, callback) {
+
+    fs.readFile(fichero, {
+            encoding: "utf-8"
+        },
+        function (err, texto) {
+            if (err) {
+                callback(new Error("Error al leer el fichero."));
+            } else {
+                let texto2 = texto.replace(buscar, sustituir);
+                fs.writeFile(fichero, texto2, {
+                        encoding: "utf-8"
+                    },
+                    function (err) {
+                        if (err) {
+                            callback(new Error("Error en la escritura del fichero"));
+                        } else {
+                            callback(null);
+                        }
+                    });
+            }
+        });
+}
+
 // module.exports = freeplace;
 
 module.exports = {
-    free:freeplace
+    free: freeplace,
+    free2: freeplace2,
 }
