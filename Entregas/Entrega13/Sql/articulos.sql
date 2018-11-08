@@ -69,3 +69,9 @@ ALTER TABLE `articulos`
 ALTER TABLE `articulos`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
+--
+-- Foreing Key palabrasclave con articulos
+--
+  ALTER TABLE `palabrasclave`
+  ADD CONSTRAINT `palabrasclave_fk_1` FOREIGN KEY (`IdArticulo`) REFERENCES `articulos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  

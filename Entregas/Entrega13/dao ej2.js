@@ -72,7 +72,6 @@ class DAO {
                     if (err) {
                         callback(new Error(`Error de inserción: ${err}`));
                     } else {
-                        usuario.id = resultado.insertId;
                         callback(null);
                     }
                 });
