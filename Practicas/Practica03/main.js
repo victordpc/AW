@@ -13,7 +13,7 @@ const _pool = mysql.createPool({
 
 let user = new daoUser(_pool);
 user.isUserCorrect("usuario@ucm.es", "mipass", cb_isUserCorrect);
-// user.isUserCorrect("usuario@ucm.es", "mipass2", cb_isUserCorrect);
+ user.isUserCorrect("usuario@ucm.es", "mipass2", cb_isUserCorrect);
 
 function cb_isUserCorrect(err, result) {
     if (err) {
@@ -24,7 +24,6 @@ function cb_isUserCorrect(err, result) {
         console.log("Usuario y/o contraseña incorrectos");
     }
 }
-
 
 user.getUserImageName("usuario@ucm.es", cb_getUserImageName);
 user.getUserImageName("usuarioucm.es", cb_getUserImageName);

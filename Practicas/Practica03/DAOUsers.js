@@ -16,7 +16,7 @@ class DAOUsers {
         } else {
             console.log("OPERACION FINALIZADA CORRECTAMENTE");
         }
-    }) {        
+    }) {
         this._pool.getConnection(function (err, connection) {
             if (err) {
                 callback(new Error(`Error de conexión a la base de datos`));
@@ -27,39 +27,40 @@ class DAOUsers {
                     if (err) {
                         callback(new Error(`Error de acceso a la base de datos`));
                     } else {
-                        callback(null,datos.length!=0);
+                        callback(null, datos.length != 0);
                     }
                 });
             }
         });
     }
 
-    getUserImageName(email, callback= function (err) {
+    getUserImageName(email, callback = function (err) {
         if (err) {
             console.log(err);
         } else {
             console.log("OPERACION FINALIZADA CORRECTAMENTE");
-        }}) {
-            this._pool.getConnection(function (err, connection) {
-                if (err) {
-                    callback(new Error(`Error de conexión a la base de datos`));
-                } else {
-                    const sql = `Select img from  user where email = '${email}'`;
-                    connection.query(sql, function (err, datos) {
-                        connection.release();
-                        if (err) {
-                            callback(new Error(`Error de acceso a la base de datos`));
-                        } else {
-                            if (datos.length!=0) {
-                                callback(null,datos[0].img);
-                            }else{
-                            callback(new Error(`No existe el usuario`));
-                            }
-                        }
-                    });
-                }
-            });
         }
+    }) {
+        this._pool.getConnection(function (err, connection) {
+            if (err) {
+                callback(new Error(`Error de conexión a la base de datos`));
+            } else {
+                const sql = `Select img from  user where email = '${email}'`;
+                connection.query(sql, function (err, datos) {
+                    connection.release();
+                    if (err) {
+                        callback(new Error(`Error de acceso a la base de datos`));
+                    } else {
+                        if (datos.length != 0) {
+                            callback(null, datos[0].img);
+                        } else {
+                            callback(new Error(`No existe el usuario`));
+                        }
+                    }
+                });
+            }
+        });
+    }
 }
 
-module.exports=DAOUsers;
+module.exports = DAOUsers;
