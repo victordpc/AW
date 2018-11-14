@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lista de usuarios</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <h1>¡Bienvenido, <%= usuario.nombre %>!</h1>
+
+    <% if (!usuario.nombre) { %>
+    <p>No estás identificado.</p>
+    <% } else { %>
+    <p>¡Bienvenido,
+        <%= usuario.nombre %> !</p>
+    <% } %>
+</body>
+
+</html>
