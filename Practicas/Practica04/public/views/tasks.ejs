@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es" class="blanco">
+
+<head>
+    <title>Gestor de tareas</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/principal.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="css/imprimir.css" media="print" />
+    <link rel="icon" href="img/favicon.jpg" type="image/x-icon" />
+</head>
+
+
+<body>
+    <div class="header">
+        <div class="cabecera">
+            <img src="img/escudo.jpg" alt="imagen del escudo de rugby fisicas" class="escudo">
+            <div class="cajaTitulo">
+                <h1 class="titulo">TAREAS</h1>
+            </div>
+        </div>
+        <div class="datosUsuario">
+            <div class="imagenPerfil">
+                <img src="img/perfil.png" alt="foto de perfil" class="fotoPerfil">
+            </div>
+            <div class="nombreUsuario">
+                <p class="usuario textoCabecera">Usuario@ucm.es</p>
+            </div>
+            <div class="botonCerrar">
+                <a href="#" class="cerrarSesion textoCabecera">Desconectar</a>
+            </div>
+        </div>
+    </div>
+    <div class="contenido">
+        <div class="tareas">
+            <% taskList.forEach(function(task) { %>
+                <% if (!task.done) { %>
+                    <div class="borde5 tarea activa">
+                 <% } else { %>
+                    <div class="borde5 tarea finalizada">
+                <% } %>
+                    <div class="datosTarea">
+                        <p class="textoTarea">
+                            <%= task.text %>>
+                        </p>
+                        <% task.tags.forEach(function(tag) { %>
+                            <p class="tag">
+                                    <%= tag %>
+                            </p>
+                        <% }); %>
+                    </div>
+                    <a href="#" class="borde5 boton">Marcar Finalizada</a>
+                </div>
+            <% }); %>
+        </div>
+        <div class="gestionTareas">
+            <div class="nuevaTarea">
+                <input type="text" class="inputTarea">
+                <a href="#" class="borde5 boton">Añadir</a>
+            </div>
+            <div class="eliminarTarea">
+                <a href="#" class="borde5 boton eliminarBoton">Eliminar Tareas Completadas</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

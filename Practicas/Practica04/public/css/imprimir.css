@@ -1,0 +1,47 @@
+html{
+    font-family: Helvetica;
+    font-size: 12px;
+}
+.escudo{
+    display: none;
+}
+.datosUsuario{
+    display: none;
+}
+.titulo{
+    font-size: 18px;
+}
+.boton{
+    display: none;
+}
+.gestionTareas{
+    display: none;
+}
+.textoTarea{
+    font-weight: bold;
+}
+.activa .textoTarea:before{
+    content: "· ";
+}
+.tarea p{
+    display: inline-block;
+}
+.finalizada .textoTarea{
+    text-decoration:line-through;
+}
+.finalizada .textoTarea:before{
+    margin-left: 30px;
+    content: "· ";
+}
+.activa .tag{
+    margin: auto 10px;
+}
+.activa .tag:before{
+    content: "( ";
+}
+.activa .tag:after{
+    content: " )";
+}
+.finalizada .tag{
+    display: none;
+} 
