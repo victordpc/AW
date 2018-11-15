@@ -3,6 +3,7 @@
 const mysql = require("mysql");
 
 const daoUser = require("./DAOUsers.js");
+const daoTask = require("./DAOTasks.js");
 
 const _pool = mysql.createPool({
     host: "localhost",
@@ -13,7 +14,7 @@ const _pool = mysql.createPool({
 
 let user = new daoUser(_pool);
 user.isUserCorrect("usuario@ucm.es", "mipass", cb_isUserCorrect);
- user.isUserCorrect("usuario@ucm.es", "mipass2", cb_isUserCorrect);
+user.isUserCorrect("usuario@ucm.es", "mipass2", cb_isUserCorrect);
 
 function cb_isUserCorrect(err, result) {
     if (err) {
@@ -35,3 +36,8 @@ function cb_getUserImageName(err, result) {
         console.log(result);
     }
 }
+
+
+let tsk = new daoTask(_pool);
+
+tsk.getAllTasks('usuario@ucm.es')
