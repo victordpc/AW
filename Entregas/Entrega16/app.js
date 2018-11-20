@@ -7,7 +7,7 @@ const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const fs = require("fs");
-
+const cookieParser = require("cookie-parser");
 
 // Crear un servidor Express.js
 const app = express();
@@ -29,6 +29,9 @@ app.use(express.static(ficherosEstaticos));
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+
+app.use(cookieParser());
+
 
 app.use(function (error, request, response, next) {
     // Código 500: Internal server error
@@ -87,9 +90,63 @@ app.get("/users.html", function (request, response) {
 });
 
 app.post("/eliminarUsr", function (request, response) {
-    
-    var _id=request.body.id;
-    
+
+    var _id = request.body.id;
+
     usuarios.splice(_id, 1);
-    response.redirect("/users.html");   
+    response.redirect("/users.html");
+});
+
+
+app.get("/reset.html", function (request, response) {
+    response.status(200);
+    response.cookie("contador", 0, {
+        maxAge: 86400000
+    });
+    response.type("text/plain");
+    response.end("Has reiniciado el contador");
+});
+
+app.get("/increment.html", function (request, response) {
+    if (request.cookies.contador === undefined) {
+        response.redirect("/reset.html");
+    } else {
+        let contador = Number(request.cookies.contador) + 1;
+        response.cookie("contador", contador);
+        response.status(200);
+        response.type("text/plain");
+        response.end(`El valor actual del contador es ${contador}`);
+    }
+});
+
+
+
+
+app.get("/primero.html", function (request, response) {
+    response.status(200);
+    response.render("primero", {});
+});
+
+app.get("/segundo.html", function (request, response) {
+    response.status(200);
+    response.cookie("contador", request.body.primero, {
+        maxAge: 86400000
+    });
+    response.type("text/plain");
+    response.render("segundo", {});
+});
+
+app.get("/resultado.html", function (request, response) {
+    if (request.cookies.contador === undefined) {
+        response.redirect("/reset.html");
+    } else {
+        let primero = Number(request.cookies.primero);
+        let segundo = Number(request.cookies.primero);
+        let resultado = primero + segundo;
+        
+        response.cookie("contador", contador);
+        response.status(200);
+        response.type("text/plain");
+        response.end(`El valor actual del contador es ${contador}`);
+    }
 });
