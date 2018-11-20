@@ -33,35 +33,37 @@
     <div class="contenido">
         <div class="tareas">
             <% taskList.forEach(function(task) { %>
-                <% if (!task.done) { %>
-                    <div class="borde5 tarea activa">
-                 <% } else { %>
-                    <div class="borde5 tarea finalizada">
-                <% } %>
+            <% if (!task.done) { %>
+            <div class="borde5 tarea activa">
+                <% } else { %>
+                <div class="borde5 tarea finalizada">
+                    <% } %>
                     <div class="datosTarea">
                         <p class="textoTarea">
                             <%= task.text %>>
                         </p>
                         <% task.tags.forEach(function(tag) { %>
-                            <p class="tag">
-                                    <%= tag %>
-                            </p>
+                        <p class="tag">
+                            <%= tag %>
+                        </p>
                         <% }); %>
                     </div>
                     <a href="#" class="borde5 boton">Marcar Finalizada</a>
                 </div>
-            <% }); %>
-        </div>
-        <div class="gestionTareas">
-            <div class="nuevaTarea">
-                <input type="text" class="inputTarea">
-                <a href="#" class="borde5 boton">Añadir</a>
+                <% }); %>
             </div>
-            <div class="eliminarTarea">
-                <a href="#" class="borde5 boton eliminarBoton">Eliminar Tareas Completadas</a>
+            <div class="gestionTareas">
+                <form method="GET" action="/addTask">
+                    <div class="nuevaTarea">
+                        <input type="text" class="inputTarea">
+                         <input type="submit" value="Añadir">
+                    </div>
+                </form>
+                <div class="eliminarTarea">
+                    <a href="#" class="borde5 boton eliminarBoton">Eliminar Tareas Completadas</a>
+                </div>
             </div>
         </div>
-    </div>
 </body>
 
 </html>
