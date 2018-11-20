@@ -36,25 +36,26 @@ app.listen(config.port, function (err) {
 });
 
 
- // Manejador para lista de tareas
+// Manejador para lista de tareas
 app.get("/tasks.html", function (request, response) {
     let lista = daoT.getAllTasks('usuario@ucm.es', function (err, datos) {
         if (err) {
             console.log(err);
         } else {
             response.status(200);
-            response.render("tasks", {taskList: datos} );
+            response.render("tasks", {
+                taskList: datos
+            });
             console.log('servida users')
         }
     });
-
-
-    // let lista = daoT.getAllTasks('usuario@ucm.es', function (err, datos) {
-    //     if (err) {
-    //         console.log(err);
-    //     } else {
-    //         response.status(200);
-    //         response.render("tasks", {taskList: datos} );
-    //     }
-    // });
 });
+
+// let lista = daoT.getAllTasks('usuario@ucm.es', function (err, datos) {
+//     if (err) {
+//         console.log(err);
+//     } else {
+//         response.status(200);
+//         response.render("tasks", {taskList: datos} );
+//     }
+// });
