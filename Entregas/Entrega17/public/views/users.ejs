@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lista de usuarios</title>
+    <meta charset="utf-8">    
+    <link rel="stylesheet" type="text/css" href="css/principal.css"/>
+</head>
+
+<body>
+    <ul>
+        <% users.forEach(function(user,indice) { %>
+        <li>
+            <%= user %>
+            <form method="POST" action="eliminarUsr">
+                <input type="hidden" class="oculto" name="id" value= <%= indice %> >
+                <input type="submit" value="Borrar">
+            </form>
+
+        </li>
+        <% }); %>
+    </ul>
+
+
+</body>
+
+</html>
