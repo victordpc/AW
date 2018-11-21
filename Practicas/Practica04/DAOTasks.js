@@ -52,7 +52,10 @@ class DAOTasks {
                                     objeto.id = _id;
                                     objeto.text = element.text;
                                     objeto.done = element.done;
-                                    objeto.tags = new Array(element.tag)
+                                    objeto.tags = new Array()
+                                    if (element.tag != null) {
+                                        objeto.tags.push(element.tag)
+                                    }
 
                                     resultado.push(objeto)
                                     i++;

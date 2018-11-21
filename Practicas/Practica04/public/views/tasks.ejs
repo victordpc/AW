@@ -33,34 +33,38 @@
     <div class="contenido">
         <div class="tareas">
             <% taskList.forEach(function(task) { %>
-            <% if (!task.done) { %>
-            <div class="borde5 tarea activa">
+                <% if (!task.done) { %>
+                <div class="borde5 tarea activa">
                 <% } else { %>
                 <div class="borde5 tarea finalizada">
-                    <% } %>
-                    <div class="datosTarea">
-                        <p class="textoTarea">
-                            <%= task.text %>>
-                        </p>
+                <% } %>
+                <div class="datosTarea">
+                    <p class="textoTarea">
+                        <%= task.text %>
+                    </p>
+                    <div class="listaTags">
                         <% task.tags.forEach(function(tag) { %>
                         <p class="tag">
                             <%= tag %>
                         </p>
                         <% }); %>
                     </div>
-                    <a href="#" class="borde5 boton">Marcar Finalizada</a>
                 </div>
-                <% }); %>
+                <a href="/finish/<%=task.id%>"" class="borde5 boton">Marcar Finalizada</a>
+            </div>
+            <% }); %>
             </div>
             <div class="gestionTareas">
-                <form method="GET" action="/addTask">
+                <form method="POST" action="/addTask">
                     <div class="nuevaTarea">
-                        <input type="text" class="inputTarea">
-                         <input type="submit" value="Añadir">
+                        <input type="text" name="texto" class="inputTarea">
+                        <input type="submit" class="borde5 botonPlano" value="Añadir">
                     </div>
                 </form>
                 <div class="eliminarTarea">
-                    <a href="#" class="borde5 boton eliminarBoton">Eliminar Tareas Completadas</a>
+                    <form method="POST" action="/eliminarCompletadas" class="eliminarBoton">
+                        <input type="submit" class="borde5 botonPlano" value="Eliminar Tareas Completadas">
+                    </form>
                 </div>
             </div>
         </div>
