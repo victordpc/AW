@@ -1,20 +1,39 @@
-// app.js
+"use strict";
+
 const config = require("./config");
-const DAOTasks = require("./DAOTasks");
+const daoTask = require("./DAOTasks");
+const daoUser = require("./DAOUsers");
 const path = require("path");
 const mysql = require("mysql");
 const express = require("express");
 const bodyParser = require("body-parser");
-const fs = require("fs");
+const session = require("express-session");
+const mysqlSession = require("express-mysql-session");
+const MySQLStore = mysqlSession(session);
+
+const sessionStore = new MySQLStore({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "tareas"
+});
 
 // Crear un servidor Express.js
 const app = express();
 
 // Crear un pool de conexiones a la base de datos de MySQL
-const pool = mysql.createPool(config.mysqlConfig);
+const _pool = mysql.createPool(config.mysqlConfig);
+let daoU = new daoUser(_pool);
+let daoT = new daoTask(_pool);
 
-// Crear una instancia de DAOTasks
-const daoT = new DAOTasks(pool);
+// Usamos el midd de sesion
+const middlewareSession = session({
+    saveUninitialized: false,
+    secret: "foobar34",
+    resave: false,
+    store: sessionStore
+});
+app.use(middlewareSession);
 
 // Configuramos el motor de plantillas
 app.set("view engine", "ejs");
@@ -40,16 +59,49 @@ app.listen(config.port, function (err) {
     }
 });
 
+let textoError = '';
+
+app.get("/login.html", function (request, response) {
+    response.status(200);
+    response.render("login", {
+        errorMsg: textoError
+    });
+});
+
+app.post("/login", function (request, response) {
+    let usuario = request.body.usr;
+    let password = request.body.psw;
+
+    daoU.isUserCorrect(usuario, password, function (err, result) {
+        if (err) {
+            console.log(err.message);
+        } else if (result) {
+            request.session.currentUser = request.body.usr;
+            response.redirect('tasks.html')
+        } else {
+            console.log("Usuario y/o contraseña incorrectos - ?", request.body.usr);
+            textoError = 'Usuario y/o contraseña incorrectos';
+            response.redirect('login.html')
+        }
+    });
+});
+
+app.get("/logout", function (request, response) {
+    request.session.destroy()
+    response.redirect('login.html')
+});
+
 // Manejador para lista de tareas
 app.get("/tasks.html", function (request, response) {
-    let lista = daoT.getAllTasks('usuario@ucm.es', function (err, datos) {
+    daoT.getAllTasks(request.session.userEmail, function (err, datos) {
         if (err) {
             console.log(err);
             response.redirect("/404.html");
         } else {
             response.status(200);
             response.render("tasks", {
-                taskList: datos
+                taskList: datos,
+                user:request.session.userEmail
             });
         }
     });
@@ -57,7 +109,7 @@ app.get("/tasks.html", function (request, response) {
 
 // Manejador para añadir tarea
 app.post("/addTask", function (request, response) {
-    let usuario = 'usuario@ucm.es';
+    let usuario =request.session.currentUser;
     let texto = request.body.texto;
 
     daoT.insertTask(usuario, texto, function (err, params) {
@@ -84,10 +136,9 @@ app.get("/finish/:taskId", function (request, response) {
     });
 });
 
-
 //Manejador para eliminar las tareas completadas
 app.post("/eliminarCompletadas", function (request, response) {
-    daoT.deleteCompleted('usuario@ucm.es', function (err, datos) {
+    daoT.deleteCompleted(request.session.currentUser, function (err, datos) {
         if (err) {
             console.log(err);
             response.redirect("/404.html");

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es" class="blanco">
+
+<head>
+    <title>Gestor de tareas</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/principal.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="css/login.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="css/imprimir.css" media="print" />
+    <link rel="icon" href="img/favicon.jpg" type="image/x-icon" />
+</head>
+
+<body>
+    <%- include("cabecera") %>
+    <div class="contenido">
+        <form action="login" method="POST" class="cajaAuxiliar">
+            <div class="cajaLogin">
+                <label class="elementoFormulario label1" for="usr">Usuario:</label>
+                <input class="elementoFormulario input1" type="text" name="usr" id="usr">
+                <label class="elementoFormulario label2" for="psw">Contraseña:</label>
+                <input class="elementoFormulario input2" type="password" name="psw" id="psw">
+                <input type="submit" class="borde5 boton" value="Entrar" id="singin">
+            </div>
+        </form>
+        <% if(locals.errorMsg){%>
+        <div class="msgError">
+            <%= errorMsg %>
+        </div>
+        <%}%>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,186 @@
+@import "https://fonts.googleapis.com/css?family=Permanent+Marker";
+@import "https://fonts.googleapis.com/css?family=Gudea";
+@import "https://fonts.googleapis.com/css?family=Monoton";
+@import "https://fonts.googleapis.com/css?family=Dosis:800";
+
+/* *{
+    border: dotted fuchsia 2px;
+} */
+*{
+    margin:0;
+    padding: 0;
+}
+html{
+    font-family: 'Gudea',sans-serif;
+}
+.titulo{
+    font-family: 'Monoton',sans-serif;
+    font-size: 60pt;
+    /* font-family: 'Permanent Marker', cursive; */
+}
+.escudo{
+    border-radius: 200px 200px 200px 200px;
+    -moz-border-radius: 200px 200px 200px 200px;
+    -webkit-border-radius: 200px 200px 200px 200px;
+    width: 150px;
+    height: 150px;
+    margin: 5px;
+    background-color: black;
+}
+.header{
+    display: grid;
+    grid-template-rows: 160px;
+    grid-template-columns: 70% 30%;
+    position:fixed;
+    top:0px;
+    width: 100%;
+    background: url(../img/fondoTitulo.png) repeat-x top;
+
+    /* background: url(../img/cesped.png); */
+    /* background-repeat: repeat; */
+    background-color: greenyellow;
+
+}
+.cabecera{
+    display: grid;
+    grid-template-rows: 100%;
+    grid-template-columns: 160px auto;
+}
+.cajaTitulo{
+    display: flex;
+    align-items: flex-end;
+}
+.datosUsuario{
+    display: grid;
+    grid-template-rows: 50% 50%;
+    grid-template-columns: 120px auto;
+    font-family: 'Dosis', sans-serif;
+}
+.imagenPerfil{
+    grid-row-start: 1;
+    grid-row-end: 3;
+    display: flex;
+    justify-items: flex-end;
+    align-items: flex-end;
+}
+.textoCabecera{
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: black;
+}
+.fotoPerfil{
+    width: 100px;
+    height: 100px;
+    margin: 6px;
+    border-radius: 50% 50% 50% 50%;
+    -moz-border-radius: 50% 50% 50% 50%;
+    -webkit-border-radius: 50% 50% 50% 50%;
+}
+.nombreUsuario{
+    display: flex;
+    align-items: flex-end;
+}
+.contenido{
+    margin: 170px auto;
+    width: 80%;
+}
+.tarea{
+    border: 2px black solid;
+    background-color: rgb(150, 218, 150);
+    margin: 10px 0;
+    display:grid;
+    grid-template-rows: 100%;
+    grid-template-columns: 80% 20%;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.tarea a, p{
+    display: inline-block;
+}
+.finalizada{
+    border: 2px rgb(77, 77, 77) solid;
+    background: rgb(143, 143, 143);
+}
+.textoTarea{
+    margin: 5px 20px;
+    padding: 5px;
+}
+.finalizada .textoTarea{
+    text-decoration:line-through;
+}
+.listaTags{
+    margin: 5px 20px;
+}
+.activa .tag{
+    border: white 2px solid;
+    border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    padding:  5px;
+    background: rgb(219, 219, 219);
+    font-weight: bold;
+    text-align: center;
+}
+.finalizada .tag{
+    display: none;
+}
+.boton{
+    margin: 5px;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    background-color: rgb(254,228,252);
+    /* color: white; */
+    color: black;
+    border: fuchsia 2px solid;
+    font-weight: bold;
+    max-height: 2em;
+    min-height: 1em;
+}
+.botonPlano{
+    margin: 5px;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    background-color: rgb(254,228,252);
+    /* color: white; */
+    color: black;
+    border: fuchsia 2px solid;
+    font-weight: bold;
+    max-height: 2em;
+    min-height: 1em;
+}
+
+.finalizada .boton{
+    display: none;
+}
+.borde5{
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+.nuevaTarea{
+    display: grid;
+    grid-template-rows: 100%;
+    grid-template-columns: 80% 20%;
+    background-color: rgb(150, 218, 150);
+    padding: 5px 0px;
+    border: 2px darkgreen solid;
+}
+.inputTarea{
+    border: 2px darkgreen solid;
+    margin: 5px 20px;
+    padding: 5px;
+}
+
+.eliminarTarea{
+    margin-top: 20px;
+    padding: 10px;
+    display: grid;
+    grid-template-rows: 100%;
+    grid-template-columns: 35% 30% 35%;
+}
+.eliminarBoton{
+    grid-column: 2 / span 1;
+}
