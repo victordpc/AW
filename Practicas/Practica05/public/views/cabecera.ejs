@@ -7,10 +7,10 @@
     </div>
     <div class="datosUsuario">
         <div class="imagenPerfil">
-            <% if(locals.img){%>
-                <img src="<%=img%>" alt="foto de perfil" class="fotoPerfil">
-                <%}%>
-            </div>
+            <% if(locals.user){%>
+            <img src="/imagenUsuario" alt="foto de perfil" class="fotoPerfil">
+            <%}%>
+        </div>
         <% if(locals.user){%>
         <div class="nombreUsuario">
             <p class="usuario textoCabecera">

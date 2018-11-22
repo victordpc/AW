@@ -11,25 +11,7 @@
 
 
 <body>
-    <div class="header">
-        <div class="cabecera">
-            <img src="img/escudo.jpg" alt="imagen del escudo de rugby fisicas" class="escudo">
-            <div class="cajaTitulo">
-                <h1 class="titulo">TAREAS</h1>
-            </div>
-        </div>
-        <div class="datosUsuario">
-            <div class="imagenPerfil">
-                <img src="img/perfil.png" alt="foto de perfil" class="fotoPerfil">
-            </div>
-            <div class="nombreUsuario">
-                <p class="usuario textoCabecera"><%=user%></p>
-            </div>
-            <div class="botonCerrar">
-                <a href="/logout" class="cerrarSesion textoCabecera">Desconectar</a>
-            </div>
-        </div>
-    </div>
+    <%- include("cabecera") %>
     <div class="contenido">
         <div class="tareas">
             <% taskList.forEach(function(task) { %>

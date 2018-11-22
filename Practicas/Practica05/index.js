@@ -10,6 +10,8 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const mysqlSession = require("express-mysql-session");
 const MySQLStore = mysqlSession(session);
+// const multer = require("multer");
+// const multerFactory = multer({ dest: path.join(__dirname, "public/profile_imgs")});
 
 const sessionStore = new MySQLStore({
     host: "localhost",
@@ -50,6 +52,16 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
+//Middleware para control de acceso
+function compruebaUsuario(request, response, next) {
+    if (request.session.currentUser) {
+        response.locals.userEmail = request.session.currentUser
+        next();
+    } else {
+        response.redirect('login.html');
+    }
+}
+
 // Arrancar el servidor
 app.listen(config.port, function (err) {
     if (err) {
@@ -60,7 +72,6 @@ app.listen(config.port, function (err) {
 });
 
 let textoError = '';
-
 app.get("/login.html", function (request, response) {
     response.status(200);
     response.render("login", {
@@ -92,8 +103,8 @@ app.get("/logout", function (request, response) {
 });
 
 // Manejador para lista de tareas
-app.get("/tasks.html", function (request, response) {
-    daoT.getAllTasks(request.session.userEmail, function (err, datos) {
+app.get("/tasks.html", compruebaUsuario, function (request, response) {
+    daoT.getAllTasks(response.locals.userEmail, function (err, datos) {
         if (err) {
             console.log(err);
             response.redirect("/404.html");
@@ -101,15 +112,15 @@ app.get("/tasks.html", function (request, response) {
             response.status(200);
             response.render("tasks", {
                 taskList: datos,
-                user:request.session.userEmail
+                user: response.locals.userEmail
             });
         }
     });
 });
 
 // Manejador para añadir tarea
-app.post("/addTask", function (request, response) {
-    let usuario =request.session.currentUser;
+app.post("/addTask", compruebaUsuario, function (request, response) {
+    let usuario = response.locals.userEmail;
     let texto = request.body.texto;
 
     daoT.insertTask(usuario, texto, function (err, params) {
@@ -123,7 +134,7 @@ app.post("/addTask", function (request, response) {
 });
 
 // Manejador para lista de tareas
-app.get("/finish/:taskId", function (request, response) {
+app.get("/finish/:taskId", compruebaUsuario, function (request, response) {
     let id = request.params.taskId
 
     daoT.markTaskDone(id, function (err, datos) {
@@ -137,13 +148,28 @@ app.get("/finish/:taskId", function (request, response) {
 });
 
 //Manejador para eliminar las tareas completadas
-app.post("/eliminarCompletadas", function (request, response) {
-    daoT.deleteCompleted(request.session.currentUser, function (err, datos) {
+app.post("/eliminarCompletadas", compruebaUsuario, function (request, response) {
+    daoT.deleteCompleted(response.locals.userEmail, function (err, datos) {
         if (err) {
             console.log(err);
             response.redirect("/404.html");
         } else {
             response.redirect("/tasks.html");
+        }
+    });
+});
+
+
+// Manejador para imagenes de usuario
+app.get("/imagenUsuario", compruebaUsuario, function (request, response) {
+    daoU.getUserImageName(response.locals.userEmail, function (err, datos) {
+        if (err) {
+            console.log(err);
+            response.status(404);
+            response.end("Recurso no encontrado");
+        } else {
+            let pathImg = path.join(__dirname, "public/profile_imgs", datos);
+            response.sendFile(pathImg);        
         }
     });
 });
