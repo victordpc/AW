@@ -168,8 +168,13 @@ app.get("/imagenUsuario", compruebaUsuario, function (request, response) {
             response.status(404);
             response.end("Recurso no encontrado");
         } else {
-            let pathImg = path.join(__dirname, "public/profile_imgs", datos);
-            response.sendFile(pathImg);        
+            var pathImg;
+            if (datos) {
+                pathImg = path.join(__dirname, "public/profile_imgs", datos);
+            } else {
+                pathImg = path.join(__dirname, "public/img", "NoPerfil.png");
+            }
+            response.sendFile(pathImg);
         }
     });
 });
