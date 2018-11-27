@@ -1,0 +1,15 @@
+<% let errores = getAndClearFlash();%>
+<%if (errores) {%>
+<%if (errores.length > 0) {%>
+<div class="caja_errores">
+    La información introducida en el formulario es incorrecta:
+    <ul>
+        <% errores.forEach(function(error) { %>
+        <li>
+            <%= error.msg %>
+        </li>
+        <% }); %>
+    </ul>
+</div>
+<%}%>
+<%}%>
