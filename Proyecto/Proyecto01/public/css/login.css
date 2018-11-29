@@ -60,11 +60,13 @@
 .panelFormulario #mail {
     grid-column-start: 2;
     grid-column-end: 4;
+    color:black;
 }
 
 .panelFormulario #pass {
     grid-column-start: 2;
     grid-column-end: 4;
+    color:black;
 }
 
 .contenedor {

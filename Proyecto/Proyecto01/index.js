@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const config = require("./config");
 const daoUser = require("./DaoUsers");
@@ -79,3 +79,103 @@ function compruebaUsuario(request, response, next) {
         response.redirect('login.html');
     }
 }
+/**Nuevo Usuario */
+
+app.get("/new_user.html", function (request, response) {
+    response.status(200);
+    response.render("new_user");
+})
+
+    // let usuario = {
+    //      correo : request.body.email,
+    //      passw : request.body.pass,
+    //      nombre : request.body.name,
+    //      gender : request.body.sex,
+    //      fechaNac : request.body.birth,
+    //      fotoPerfil : null
+    // };
+//,  multerFactory.single("imagenPerfil")
+app.post("/new_user",function (request, response){
+     let correo = request.body.email;
+     let passw = request.body.pass;
+     let nombre = request.body.name;
+     let gender = request.body.sex;
+     let fechaNac = request.body.birth;
+     let fotoPerfil = null;
+
+    if (request.file) {
+        fotoPerfil = request.file.buffer;
+    } 
+    daoU.createUser(nombre,correo,passw,gender,fechaNac,fotoPerfil, function(err, result){
+   // daoU.createUser(usuario, function(err, result){
+        if(err){
+            console.log(err.message);
+        }else if(result){
+            request.session.currentUser = request.body.email;
+            response.render('my_profile',correo );
+        }else{
+            console.log("Faltan datos imprescindibles");
+            response.write("Hay campos obligatorios que no se han rellenado");
+            response.end();
+        }
+    });
+} );
+
+//* control del login* */
+let textoError = '';
+app.get("/login.html", function (request, response) {
+    response.status(200);
+    response.render("login", {
+        errorMsg: textoError
+
+    });
+})
+app.post("/login", function (request, response) {
+    let usuario = request.body.email;
+    let password = request.body.pass;
+    daoU.isUserCorrect(usuario, password, function (err, result) {
+        if (err) {
+            console.log(err.message);
+        } else if (result) {
+              request.session.currentUser = request.body.email;
+            response.redirect('my_profile.html');
+        
+        } else {
+            console.log("Usuario y/o contraseña incorrectos - ?", request.body.usr);
+            textoError = 'Usuario y/o contraseña incorrectos';
+            response.redirect('login.html');
+        }
+
+        //     if (request.session.currentUser) {
+//         response.locals.userEmail = request.session.currentUser
+//         next();
+//     } else {
+//         response.redirect('login.html');
+//     }
+
+    });
+});
+
+// function compruebaUsuario(request, response, next) {
+//     if (request.session.currentUser) {
+//         response.locals.userEmail = request.session.currentUser
+//         next();
+//     } else {
+//         response.redirect('login.html');
+//     }
+// }
+/**My Profile */
+
+app.get("/my_profile.html", function(request, response){
+    response.status(200);
+response.render("my_profile", {
+nombre: request.query.nombre,
+sexo: request.query.sexo,
+//email: request.query.email
+});
+
+});
+app.post("/my_profile", function (request, response) {
+    nombre : reque
+});
+    
