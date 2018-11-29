@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es" class="blanco">
+
+<head>
+    <title>PhysicBooK</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../css/principal.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="../css/new_user.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="../css/imprimir.css" media="print" />
+    <link rel="icon" href="../img/favicon.jpg" type="image/x-icon" />
+</head>
+
+<body>
+    <!-- <iframe src="../index.html" frameborder="0" class="contenedorCabecera"></iframe> -->
+    <!-- <object type="text/html" data="../index.html" class="contenedorCabecera"></object> -->
+    <%- include("header") %>
+    <div class="contenedor">
+         <div class="PaneltituloPagina">
+        <h2>NUEVO USUARIO</h2>
+            </div>
+        <form action = "new_user" id="new_user" method="POST" name="new_user" enctype="multipart/form-data">
+            <div class="panelFormulario">
+                <label for="email">E-Mail </label>
+                <input type="text" name="email" id="email" placeholder="pepito@physicbook.com " >
+                <label for="pass">Contraseña </label>
+                <input type="password" name="pass" id="pass" placeholder="*************">
+                <label for="name">Nombre Completo</label>
+                <input type="text" name="nombreCompleto" id="nombreCom" />
+                <label for="sex" name="sex">Sexo</label>
+                <div class="radios">
+                    <input type="radio" class="radioB" name="sexo" value="femenino" id="femenino">Femenino
+                    <input type="radio" class="radioB" name="sexo" value="masculino" id="masculino">Masculino
+                    <input type="radio" class="radioB" name="sexo" value="otro" id="otro">Otro
+                </div>
+                <label for="birth">Fecha de Nacimiento</label>
+                <input type="date" name="date" id="fechaNac">
+                <label for="imgPerfil">Imagen de perfil</label>
+                <input type="file" name="imagenPerfil" id="imgPerfil" accept="image/x-png,image/gif,image/jpeg" />
+                <input type="submit" name="conectar" id="conectar" value="Registrar Usuario">
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
