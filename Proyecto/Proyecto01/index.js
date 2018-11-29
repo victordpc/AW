@@ -10,7 +10,7 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const expressValidator = require("express-validator");
 
-// Crear un servidor Express.js
+// Crear un servidor Express.js 
 const app = express();
 
 // Crear un pool de conexiones a la base de datos de MySQL
