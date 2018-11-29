@@ -24,7 +24,7 @@ class DAOUsers {
             if (err) {
                 callback(new Error(`Error de conexión a la base de datos`));
             } else {
-                const sql = `Select 1 from  user where email = ? and password = ?`;
+                const sql = `Select 1 from  usuarios where email = ? and password = ?`;
                 connection.query(sql, [email, password], function (err, datos) {
                     connection.release();
                     if (err) {
@@ -49,7 +49,7 @@ class DAOUsers {
             if (err) {
                 callback(new Error(`Error de conexión a la base de datos`));
             } else {
-                const sql = `Select img from  user where email = ?`;
+                const sql = `Select foto from usuarios where email = ?`;
                 connection.query(sql, [email], function (err, datos) {
                     connection.release();
                     if (err) {

@@ -1,7 +1,7 @@
 "use strict"
 
 const config = require("./config");
-const daoUser = require("./DAOUsers");
+const daoUser = require("./DaoUsers");
 const daoPreguntas = require("./DaoPreguntas");
 const path = require("path");
 const mysql = require("mysql");
