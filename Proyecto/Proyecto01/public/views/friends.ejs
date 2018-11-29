@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es" class="friends">
+
+<head>
+    <title>PhisycBook</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../css/principal.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="../css/friends.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="css/imprimir.css" media="print" />
+    <link rel="icon" href="img/favicon.jpg" type="image/x-icon" />
+</head>
+
+<body>
+    <%- include("header") %>
+    <div class="contenedor">
+        <div class="PaneltituloPagina">
+            <h2 class="tituloAmigos">AMIGOS</h2>
+            <div class="buscardorAmigos">
+                <form method="GET" name="search" action="search">
+                    <input type="search" placeholder="Buscar Amigos...">Buscar por nombre:
+                    <input type="submit" name="buscar" id="buscar" value="Buscar">
+                </form>
+            </div>
+        </div>
+        <div class="panelSolocitudAmistad">
+        </div>
+        <div class="busquedaDeAmigos">
+        </div>
+        <div class="amigos">
+        </div>
+    </div>
+</body>
