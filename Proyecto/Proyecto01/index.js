@@ -86,76 +86,94 @@ app.get("/new_user.html", function (request, response) {
     response.render("new_user");
 })
 
-    // let usuario = {
-    //      correo : request.body.email,
-    //      passw : request.body.pass,
-    //      nombre : request.body.name,
-    //      gender : request.body.sex,
-    //      fechaNac : request.body.birth,
-    //      fotoPerfil : null
-    // };
+// let usuario = {
+//      correo : request.body.email,
+//      passw : request.body.pass,
+//      nombre : request.body.name,
+//      gender : request.body.sex,
+//      fechaNac : request.body.birth,
+//      fotoPerfil : null
+// };
 //,  multerFactory.single("imagenPerfil")
-app.post("/new_user",function (request, response){
-     let correo = request.body.email;
-     let passw = request.body.pass;
-     let nombre = request.body.name;
-     let gender = request.body.sex;
-     let fechaNac = request.body.birth;
-     let fotoPerfil = null;
+app.post("/new_user", function (request, response) {
+    let correo = request.body.email;
+    let passw = request.body.pass;
+    let nombre = request.body.name;
+    let gender = request.body.sex;
+    let fechaNac = request.body.birth;
+    let fotoPerfil = null;
 
     if (request.file) {
         fotoPerfil = request.file.buffer;
-    } 
-    daoU.createUser(nombre,correo,passw,gender,fechaNac,fotoPerfil, function(err, result){
-   // daoU.createUser(usuario, function(err, result){
-        if(err){
+    }
+    daoU.createUser(nombre, correo, passw, gender, fechaNac, fotoPerfil, function (err, result) {
+        // daoU.createUser(usuario, function(err, result){
+        if (err) {
             console.log(err.message);
-        }else if(result){
+        } else if (result) {
             request.session.currentUser = request.body.email;
-            response.render('my_profile',correo );
-        }else{
+            response.render('my_profile', correo);
+        } else {
             console.log("Faltan datos imprescindibles");
             response.write("Hay campos obligatorios que no se han rellenado");
             response.end();
         }
     });
-} );
+});
 
 //* control del login* */
-let textoError = '';
+
+
+// Manejador para raiz
 app.get("/login.html", function (request, response) {
     response.status(200);
+    let err = [];
     response.render("login", {
-        errorMsg: textoError
-
+        errores: err
     });
-})
-app.post("/login", function (request, response) {
+});
+
+app.post("/procesarInputLogin", function (request, response) {
+    request.checkBody("email", "El formato del email pepito@physicbook.com").isEmail();
+    
+    request.getValidationResult().then(function (result) {
+        if (result.isEmpty()) {
+            response.redirect("isUserCorrect.html");
+        } else {    
+            response.render("login", {
+                errores: result.array()
+            });
+        }
+    });
+});
+
+app.get("/isUserCorrect.html", function (request, response) {
+    response.status(200);
+    let err = [];
+    response.render("login", {
+        errores: err
+    });
+});
+app.post("/isUserCorrect.html", function (request, response) {
     let usuario = request.body.email;
     let password = request.body.pass;
     daoU.isUserCorrect(usuario, password, function (err, result) {
         if (err) {
             console.log(err.message);
         } else if (result) {
-              request.session.currentUser = request.body.email;
+            request.session.currentUser = request.body.email;
             response.redirect('my_profile.html');
-        
+
         } else {
-            console.log("Usuario y/o contraseña incorrectos - ?", request.body.usr);
-            textoError = 'Usuario y/o contraseña incorrectos';
+            console.log("Usuario y/o contraseÃ±a incorrectos - ?", request.body.email);
             response.redirect('login.html');
         }
 
-        //     if (request.session.currentUser) {
-//         response.locals.userEmail = request.session.currentUser
-//         next();
-//     } else {
-//         response.redirect('login.html');
-//     }
-
     });
 });
+// app.post("/login.html", function (request,response){
 
+// });
 // function compruebaUsuario(request, response, next) {
 //     if (request.session.currentUser) {
 //         response.locals.userEmail = request.session.currentUser
@@ -166,16 +184,16 @@ app.post("/login", function (request, response) {
 // }
 /**My Profile */
 
-app.get("/my_profile.html", function(request, response){
+app.get("/my_profile.html", function (request, response) {
     response.status(200);
-response.render("my_profile", {
-nombre: request.query.nombre,
-sexo: request.query.sexo,
-//email: request.query.email
-});
+    response.render("my_profile", {
+        nombre: request.query.nombre,
+        sexo: request.query.sexo,
+        email: request.query.email,
+        puntos: request.query.puntos
+    });
 
 });
 app.post("/my_profile", function (request, response) {
-    nombre : reque
-});
     
+});

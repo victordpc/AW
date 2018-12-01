@@ -11,36 +11,45 @@
 </head>
 
 <body>
-    <!-- <iframe src="../index.html" frameborder="0" class="contenedorCabecera"></iframe> -->
-    <!-- <object type="text/html" data="../index.html" class="contenedorCabecera"></object> -->
-    <!-- <div class="header">
-        <div class="cabecera">
-            <img src="../img/escudo.jpg" alt="imagen del escudo de rugby fisicas" class="escudo">
-            <div class="cajaTitulo">
-                <h1 class="titulo">PHYSICBOOK</h1>
-            </div>
-            <div class="menu">
-                <a href="login.html">Entrar</a>
-                <a href="new_user.html">Nuevo Usuario</a>
-            </div>
-        </div>
-    </div> -->
     <%- include("header") %>
 
     <div class="contenedor">
         <div class="PaneltituloPagina">
-        <h2>Entrar</h2>
+            <h2>Entrar</h2>
         </div>
-        <form id="formulario" method="POST" name="login" action="login">
+        <%- include("flash") %>
+        <!-- <% let errores = getAndClearFlash();%> -->
+        <!-- <%if (errores) {%>
+        <%if (errores.length > 0) {%>
+        <div class="caja_errores">
+            Algo ha ido mal:
+            <ul>
+                <% errores.forEach(function(error) { %>
+                <li>
+                    <%= error.msg %>
+                </li>
+                <% }); %>
+            </ul>
+        </div>
+        <%}%>
+        <%}%> -->
+        <form id="formulario" method="POST" name="login" action="procesarInputLogin">
             <div class="panelFormulario">
+
                 <label for="email">E-Mail </label>
                 <input type="text" name="email" id="email" placeholder="pepito@physicbook.com " />
+
                 <label for="pass">Contraseña </label>
                 <input type="password" name="password" id="pass" placeholder="*************">
                 <input type="submit" name="conectar" id="conectar" value="Conectar">
             </div>
         </form>
+
     </div>
+    <div>
+
+    </div>
+
 </body>
 
 </html>
