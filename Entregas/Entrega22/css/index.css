@@ -1,0 +1,48 @@
+.lista {
+    background-color: lightgray;
+}
+
+.naranja {
+    background-color: orange;
+}
+
+.amarillo {
+    background-color: yellow;
+}
+
+#ventana {
+    background-color: lightgreen;
+    border: 2px solid green;
+}
+
+#mensaje {
+    color: red;
+}
+
+.bordeRojo {
+    border: 2px solid red;
+}
+
+.captura {
+    height: 200px;
+    width: 200px;
+    border: solid 2px orange;
+    background-color: #ffae61
+}
+
+.mostrar {
+    color: white;
+    background-color: blue;
+    font-weight: bolder;
+    display: inline-block;
+}
+
+.fondoRosa {
+    background-color: #ff00c8;
+}
+
+.tecla {
+    display: inline-block;
+    border: 2px solid red;
+    padding: 5px;
+}
