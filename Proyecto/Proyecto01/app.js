@@ -77,10 +77,11 @@ app.listen(config.port, function (err) {
 //Middleware para control de acceso
 function compruebaUsuario(request, response, next) {
     if (request.session.currentUser) {
-       if(request.session.puntos)
-        next();
-        else{
+        //response.locals.userEmail = request.session.currentUser
+        if (request.session.id === undefined) {
             response.redirect('login.html');
+        } else {
+            next();
         }
     } else {
         response.redirect('login.html');
@@ -88,16 +89,21 @@ function compruebaUsuario(request, response, next) {
 }
 
 /****************************************************************** */
-/**VARIABLE GLABALES  de plantillas********************************************/
+/**VARIABLE GLOBALES  de plantillas********************************************/
 
 let textoError = '';
 //****************************************************************** */
 /***************************Raiz*************************** */
 app.get("/", function (request, response) {
     response.status(200);
-    response.redirect("/login.html");
+    response.redirect("/index.html");
 })
 
+/** Principal */
+app.get("/index.html", function (request, response) {
+    response.status(200);
+    response.render("index");
+})
 
 /**Nuevo Usuario */
 app.get("/new_user.html", function (request, response) {
@@ -107,33 +113,45 @@ app.get("/new_user.html", function (request, response) {
     });
 })
 
-app.post("/process_login", function (request, response) {
+app.post("/process_login", multerFactory.single("foto"), function (request, response) {
     request.checkBody("email", "Dirección de correo no válida").isEmail();
     // request.checkBody("fechaNac", "Fecha de nacimiento no válida").isBefore();
     // request.checkBody("pass","La contraseña debe contener entre 4-15 caracteres").isLength({ min: 4, max: 5 });
     request.checkBody("sexo", "Este campo género no debe de estar vacío").notEmpty();
     request.getValidationResult().then(function (result) {
         // El método isEmpty() devuelve true si las comprobaciones no han detectado ningún error
-        if (result.isEmpty()) { 
+        if (result.isEmpty()) {
             //let fecha =  $('#fechaNac .fechaNac').val();
             let usuario = {
                 correo: request.body.email,
                 passw: request.body.pass,
                 nombre: request.body.nombre,
                 genero: request.body.sexo,
-                fechaNac: request.body.fechaNac,
+                fechaNac: request.body.date,
                 foto: null
             }
             if (request.file) {
                 usuario.foto = request.file.buffer;
             }
             daoU.createUser(usuario, function (err, result) {
-                if (result){
-                    request.session.currentUser = result;
-                    response.redirect('my_profile.html');
-                } else {
-                    textoError = 'Usuario y/o contraseña incorrectos';
+                if (result) {
                     response.status(200);
+                    // response.redirect('login.html');
+
+                    daoU.isUserCorrect(usuario.correo, usuario.passw, function (err, result) {
+                        if (err) {
+                            textoError = 'Error del sistema intentelo de nuevo más tarde';
+                            response.status(500);
+                            response.redirect("/new_user.html");
+                        } else {
+                            request.session.puntos = result[0].puntos;
+                            request.session.currentUser = result[0].id;
+                            response.redirect('my_profile.html');
+                        }
+                    });
+                } else {
+                    textoError = 'Error del sistema intentelo de nuevo más tarde';
+                    response.status(500);
                     response.redirect("/new_user.html");
                 }
             });
@@ -143,7 +161,7 @@ app.post("/process_login", function (request, response) {
                 errores: result.array()
             });
         }
-    
+
     });
 })
 
@@ -188,9 +206,9 @@ app.post("/login", function (request, response) {
 
 /**My Profile */
 
-app.get("/my_profile.html", compruebaUsuario ,function (request, response) {
-  daoU.getUserData(request.session.currentUser, function (err, result) {   
-  if (err) {
+app.get("/my_profile.html", compruebaUsuario, function (request, response) {
+    daoU.getUserData(request.session.currentUser, function (err, result) {
+        if (err) {
             console.log(err.message);
         } else {
             response.status(200);
@@ -220,13 +238,13 @@ function ObtenerImagen(usuario, callback) {
 }
 app.get("/imagen/:email", function (request, response) {
     //let usuario = request.params.email;
-   // if (_id == undefined) {request.session.currentUser
-   if (request.session.currentUser == undefined) {   
-   response.status(400);
+    // if (_id == undefined) {request.session.currentUser
+    if (request.session.currentUser == undefined) {
+        response.status(400);
         response.end("Petición incorrecta");
     } else {
         response.status(200);
-       // ObtenerImagen(request.session.currentUser, function (err, imagen) {
+        // ObtenerImagen(request.session.currentUser, function (err, imagen) {
         ObtenerImagen(request.session.currentUser, function (err, imagen) {
             if (imagen) {
                 response.end(imagen);
@@ -253,7 +271,7 @@ app.put('/my_profile.html', (request, response) => {
 //************************************************************************
 let _amigos = new Array();
 
-app.get("/friends.html", compruebaUsuario,function (request, response) {
+app.get("/friends.html", compruebaUsuario, function (request, response) {
     response.status(200);
     response.render("friends", {
         amigos: _amigos,
@@ -315,7 +333,7 @@ app.get("/procesarSolicitudes.html", function (request, response) {
 
 //******************************************************************** */
 //****************************LOGOUT********************** */
-app.get("/desconectar.html", function(request, response){
+app.get("/desconectar", function (request, response) {
     response.status(200);
     response.redirect("/login.html");
 });
