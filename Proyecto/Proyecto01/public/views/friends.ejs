@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es" class="blanco">
+
+<head>
+    <title>PhisycBook</title>
+    <meta charset="utf-8">
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="../../app.js"></script> -->
+    <link rel="stylesheet" type="text/css" href="../css/principal.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="../css/friends.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="css/imprimir.css" media="print" />
+    <link rel="icon" href="img/favicon.jpg" type="image/x-icon" />
+</head>
+
+<body>
+    <%- include("header_login") %>
+    <div class="contenedor">
+        <div class="PaneltituloPagina">
+            <h2 class="tituloAmigos">AMIGOS</h2>
+            <div class="buscardorAmigos">
+                <form action="" method="">
+                    <input type="search" placeholder="Buscar Amigos...">Buscar por nombre:
+                    <button>Buscar</button>
+                </form>
+            </div>
+
+        </div>
+
+
+        <div class="panelSolocitudAmistad">
+                <%if (solicitudes.length>0) {%>
+                    <div class="solicitudes">
+                            <!-- <%= amigos[0].nombre %> -->
+                        <ul>
+                            <% solicitudes.forEach(function(solicitud) { %>
+                            <li>
+                                <%= solicitud.nombre %>
+                            </li>
+                            <% }); %>
+                        </ul>
+            
+                    </div>
+                    <%}%>
+        </div>
+        <div class="busquedaDeAmigos">
+
+            <ul id="listaBusqueda">
+
+            </ul>
+        </div>
+        Lista de amigos
+        <%if (amigos.length>0) {%>
+        <div class="amigos">
+                <!-- <%= amigos[0].nombre %> -->
+            <ul>
+                <% amigos.forEach(function(amigo) { %>
+                <li>
+                    <%= amigo.nombre %>
+                </li>
+                <% }); %>
+            </ul>
+
+        </div>
+        <%}%>
+    </div>
+</body>

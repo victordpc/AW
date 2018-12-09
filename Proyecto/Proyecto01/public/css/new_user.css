@@ -17,13 +17,6 @@
     width: 100%;
 }
 
-/* .contenedor {
-    display: flex;
-    flex-direction: column;
-    width: 600px;
-    margin: 0 auto;
-    padding-top: 220px;
-} */
 label{
     color: white;
 }
@@ -38,9 +31,13 @@ label{
     background-image: linear-gradient(315deg, #e84393 0%, #000000 74%);
     border-radius: 15px 0 15px 0;
     text-align: right;
-    width: 600px;
-    margin-left: 300px;
-
+    width: 50%;
+    margin-left: 30%;
+    justify-content: space-between;
+ /*   display: flex;
+ flex-direction: column;
+justify-content: space-between;
+margin: 5px; */
 }
 
 .panelFormulario label {
@@ -71,7 +68,7 @@ label{
     color:black;
 }
 
-.panelFormulario #nombreCom {
+.panelFormulario #nombre {
     grid-column-start: 2;
     grid-column-end: 4;
     color:black;
@@ -100,4 +97,16 @@ label{
     grid-column-end: 4;
     color:black;
 }
-
+div.caja_errores {
+    background-color: rgba(255, 0, 0, 0.5);
+    color: RED;  
+    grid-column-start:1 ;
+    grid-column-end: 4;
+    grid-row: 1;
+    text-align: justify;
+    
+    
+}
+.rojo {
+    color: red;
+}

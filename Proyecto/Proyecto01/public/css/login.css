@@ -35,7 +35,7 @@ div.panelFormulario {
     background-image: linear-gradient(315deg, #e84393 0%, #000000 74%);
     border-radius: 15px 0 15px 0;
     text-align: right;
-    width: 420px;
+    /* width: 420px; */
     margin-left: 80px;
 }
 
@@ -79,12 +79,11 @@ div.panelFormulario {
 }
 
 div.caja_errores {
-    border: 2px solid blueviolet;
-    /* background-color: rgba(255, 0, 0, 0.5); */
-    color: RED;   
-
-    margin-top: 20px;
-display: inline-block;
+    background-color: rgba(255, 0, 0, 0.5);
+    color: RED;  
+    grid-column-start:1 ;
+    grid-column-end: 3;
+    grid-row: 3;
 }
 .rojo {
     color: red;
