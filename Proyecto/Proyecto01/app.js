@@ -78,10 +78,10 @@ app.listen(config.port, function (err) {
 function compruebaUsuario(request, response, next) {
     if (request.session.currentUser) {
         //response.locals.userEmail = request.session.currentUser
-        if (request.session.puntos) {
-            next();
-        } else {
+        if (request.session.id === undefined) {
             response.redirect('login.html');
+        } else {
+            next();
         }
     } else {
         response.redirect('login.html');
@@ -136,7 +136,19 @@ app.post("/process_login", function (request, response) {
             daoU.createUser(usuario, function (err, result) {
                 if (result) {
                     response.status(200);
-                    response.redirect('login.html');
+                    // response.redirect('login.html');
+
+                    daoU.isUserCorrect(usuario.correo, usuario.passw, function (err, result) {
+                        if (err) {
+                            textoError = 'Error del sistema intentelo de nuevo más tarde';
+                            response.status(500);
+                            response.redirect("/new_user.html");
+                        } else {
+                            request.session.puntos = result[0].puntos;
+                            request.session.currentUser = result[0].id;
+                            response.redirect('my_profile.html');
+                        }
+                    });
                 } else {
                     textoError = 'Error del sistema intentelo de nuevo más tarde';
                     response.status(500);
