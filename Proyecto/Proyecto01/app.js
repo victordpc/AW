@@ -236,8 +236,9 @@ app.get("/imagen/:email", function (request, response) {
         response.end("Petición incorrecta");
     } else {
         response.status(200);
+        let n = request.params.email;
         // ObtenerImagen(request.session.currentUser, function (err, imagen) {
-        ObtenerImagen(request.session.currentUser, function (err, imagen) {
+        ObtenerImagen(n, function (err, imagen) {
             if (imagen) {
                 response.end(imagen);
             } else {
@@ -328,7 +329,7 @@ app.get("/desconectar", function (request, response) {
 /******************************************************** */
 /****************PREGUNTAS ****************************** */
 /******************************************************** */
-app.get("/preguntas.html", compruebaUsuario,function(request, response){
+app.get("/preguntas.html", compruebaUsuario, function (request, response) {
     response.status(200);
     response.render("preguntas", {});
 });

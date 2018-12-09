@@ -99,7 +99,7 @@ class DAOUsers {
             if (err) {
                 callback(new Error(`Error de conexión a la base de datos`));
             } else {
-                const sql = `SELECT nombre, fechaNac, genero, foto, puntos FROM  usuarios WHERE id = ?`;
+                const sql = `SELECT nombre, fechaNac, genero, foto, puntos, email FROM  usuarios WHERE id = ?`;
                 connection.query(sql, [id], function (err, datos) {
                     connection.release();
                     if (err) {
