@@ -113,7 +113,7 @@ app.get("/new_user.html", function (request, response) {
     });
 })
 
-app.post("/process_login", function (request, response) {
+app.post("/process_login", multerFactory.single("foto"), function (request, response) {
     request.checkBody("email", "Dirección de correo no válida").isEmail();
     // request.checkBody("fechaNac", "Fecha de nacimiento no válida").isBefore();
     // request.checkBody("pass","La contraseña debe contener entre 4-15 caracteres").isLength({ min: 4, max: 5 });
