@@ -1,22 +1,19 @@
 @import "https://fonts.googleapis.com/css?family=Frijole";
 @import "https://fonts.googleapis.com/css?family=Chicle";
 
-* {
-    /* border: dotted fuchsia 2px; */
-
-}
 
 * {
     margin: 0;
     padding: 0;
-    color: white;
+    /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
+    /* color:black; */
 }
-
+/* 
 @font-face {
     font-family: "Scorched";
     src: url("../font/ScorchedEarth/ScorchedEarthDEMO-KCFonts.ttf");
     font-style: normal;
-}
+} */
 
 /* h2 {
     align-self: center;
@@ -24,25 +21,28 @@
     margin-top: 50px;
 
 } */
+html,body {
+    height:100%;
+}
 
-.panelFormulario {
+div.panelFormulario {
     display: grid;
     grid-template-rows: auto auto auto;
     grid-template-columns: 33% 34% 33%;
     grid-row-gap: 10px;
     padding: 10px;
-    color: white;
     background-color: #e84393;
     background-image: linear-gradient(315deg, #e84393 0%, #000000 74%);
     border-radius: 15px 0 15px 0;
     text-align: right;
-    width: 420px;
-    margin-left: 400px;
+    /* width: 420px; */
+    margin-left: 80px;
 }
 
 
 .panelFormulario label {
     margin: 5px 10px;
+    color : white;
 }
 
 .panelFormulario #conectar {
@@ -54,10 +54,10 @@
     margin: 0 auto;
     align-content: center;
     background-image: linear-gradient(to right, black,rgb(54, 4, 33),rgb(177, 9, 107),rgb(243, 26, 134),rgb(247, 19, 152),rgb(243, 26, 134),rgb(177, 9, 107),rgb(54, 4, 33), black);   
-  
+
 }
 
-.panelFormulario #mail {
+.panelFormulario #email {
     grid-column-start: 2;
     grid-column-end: 4;
     color:black;
@@ -70,9 +70,22 @@
 }
 
 .contenedor {
-    /* display: flex;
+    display: flex;
     flex-direction: column;
     width: 600px;
     margin: 0 auto;
-    padding-top: 220px; */
+    padding-top: 220px;
+
 }
+
+div.caja_errores {
+    background-color: rgba(255, 0, 0, 0.5);
+    color: RED;  
+    grid-column-start:1 ;
+    grid-column-end: 3;
+    grid-row: 3;
+}
+.rojo {
+    color: red;
+}
+

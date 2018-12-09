@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="friends">
+<html lang="es" class="blanco">
 
 <head>
     <title>PhisycBook</title>
@@ -16,17 +16,49 @@
         <div class="PaneltituloPagina">
             <h2 class="tituloAmigos">AMIGOS</h2>
             <div class="buscardorAmigos">
-                <form method="GET" name="search" action="search">
+                <form action="" method="">
                     <input type="search" placeholder="Buscar Amigos...">Buscar por nombre:
-                    <input type="submit" name="buscar" id="buscar" value="Buscar">
+                    <button>Buscar</button>
                 </form>
             </div>
+
         </div>
+
+
         <div class="panelSolocitudAmistad">
+                <%if (solicitudes.length>0) {%>
+                    <div class="solicitudes">
+                            <!-- <%= amigos[0].nombre %> -->
+                        <ul>
+                            <% solicitudes.forEach(function(solicitud) { %>
+                            <li>
+                                <%= solicitud.nombre %>
+                            </li>
+                            <% }); %>
+                        </ul>
+            
+                    </div>
+                    <%}%>
         </div>
         <div class="busquedaDeAmigos">
+
+            <ul id="listaBusqueda">
+
+            </ul>
         </div>
+        Lista de amigos
+        <%if (amigos.length>0) {%>
         <div class="amigos">
+                <!-- <%= amigos[0].nombre %> -->
+            <ul>
+                <% amigos.forEach(function(amigo) { %>
+                <li>
+                    <%= amigo.nombre %>
+                </li>
+                <% }); %>
+            </ul>
+
         </div>
+        <%}%>
     </div>
 </body>

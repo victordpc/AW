@@ -75,13 +75,13 @@
     border-radius: 15px 0 15px 0;
     /* text-align: right; */
 }
-.calavera{
+/* .calavera{
     grid-column: 2;
     border-radius: 200px 200px 200px 200px;
     width: 150px;
     height: 150px;
     margin: AUTO; 
-}
+} */
 
 .fotoPerfil{
     grid-column: 1;
@@ -99,6 +99,7 @@ margin: auto;
     grid-row: 1;
     align-self: center;
     text-align: left;
+    color: white;
    
 }
 .panelPerfil #modificarPerfil {
@@ -117,5 +118,8 @@ margin: auto;
 .panelPerfil #modificarPerfil:hover{
     background-image: linear-gradient(to right,rgb(247, 19, 152),rgb(243, 26, 134),rgb(177, 9, 107),rgb(54, 4, 33), black,rgb(54, 4, 33),rgb(177, 9, 107),rgb(243, 26, 134),rgb(247, 19, 152)); 
     
+}
+.p {
+    color :white;
 }
 

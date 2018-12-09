@@ -1,0 +1,16 @@
+<!-- <% let errores = getAndClearFlash();%> -->
+<% let errores = "";%>
+<%if (errores) {%>
+<%if (errores.length > 0) {%>
+<div class="caja_errores">
+    Algo ha ido mal:
+    <ul>
+        <% errores.forEach(function(error) { %>
+        <li>
+            <%= error.msg %>
+        </li>
+        <% }); %>
+    </ul>
+</div>
+<%}%>
+<%}%>

@@ -15,18 +15,31 @@
 
     <div class="contenedor">
         <div class="PaneltituloPagina">
-        <h2>Entrar</h2>
+            <h2>Entrar</h2>
         </div>
+
+
         <form id="formulario" method="POST" name="login" action="login">
             <div class="panelFormulario">
+                <% if(locals.errorMsg){%>
+                <div class="caja_errores">
+                    <%= errorMsg %>
+                </div>
+                <%}%>
                 <label for="email">E-Mail </label>
                 <input type="text" name="email" id="email" placeholder="pepito@physicbook.com " />
+
                 <label for="pass">Contraseña </label>
                 <input type="password" name="password" id="pass" placeholder="*************">
                 <input type="submit" name="conectar" id="conectar" value="Conectar">
             </div>
         </form>
+
     </div>
+    <div>
+
+    </div>
+
 </body>
 
 </html>
