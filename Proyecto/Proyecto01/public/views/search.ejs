@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es" class="blanco">
+
+<head>
+    <title>PhisycBook</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../css/principal.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="../css/friends.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="css/imprimir.css" media="print" />
+    <link rel="icon" href="img/favicon.jpg" type="image/x-icon" />
+</head>
+
+<body>
+    <%- include("header") %>
+    <div class="contenedor">
+
+        <h2>Lista de personas encontradas</h2>
+        <%if (personas.length>0) {%>
+        <div class="panelSolocitudAmistad">
+            <div class="solicitudes">
+                <ul>
+                    <% personas.forEach(function(per) { %>
+                    <li>
+                        <%= per.s_nombre %>
+                        <a href="agregar/<%=per.email%>">Agregar</a>
+                    </li>
+                    <% }); %>
+                </ul>
+            </div>
+        </div>
+        <%}%>
+    </div>
+</body>
