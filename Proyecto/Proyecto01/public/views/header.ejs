@@ -5,8 +5,38 @@
             <h1 class="titulo">PHYSICBOOK</h1>
         </div>
         <div class="menu">
+            <% if(!locals.user){%>
             <a href="login.html">Entrar</a>
             <a href="new_user.html">Nuevo Usuario</a>
+            <%}%>
+            <% if(locals.user){%>
+            <a href="my_profile.html">Perfil</a>
+            <a href="friends.html">Amigos</a>
+            <a href="new_user.html">Preguntas</a>
+            <a href="new_user.html">Desconectar</a>
+            <%}%>
+        </div>
+        <div class="cabeceraDatosUsuario">
+            <div class="cabeceraImagenPerfil">
+                <% if(locals.user){%>
+                <img src="../imagenUsuario" alt="Imagen de perfil" class="cabeceraFotoPerfil">
+                <%}%>
+            </div>
+            <div class="puntos">
+                <% if(locals.user){%>
+                <p class="puntos">50 pts</p>
+                <%}%>
+            </div>
+            <% if(locals.user){%>
+            <div class="nombreUsuario">
+                <p class="usuario textoCabecera">
+                    <%=user%>
+                </p>
+            </div>
+            <div class="botonCerrar">
+                <a href="/logout" class="cerrarSesion textoCabecera">Desconectar</a>
+            </div>
+            <%}%>
         </div>
     </div>
 </div>
