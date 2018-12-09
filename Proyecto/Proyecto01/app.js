@@ -138,17 +138,9 @@ app.post("/process_login", multerFactory.single("foto"), function (request, resp
                     response.status(200);
                     // response.redirect('login.html');
 
-                    daoU.isUserCorrect(usuario.correo, usuario.passw, function (err, result) {
-                        if (err) {
-                            textoError = 'Error del sistema intentelo de nuevo más tarde';
-                            response.status(500);
-                            response.redirect("/new_user.html");
-                        } else {
-                            request.session.puntos = result[0].puntos;
-                            request.session.currentUser = result[0].id;
-                            response.redirect('my_profile.html');
-                        }
-                    });
+                    request.session.puntos = 0;
+                    request.session.currentUser = result.insertId;
+                    response.redirect('my_profile.html');
                 } else {
                     textoError = 'Error del sistema intentelo de nuevo más tarde';
                     response.status(500);
