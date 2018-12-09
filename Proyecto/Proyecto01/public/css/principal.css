@@ -14,15 +14,16 @@
     color: white;
 }
 
-.contenedor{
+.contenedor {
     padding-top: 220px;
-    
+
 }
+
 .escudo {
     border-radius: 200px 200px 200px 200px;
     width: 150px;
     height: 150px;
-    margin: 5px;  
+    margin: 5px;
 }
 
 .header {
@@ -32,6 +33,7 @@
     background: url(../img/gradient.png) repeat-x top;
     background-color: black;
 }
+
 .cabecera {
     display: grid;
     grid-template-rows: 2fr 50px;
@@ -52,7 +54,7 @@
 .menu {
     grid-column-start: 2;
     grid-column-end: 3;
-    bottom:0;
+    bottom: 0;
     margin-bottom: 0;
 }
 
@@ -63,41 +65,53 @@
     /* color: white; */
     /* margin: 0px 10px; */
     margin-right: 5px;
-    
+
     text-decoration: none;
     align-self: baseline;
 }
-.cabeceraDatosUsuario{
+
+.cabeceraDatosUsuario {
     display: grid;
     grid-template-rows: 50px;
-    grid-template-columns: 70px 50px ;
-    
+    grid-template-columns: 70px 50px;
+
 }
-.cabeceraImagenPerfil{
+
+.cabeceraImagenPerfil {
     align-self: center;
 }
-.puntos{
+
+.puntos {
     align-self: center;
 }
-.cabeceraFotoPerfil{
+
+.cabeceraFotoPerfil {
     width: 50px;
     height: 50px;
     margin: 6px;
 }
-.PaneltituloPagina{
-	display: grid;
-	grid-row: 1;
-	grid-column:3 ;
-	grid-column-gap: 10px;
-	grid-template-rows: 80px;
-	align-content: center;
+
+.PaneltituloPagina {
+    display: grid;
+    grid-row: 1;
+    grid-column: 3;
+    grid-column-gap: 10px;
+    grid-template-rows: 80px;
+    align-content: center;
     background: #000;
-    color:white;
-	/* background: linear-gradient(#1b1b1b, #111); */
-	border: 1px solid #000;
+    color: white;
+    /* background: linear-gradient(#1b1b1b, #111); */
+    border: 1px solid #000;
 }
-.PaneltituloPagina h2{
+
+.PaneltituloPagina h2 {
     align-self: center;
     text-align: center;
     font-size: 50px;
+}
+
+.imagenPerfil {
+
+    width: 100px;
+    height: 100px;
 }

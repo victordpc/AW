@@ -256,63 +256,39 @@ app.put('/my_profile.html', (request, response) => {
 //************************************************************* */
 //************************Amigos*****************************************
 //************************************************************************
-let _amigos = new Array();
 
 app.get("/friends.html", compruebaUsuario, function (request, response) {
-    response.status(200);
-    response.render("friends", {
-        amigos: _amigos,
-        solicitudes: _solicitudes
-    });
-    console.log(_amigos);
-    console.log(_solicitudes);
-    console.log(request.session.amigos);
-    _amigos = []; //se limpia la lista
-    _solicitudes = [];
-});
-app.get("/procesarAmigos.html", function (request, response) {
-    daoU.friendsList(request.session.currentUser, function (err, result) {
+    daoU.friendsList(request.session.currentUser, function (err, datosAmigos) {
         if (err) {
             response.status(404);
         } else {
-            response.status(200);
-            result.forEach(element => {
-                daoU.getUserData(element, function (err, datos) {
-                    if (!err) {
-                        let amigo = {
-                            nombre: datos[0].nombre
-                            //  imgen : datos[0].imagen
-                        }
-                        _amigos.push(amigo);
-                        request.session.amigos.push(amigo);
-                        // request.session.amigos = _amigos;
-                    }
-                });
+            daoU.friendsRequestList(request.session.currentUser, function (err, datosSolicitudes) {
+                if (err) {
+                    response.status(404);
+                } else {
+                    response.status(200);
+                    response.render("friends", {
+                        amigos: datosAmigos,
+                        solicitudes: datosSolicitudes
+                    });
+                }
             });
-            response.redirect("/procesarSolicitudes.html");
         }
     });
 });
-let _solicitudes = new Array();
-app.get("/procesarSolicitudes.html", function (request, response) {
+
+
+app.post("/searchAmigos", function (request, response) {
     //daoU.friendsRequestList(_id, function (err, result) {
-    daoU.friendsRequestList(request.session.currentUser, function (err, result) {
+    let s_nombre = request.body.nombre;
+    daoU.searchFriends(request.session.currentUser, s_nombre, function (err, result) {
         if (err) {
             response.status(404);
         } else {
             response.status(200);
-            result.forEach(element => {
-                daoU.getUserData(element, function (err, datos) {
-                    if (!err) {
-                        let solicitud = {
-                            nombre: datos[0].nombre
-                            //  imgen : datos[0].imagen
-                        }
-                        _solicitudes.push(solicitud);
-                    }
-                });
+            response.render("search", {
+                personas: result
             });
-            response.redirect("/friends.html");
         }
     });
 });
