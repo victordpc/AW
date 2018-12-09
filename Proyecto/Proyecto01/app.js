@@ -335,7 +335,7 @@ app.get("/procesarSolicitudes.html", function (request, response) {
 //****************************LOGOUT********************** */
 app.get("/desconectar", function (request, response) {
     response.status(200);
-    response.redirect("/login.html");
+    response.redirect("/index.html");
 });
 
 
