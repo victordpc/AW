@@ -77,7 +77,6 @@ app.listen(config.port, function (err) {
 //Middleware para control de acceso
 function compruebaUsuario(request, response, next) {
     if (request.session.currentUser) {
-        //response.locals.userEmail = request.session.currentUser
        if(request.session.puntos)
         next();
         else{
@@ -239,8 +238,14 @@ app.get("/imagen/:email", function (request, response) {
     }
 });
 //**Modificar */
-app.put('/my_profile.html', (request, response) => { 
-   daoU.updateUserData();
+app.put('/my_profile.html', (request, response) => {
+    let usuario={
+
+    } 
+   daoU.updateUserData(usuario, function(err, result){
+    
+
+   });
 });
 
 //************************************************************* */
@@ -313,4 +318,13 @@ app.get("/procesarSolicitudes.html", function (request, response) {
 app.get("/desconectar.html", function(request, response){
     response.status(200);
     response.redirect("/login.html");
+});
+
+
+/******************************************************** */
+/****************PREGUNTAS ****************************** */
+/******************************************************** */
+app.get("/preguntas.html", compruebaUsuario,function(request, response){
+    response.status(200);
+    response.render("preguntas", {});
 });

@@ -22,10 +22,8 @@ class DAOUsers {
             if (err) {
                 callback(new Error("Error de conexión a la base de datos"));
             } else {
-
                 const sql = `INSERT INTO usuarios  (nombre,password,fechaNac,email, genero,foto, puntos) VALUES (?,?,?,?,?,?,0)`;
-                // connection.query(sql, [Nombre, password, fechaNac, email, genero, foto, Puntos], function (err, datos) {
-                connection.query(sql, [user.nombre, user.passw, user.fechaNac, user.correo, user.genero, user.foto], function (err, datos) {
+                connection.query(sql, [user.nombre, user.passw, user.date, user.correo, user.genero, user.foto], function (err, datos) {
                     connection.release();
                     if (err) {
                         callback(new Error(`Error al insertar usuario`));
@@ -130,6 +128,7 @@ class DAOUsers {
                 callback(new Error(`Error de conexión a la base de datos`));
             } else {
                 const sql = `UPDATE usuarios SET Nombre = ?, fechaNac = ?, genero = ?, foto = ?, email = ? WHERE id = ?`;
+              
                 connection.query(sql, [usuario.nombre, usuario.fechaNac, usuario.genero, usuario.foto, uausario.email, usuario.id], function (err, datos) {
                     connection.release();
                     if (err) {
