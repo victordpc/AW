@@ -12,14 +12,14 @@
 </head>
 
 <body>
-    <%- include("header_login") %>
+    <%- include("header") %>
     <div class="contenedor">
         <div class="PaneltituloPagina">
             <h2>TU PERFIL
                 <%=usuario[0].nombre%>
             </h2>
         </div>
-        <form id="formularioPerfil" method="POST" name="perfil" action="modificarPerfil">
+        <form id="formularioPerfil" method="POST" name="perfil" action="updateProfile">
             <div class="panelPerfil">
                 <!-- <img src="../img/calavera.png" class="calavera"> -->
                 <div class="fotoPerfil">
@@ -39,7 +39,25 @@
                         <%= edad %>
                     </p>
                     <p class="puntos">
-                        <%=puntos%> puntos</p>
+                        <%=puntos%> puntos
+                    </p>
+
+                    <label for="email">E-Mail </label>
+                    <input type="text" name="email" id="email" value="<%=usuario[0].email%>" />
+                    <label for="nombre">Nombre</label>
+                    <input type="text" name="nombre" id="nombre" value="<%=usuario[0].nombre%>" />
+                    <label for="nombre">Nombre</label>
+                    <input type="text" name="nombre" id="nombre"  value="<%=usuario[0].apellidos%>"/>
+                    <label for="sexo" name="sexo">Sexo</label>
+                    <div class="radios">
+                        <input type="radio" class="radioB" name="sexo" value="Mujer" id="femenino" <%if (usuario[0].genero=="Femenino") {%>checked<%}%> >Femenino
+                        <input type="radio" class="radioB" name="sexo" value="Hombre" id="masculino" <%if (usuario[0].genero=="Masculino") {%>checked<%}%> >Masculino
+                        <input type="radio" class="radioB" name="sexo" value="otro" id="otro" <%if (usuario[0].genero=="Otro") {%>checked<%}%> >Otro
+                    </div>
+                    <label for="fechaNac">Fecha de Nacimiento</label>
+                    <input type="date" name="date" id="fechaNac" value="<%=edad%>">
+                    <label for="foto">Imagen de perfil</label>
+                    <input type="file" name="foto" id="foto" accept="image/x-png,image/gif,image/jpeg" />    
                 </div>
                 <input type="submit" name="modificarPerfil" id="modificarPerfil" value="Modificar Perfil">
             </div>
