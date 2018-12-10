@@ -320,11 +320,12 @@ app.post('/updateProfile', multerFactory.single("foto"), (request, response) => 
         if (result.isEmpty()) {
             //let fecha =  $('#fechaNac .fechaNac').val();
             let usuario = {
-                correo: request.body.email,
+                email: request.body.email,
                 nombre: request.body.nombre,
                 genero: request.body.sexo,
                 fechaNac: request.body.date,
-                foto: null
+                foto: null,
+                id:request.session.currentUser
             }
             if (request.file) {
                 usuario.foto = request.file.buffer;

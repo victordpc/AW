@@ -128,13 +128,14 @@ class DAOUsers {
             if (err) {
                 callback(new Error(`Error de conexión a la base de datos`));
             } else {
-                var sql = `UPDATE usuarios SET nombre = ?, apellidos = ?, fechaNac = ?, genero = ?, email = ?`;
-                var datos = [usuario.nombre, usuario.apellidos, usuario.fechaNac, usuario.genero, usuario.email, usuario.id];
+                var sql = `UPDATE usuarios SET nombre = ?, fechaNac = ?, genero = ?, email = ?`;
+                var datos = [usuario.nombre, usuario.fechaNac, usuario.genero, usuario.email];
                 if (usuario.foto !== null) {
                     sql += `, foto = ?`;
                     datos.push(usuario.foto);
                 }
                 sql += ` WHERE id = ?`;
+                datos.push(usuario.id);
 
                 connection.query(sql, datos, function (err, datos) {
                     connection.release();
