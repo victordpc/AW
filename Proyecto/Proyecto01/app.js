@@ -2,6 +2,7 @@
 
 const config = require("./config");
 const daoUser = require("./DaoUsers");
+const daoAmigos = require("./DaoAmigos");
 const daoPreguntas = require("./DaoPreguntas");
 const path = require("path");
 const mysql = require("mysql");
@@ -20,6 +21,7 @@ const app = express();
 // Crear un pool de conexiones a la base de datos de MySQL
 const _pool = mysql.createPool(config.mysqlConfig);
 let daoU = new daoUser(_pool);
+let daoA = new daoAmigos(_pool);
 let daoP = new daoPreguntas(_pool);
 
 const sessionStore = config.sessionStore;
@@ -73,7 +75,6 @@ app.listen(config.port, function (err) {
     }
 });
 
-
 //Middleware para control de acceso
 function compruebaUsuario(request, response, next) {
     if (request.session.currentUser) {
@@ -88,22 +89,57 @@ function compruebaUsuario(request, response, next) {
     }
 }
 
+/* Imagenes */
+function ObtenerImagen(usuario, callback) {
+    daoU.getUserImageName(usuario, function (err, imagen) {
+        if (err) {
+            console.log(err.message);
+        } else {
+            callback(null, imagen);
+        }
+    });
+}
+
+app.get("/imagen/:email", function (request, response) {
+    //let usuario = request.params.email;
+    // if (_id == undefined) {request.session.currentUser
+    if (request.session.currentUser == undefined) {
+        response.status(400);
+        response.end("Petición incorrecta");
+    } else {
+        response.status(200);
+        // ObtenerImagen(request.session.currentUser, function (err, imagen) {
+        ObtenerImagen(request.session.currentUser, function (err, imagen) {
+            if (imagen) {
+                response.end(imagen);
+            } else {
+                response.status(404);
+                response.end("Not found");
+            }
+        });
+    }
+});
+/* Imagenes */
+
+
 /****************************************************************** */
 /**VARIABLE GLOBALES  de plantillas********************************************/
 
 let textoError = '';
 //****************************************************************** */
 /***************************Raiz*************************** */
+
+// Manejador para raiz
 app.get("/", function (request, response) {
     response.status(200);
     response.redirect("/index.html");
-})
+});
 
 /** Principal */
 app.get("/index.html", function (request, response) {
     response.status(200);
     response.render("index");
-})
+});
 
 /**Nuevo Usuario */
 app.get("/new_user.html", function (request, response) {
@@ -111,9 +147,9 @@ app.get("/new_user.html", function (request, response) {
     response.render("new_user", {
         errores: textoError
     });
-})
+});
 
-app.post("/process_login", multerFactory.single("foto"), function (request, response) {
+app.post("/newUser", multerFactory.single("foto"), function (request, response) {
     request.checkBody("email", "Dirección de correo no válida").isEmail();
     // request.checkBody("fechaNac", "Fecha de nacimiento no válida").isBefore();
     // request.checkBody("pass","La contraseña debe contener entre 4-15 caracteres").isLength({ min: 4, max: 5 });
@@ -145,6 +181,7 @@ app.post("/process_login", multerFactory.single("foto"), function (request, resp
                     textoError = 'Error del sistema intentelo de nuevo más tarde';
                     response.status(500);
                     response.redirect("/new_user.html");
+                    console.log(err);
                 }
             });
         } else {
@@ -155,13 +192,9 @@ app.post("/process_login", multerFactory.single("foto"), function (request, resp
         }
 
     });
-})
+});
 
 //* control del login* */
-
-
-// Manejador para raiz
-//let textoError = '';
 app.get("/login.html", function (request, response) {
     response.status(200);
     response.render("login", {
@@ -195,7 +228,6 @@ app.post("/login", function (request, response) {
     });
 });
 
-
 /**My Profile */
 
 app.get("/my_profile.html", compruebaUsuario, function (request, response) {
@@ -219,38 +251,71 @@ app.get("/my_profile.html", compruebaUsuario, function (request, response) {
     });
 });
 
-function ObtenerImagen(usuario, callback) {
-    daoU.getUserImageName(usuario, function (err, imagen) {
+//**Modificar */
+app.get("/editProfile.html", compruebaUsuario, function (request, response) {
+    daoU.getUserData(request.session.currentUser, function (err, result) {
         if (err) {
             console.log(err.message);
         } else {
-            callback(null, imagen);
+            response.status(200);
+            if (result[0].fechaNac != null) {
+                var years = moment().diff(result[0].fechaNac, 'years', false) + 'años';
+            } else {
+                years = "";
+            }
+            app.locals.puntos = result[0].puntos;
+            response.render("editProfile", {
+                usuario: result,
+                edad: years
+            });
+
         }
     });
-}
-app.get("/imagen/:email", function (request, response) {
-    //let usuario = request.params.email;
-    // if (_id == undefined) {request.session.currentUser
-    if (request.session.currentUser == undefined) {
-        response.status(400);
-        response.end("Petición incorrecta");
-    } else {
-        response.status(200);
-        let n = request.params.email;
-        // ObtenerImagen(request.session.currentUser, function (err, imagen) {
-        ObtenerImagen(n, function (err, imagen) {
-            if (imagen) {
-                response.end(imagen);
-            } else {
-                response.status(404);
-                response.end("Not found");
-            }
-        });
-    }
 });
-//**Modificar */
-app.put('/my_profile.html', (request, response) => {
-    daoU.updateUserData();
+
+
+app.put('/updateProfile', multerFactory.single("foto"), (request, response) => {
+    request.checkBody("email", "Dirección de correo no válida").isEmail();
+    // request.checkBody("fechaNac", "Fecha de nacimiento no válida").isBefore();
+    // request.checkBody("pass","La contraseña debe contener entre 4-15 caracteres").isLength({ min: 4, max: 5 });
+    request.checkBody("sexo", "Este campo género no debe de estar vacío").notEmpty();
+    request.getValidationResult().then(function (result) {
+        // El método isEmpty() devuelve true si las comprobaciones no han detectado ningún error
+        if (result.isEmpty()) {
+            //let fecha =  $('#fechaNac .fechaNac').val();
+            let usuario = {
+                correo: request.body.email,
+                nombre: request.body.nombre,
+                genero: request.body.sexo,
+                fechaNac: request.body.date,
+                foto: null
+            }
+            if (request.file) {
+                usuario.foto = request.file.buffer;
+            }
+            daoU.updateUserData(usuario, function (err, result) {
+                if (result) {
+                    response.status(200);
+                    // response.redirect('login.html');
+
+                    request.session.puntos = 0;
+                    request.session.currentUser = result.insertId;
+                    response.redirect('my_profile.html');
+                } else {
+                    textoError = 'Error del sistema intentelo de nuevo más tarde';
+                    response.status(500);
+                    response.redirect('editProfile.html');
+                    console.log(err);
+                }
+            });
+        } else {
+            response.status(200);
+            response.render("editUser", {
+                errores: result.array()
+            });
+        }
+
+    });
 });
 
 //************************************************************* */
@@ -258,7 +323,19 @@ app.put('/my_profile.html', (request, response) => {
 //************************************************************************
 
 app.get("/friends.html", compruebaUsuario, function (request, response) {
-    daoU.friendsList(request.session.currentUser, function (err, datosAmigos) {
+    response.status(200);
+    response.render("friends", {
+        amigos: _amigos,
+        solicitudes: _solicitudes
+    });
+    console.log(_amigos);
+    console.log(_solicitudes);
+    console.log(request.session.amigos);
+    _amigos = []; //se limpia la lista
+    _solicitudes = [];
+});
+app.get("/procesarAmigos.html", function (request, response) {
+    daoA.friendsList(request.session.currentUser, function (err, result) {
         if (err) {
             response.status(404);
         } else {
@@ -280,8 +357,7 @@ app.get("/friends.html", compruebaUsuario, function (request, response) {
 
 app.post("/searchAmigos", function (request, response) {
     //daoU.friendsRequestList(_id, function (err, result) {
-    let s_nombre = request.body.nombre;
-    daoU.searchFriends(request.session.currentUser, s_nombre, function (err, result) {
+    daoA.friendsRequestList(request.session.currentUser, function (err, result) {
         if (err) {
             response.status(404);
         } else {
