@@ -100,7 +100,7 @@ class DAOUsers {
             if (err) {
                 callback(new Error(`Error de conexión a la base de datos`));
             } else {
-                const sql = `SELECT nombre, fechaNac, genero, foto, puntos, email, apellidos FROM usuarios WHERE id = ?`;
+                const sql = `SELECT id, nombre, fechaNac, genero, puntos, email, apellidos FROM usuarios WHERE id = ?`;
                 connection.query(sql, [id], function (err, datos) {
                     connection.release();
                     if (err) {
@@ -128,9 +128,15 @@ class DAOUsers {
             if (err) {
                 callback(new Error(`Error de conexión a la base de datos`));
             } else {
-                const sql = `UPDATE usuarios SET Nombre = ?, fechaNac = ?, genero = ?, foto = ?, email = ? WHERE id = ?`;
+                var sql = `UPDATE usuarios SET nombre = ?, apellidos = ?, fechaNac = ?, genero = ?, email = ?`;
+                var datos = [usuario.nombre, usuario.apellidos, usuario.fechaNac, usuario.genero, usuario.email, usuario.id];
+                if (usuario.foto !== null) {
+                    sql += `, foto = ?`;
+                    datos.push(usuario.foto);
+                }
+                sql += ` WHERE id = ?`;
 
-                connection.query(sql, [usuario.nombre, usuario.fechaNac, usuario.genero, usuario.foto, uausario.email, usuario.id], function (err, datos) {
+                connection.query(sql, datos, function (err, datos) {
                     connection.release();
                     if (err) {
                         callback(new Error(`Error de acceso a la base de datos`));

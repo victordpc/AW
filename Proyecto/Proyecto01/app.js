@@ -107,10 +107,10 @@ app.get("/imagen/:email", function (request, response) {
         response.status(400);
         response.end("Petición incorrecta");
     } else {
-        response.status(200);
         // ObtenerImagen(request.session.currentUser, function (err, imagen) {
-        ObtenerImagen(request.session.currentUser, function (err, imagen) {
+        ObtenerImagen(request.params.email, function (err, imagen) {
             if (imagen) {
+                response.status(200);
                 response.end(imagen);
             } else {
                 response.status(404);
@@ -121,7 +121,23 @@ app.get("/imagen/:email", function (request, response) {
 });
 /* Imagenes */
 
+/**
+ * Funciones auxiliares
+ */
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
 
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+/**
+ * Funciones auxiliares
+ */
 /****************************************************************** */
 /**VARIABLE GLOBALES  de plantillas********************************************/
 
@@ -152,7 +168,7 @@ app.get("/new_user.html", function (request, response) {
 app.post("/newUser", multerFactory.single("foto"), function (request, response) {
     request.checkBody("email", "Dirección de correo no válida").isEmail();
     // request.checkBody("fechaNac", "Fecha de nacimiento no válida").isBefore();
-    // request.checkBody("pass","La contraseña debe contener entre 4-15 caracteres").isLength({ min: 4, max: 5 });
+    // request.checkBody("pass","La contraseña debe contener entre 4-15 caracteres").isLength({ min: 4, max: 15 });
     request.checkBody("sexo", "Este campo género no debe de estar vacío").notEmpty();
     request.getValidationResult().then(function (result) {
         // El método isEmpty() devuelve true si las comprobaciones no han detectado ningún error
@@ -206,14 +222,31 @@ app.post("/login", function (request, response) {
     let usuario = request.body.email;
     let password = request.body.password;
 
-    daoU.isUserCorrect(usuario, password, function (err, result) {
+    daoU.isUserCorrect(usuario, password, function (err, data) {
         if (err) {
             console.log(err.message);
-        } else if (result) {
-            if (result.length != 0) {
-                request.session.puntos = result[0].puntos;
-                request.session.currentUser = result[0].id;
-                response.redirect('my_profile.html');
+            response.status(500);
+            response.redirect("500.html")
+        } else if (data) {
+            if (data.length != 0) {
+                // Tenemos un login correcto
+                // Cargamos los datos del usuario en la sesion
+                daoU.getUserData(data[0].id, function (err, result) {
+                    if (err) {
+                        console.log(err.message);
+                        response.status(500);
+                        response.redirect("500.html")
+                    } else {
+                        let usr = {
+                            email: result[0].email,
+                            nombre: result[0].nombre,
+                            puntos: result[0].puntos,
+                        }
+                        request.session.usuario = usr;
+                        request.session.currentUser = result[0].id;
+                        response.redirect('my_profile.html');
+                    }
+                });
             } else {
                 textoError = 'Usuario y/o contraseña incorrectos';
                 response.status(200);
@@ -229,22 +262,23 @@ app.post("/login", function (request, response) {
 });
 
 /**My Profile */
-
 app.get("/my_profile.html", compruebaUsuario, function (request, response) {
     daoU.getUserData(request.session.currentUser, function (err, result) {
         if (err) {
             console.log(err.message);
+            response.status(500);
+            response.redirect("500.html")
         } else {
             response.status(200);
             if (result[0].fechaNac != null) {
-                var years = moment().diff(result[0].fechaNac, 'years', false) + 'años';
+                result[0].years = moment().diff(result[0].fechaNac, 'years', false) + ' años';
             } else {
-                years = "";
+                result[0].years = "";
             }
             app.locals.puntos = result[0].puntos;
             response.render("my_profile", {
                 usuario: result,
-                edad: years
+                usr: request.session.usuario,
             });
 
         }
@@ -259,14 +293,16 @@ app.get("/editProfile.html", compruebaUsuario, function (request, response) {
         } else {
             response.status(200);
             if (result[0].fechaNac != null) {
-                var years = moment().diff(result[0].fechaNac, 'years', false) + 'años';
+                var years = moment().diff(result[0].fechaNac, 'years', false) + ' años';
             } else {
                 years = "";
             }
-            app.locals.puntos = result[0].puntos;
+            result[0].dateBirth = formatDate(result[0].fechaNac);
+            result[0].years = years;
+
             response.render("editProfile", {
-                usuario: result,
-                edad: years
+                usuario: result[0],
+                usr: request.session.usuario,
             });
 
         }
@@ -274,7 +310,7 @@ app.get("/editProfile.html", compruebaUsuario, function (request, response) {
 });
 
 
-app.put('/updateProfile', multerFactory.single("foto"), (request, response) => {
+app.post('/updateProfile', multerFactory.single("foto"), (request, response) => {
     request.checkBody("email", "Dirección de correo no válida").isEmail();
     // request.checkBody("fechaNac", "Fecha de nacimiento no válida").isBefore();
     // request.checkBody("pass","La contraseña debe contener entre 4-15 caracteres").isLength({ min: 4, max: 5 });
@@ -296,10 +332,6 @@ app.put('/updateProfile', multerFactory.single("foto"), (request, response) => {
             daoU.updateUserData(usuario, function (err, result) {
                 if (result) {
                     response.status(200);
-                    // response.redirect('login.html');
-
-                    request.session.puntos = 0;
-                    request.session.currentUser = result.insertId;
                     response.redirect('my_profile.html');
                 } else {
                     textoError = 'Error del sistema intentelo de nuevo más tarde';
@@ -334,6 +366,7 @@ app.get("/friends.html", compruebaUsuario, function (request, response) {
     _amigos = []; //se limpia la lista
     _solicitudes = [];
 });
+
 app.get("/procesarAmigos.html", function (request, response) {
     daoA.friendsList(request.session.currentUser, function (err, result) {
         if (err) {

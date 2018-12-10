@@ -5,32 +5,34 @@
             <h1 class="titulo">PHYSICBOOK</h1>
         </div>
         <div class="menu">
-            <% if(!locals.user){%>
+            <% if(!locals.usuario){%>
             <a href="login.html">Entrar</a>
             <a href="new_user.html">Nuevo Usuario</a>
             <%}%>
-            <% if(locals.user){%>
+            <% if(locals.usuario){%>
             <a href="my_profile.html">Perfil</a>
             <a href="friends.html">Amigos</a>
-            <a href="new_user.html">Preguntas</a>
-            <a href="new_user.html">Desconectar</a>
+            <a href="preguntas.html">Preguntas</a>
             <%}%>
         </div>
         <div class="cabeceraDatosUsuario">
             <div class="cabeceraImagenPerfil">
-                <% if(locals.user){%>
-                <img src="../imagenUsuario" alt="Imagen de perfil" class="cabeceraFotoPerfil">
+                <% if(locals.usr){%>
+                <a href="/my_profile.html">
+                    <img src="/imagen/<%=usr.email%>" alt="Imagen de perfil" class="cabeceraFotoPerfil">
+                </a>
                 <%}%>
             </div>
             <div class="puntos">
-                <% if(locals.user){%>
-                <p class="puntos">50 pts</p>
+                <% if(locals.usr){%>
+                <p class="puntos">
+                    <%=usr.puntos%> puntos</p>
                 <%}%>
             </div>
-            <% if(locals.user){%>
+            <% if(locals.usr){%>
             <div class="nombreUsuario">
                 <p class="usuario textoCabecera">
-                    <%=user%>
+                    <%=usr.nombre%>
                 </p>
             </div>
             <div class="botonCerrar">

@@ -8,42 +8,37 @@
     <link rel="stylesheet" type="text/css" href="../css/my_profile.css" media="screen">
     <link rel="stylesheet" type="text/css" href="css/imprimir.css" media="print" />
     <link rel="icon" href="img/favicon.jpg" type="image/x-icon" />
-    <script src="app.js"></script>
 </head>
 
 <body>
-    <%- include("header_login") %>
+    <%- include("header") %>
     <div class="contenedor">
         <div class="PaneltituloPagina">
             <h2>TU PERFIL
                 <%=usuario[0].nombre%>
             </h2>
         </div>
-        <form id="formularioPerfil" method="POST" name="perfil" action="modificarPerfil">
-            <div class="panelPerfil">
-                <!-- <img src="../img/calavera.png" class="calavera"> -->
-                <div class="fotoPerfil">
-                    <tr>
-                        <td><img src="/imagen/<%=usuario[0].email%>" class="imagenPerfil"></td>
-                    </tr>
-                    <!-- <img src="../img/perfil.png" alt="imagen de perfil" class="imagenPerfil"> -->
-                </div>
-                <div class="datosPerfil">
-                    <p class="nombre">
-                        <%=usuario[0].nombre%>
-                    </p>
-                    <p class="sexo">
-                        <%=usuario[0].genero%>
-                    </p>
-                    <p class="edad">
-                        <%= edad %>
-                    </p>
-                    <p class="puntos">
-                        <%=puntos%> puntos</p>
-                </div>
-                <input type="submit" name="modificarPerfil" id="modificarPerfil" value="Modificar Perfil">
+        <div class="panelPerfil">
+            <div class="fotoPerfil">
+                <tr>
+                    <td><img src="/imagen/<%=usuario[0].email%>" class="imagenPerfil"></td>
+                </tr>
             </div>
-        </form>
+            <div class="datosPerfil">
+                <p class="nombre">
+                    <%=usuario[0].nombre%>
+                </p>
+                <p class="sexo">
+                    <%=usuario[0].genero%>
+                </p>
+                <p class="edad">
+                    <%=usuario[0].years%>
+                </p>
+                <p class="puntos">
+                    <%=usuario[0].puntos%> puntos</p>
+            </div>
+            <a href="editProfile.html" class="modificarPerfil">Modificar Perfil</a>
+        </div>
     </div>
 </body>
 
