@@ -178,6 +178,7 @@ app.post("/newUser", multerFactory.single("foto"), function (request, response) 
                 correo: request.body.email,
                 passw: request.body.pass,
                 nombre: request.body.nombre,
+                apellidos: request.body.apellidos,
                 genero: request.body.sexo,
                 fechaNac: request.body.date,
                 foto: null
