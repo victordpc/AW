@@ -23,7 +23,7 @@ estado ENUM ('enviada', 'aceptada') NOT NULL,
 
 CREATE TABLE preguntas(
 id int(11) NOT NULL AUTO_INCREMENT,
-texto VARCHAR(8000) NOT NULL,
+texto VARCHAR(300) NOT NULL,
 PRIMARY KEY (id),
 UNIQUE (texto)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -31,7 +31,7 @@ UNIQUE (texto)
 CREATE TABLE respuestas(
 id int(11) NOT NULL AUTO_INCREMENT,
 idPregunta int NOT NULL,
-texto VARCHAR(8000) NOT NULL,
+texto VARCHAR(300) NOT NULL,
 PRIMARY KEY (id),
 FOREIGN KEY (idPregunta) REFERENCES preguntas(id)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;  
@@ -41,7 +41,7 @@ id int(11) NOT NULL AUTO_INCREMENT,
 idPregunta int NOT NULL,
 idRespuesta int  NOT NULL,
 idUsuario int NOT NULL, 
-texto VARCHAR(8000) NOT NULL,
+texto VARCHAR(300) NOT NULL,
 PRIMARY KEY (id),
 FOREIGN KEY (idPregunta) REFERENCES preguntas(id),
 FOREIGN KEY (idRespuesta) REFERENCES respuestas(id),
@@ -55,8 +55,6 @@ idUsuarioAdivina int NOT NULL,
 estado BOOLEAN NOT NULL,
 PRIMARY KEY (id),
 FOREIGN KEY (idListaRespuesta) REFERENCES listaRespuesta(id),
-FOREIGN KEY (idUsuarioAdivina) REFERENCES usuarios(id),
-UNIQUE (texto)
+FOREIGN KEY (idUsuarioAdivina) REFERENCES usuarios(id)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 

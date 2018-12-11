@@ -383,14 +383,14 @@ app.get("/user_profile.html", compruebaUsuario, function (request, response) {
 app.get("/friends.html", compruebaUsuario, function (request, response) {
     response.status(200);
     response.render("friends", {
-        amigos: _amigos,
-        solicitudes: _solicitudes
+        // amigos: _amigos,
+        // solicitudes: _solicitudes
     });
-    console.log(_amigos);
-    console.log(_solicitudes);
-    console.log(request.session.amigos);
-    _amigos = []; //se limpia la lista
-    _solicitudes = [];
+    // console.log(_amigos);
+    // console.log(_solicitudes);
+    // console.log(request.session.amigos);
+    // _amigos = []; //se limpia la lista
+    // _solicitudes = [];
 });
 
 app.get("/procesarAmigos.html", function (request, response) {
@@ -471,17 +471,53 @@ app.get("/desconectar", function (request, response) {
 app.get("/preguntas.html", compruebaUsuario, function (request, response) {
     response.status(200);
     response.render("preguntas", {
-        preguntas :true
+        crearPregunta :false
     });
 });
 
-app.post("crearPregunta", function(request, response){
+app.get("/creaPregunta", function(request, response){
     response.status(200);
     response.render("preguntas", {
-        errores: textoError
+        insertado : false,
+        crearPregunta :true
     });
 });
-
+app.get("/insertarPregunta", function(request, response){
+    response.status(200);
+    response.render("preguntas", {
+        insertado : false,
+        crearPregunta :true,
+        errorMsg: textoError
+    }); 
+});
 app.post("insertarPregunta", function(request, response){
-    daoPreguntas.createQuestion(request.body.);
+    daoPreguntas.createQuestion(request.body.pregunta, function(err, idPregunta){
+        if(err){
+            textoError="No se pudo crear la pregunta, inténtalo de nuevo más tarde";
+        }else{
+            let listaR = document.getElementById("listaRespuestas");
+            if(listaR.length>1){
+            listaR.forEach(element => {
+                daoPreguntas.createAnswer(idPregunta,request.bodyParser, element, function(err, result){
+                    if(err){
+                        textoError="No se pudo crear la respuesta";
+                    }
+                });
+            });
+        
+            response.status(200);
+            response.render("preguntas", {
+                errorMsg: textoError,
+                insertado:true
+            });
+        }else{
+            textoError="debes introducir al menos dos respuestas";
+            response.status(200);
+            response.render("preguntas", {
+                errorMsg: textoError,
+                insertado:true
+            });
+        }
+        }
+    });
 });
