@@ -17,9 +17,10 @@
     width: 100%;
 }
 
-label{
+label {
     color: white;
 }
+
 .panelFormulario {
     display: grid;
     grid-template-rows: auto auto auto auto auto auto auto;
@@ -34,7 +35,7 @@ label{
     width: 50%;
     margin-left: 30%;
     justify-content: space-between;
- /*   display: flex;
+    /*   display: flex;
  flex-direction: column;
 justify-content: space-between;
 margin: 5px; */
@@ -52,26 +53,32 @@ margin: 5px; */
     width: 200px;
     margin: 0 auto;
     align-content: center;
-    background-image: linear-gradient(to right, black,rgb(54, 4, 33),rgb(177, 9, 107),rgb(243, 26, 134),rgb(247, 19, 152),rgb(243, 26, 134),rgb(177, 9, 107),rgb(54, 4, 33), black);   
-  
+    background-image: linear-gradient(to right, black, rgb(54, 4, 33), rgb(177, 9, 107), rgb(243, 26, 134), rgb(247, 19, 152), rgb(243, 26, 134), rgb(177, 9, 107), rgb(54, 4, 33), black);
+
 }
 
 .panelFormulario #email {
     grid-column-start: 2;
     grid-column-end: 4;
-    color:black;
+    color: black;
 }
 
 .panelFormulario #pass {
     grid-column-start: 2;
     grid-column-end: 4;
-    color:black;
+    color: black;
+}
+
+.panelFormulario #apellidos {
+    grid-column-start: 2;
+    grid-column-end: 4;
+    color: black;
 }
 
 .panelFormulario #nombre {
     grid-column-start: 2;
     grid-column-end: 4;
-    color:black;
+    color: black;
 }
 
 .panelFormulario #fechaNac {
@@ -95,18 +102,20 @@ margin: 5px; */
     margin: 5px 0px;
     grid-column-start: 2;
     grid-column-end: 4;
-    color:black;
+    color: black;
 }
+
 div.caja_errores {
     background-color: rgba(255, 0, 0, 0.5);
-    color: RED;  
-    grid-column-start:1 ;
+    color: RED;
+    grid-column-start: 1;
     grid-column-end: 4;
     grid-row: 1;
     text-align: justify;
-    
-    
+
+
 }
+
 .rojo {
     color: red;
 }
