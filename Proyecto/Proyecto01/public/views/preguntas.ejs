@@ -4,39 +4,49 @@
 <head>
     <title>PhisicBook</title>
     <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="../query.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/principal.css" media="screen">
     <link rel="stylesheet" type="text/css" href="../css/preguntas.css" media="screen">
     <link rel="stylesheet" type="text/css" href="css/imprimir.css" media="print" />
     <link rel="icon" href="img/favicon.jpg" type="image/x-icon" />
-    <script src="query.js"></script>
 </head>
 
 <body>
-    <%- include("header_login") %>
+    <%- include("header") %>
     <div class=contenedor>
-            <%if (errores.length>0) {%>
-                <div class="caja_errores">
-                    Algo no fue bien:
-                    <ul>
-                        <% errores.forEach(function(error) { %>
-                        <li>
-                            <%= error.msg %>
-                        </li>
-                        <% }); %>
-                    </ul>
-                </div>
-                <%}%>
-            <button id="anyadirElemento">Añadir respuesta</button>
+        <% if(locals.errorMsg){%>
+            <div class="caja_errores">
+                <%= errorMsg %>
+            </div>
+            <%}%>
             <%if (crearPregunta) {%>
                 Pregunta: <input type="text" name="pregunta" id="pregunta" placeholder="¿****?" />
                <ol id="listaRespuestas">
-                    <button id="anyadirElemento">Añadir Pregunta</button>
                </ol> 
+               <button id="anyadirElemento"> Añadir Respuesta</button>
                <%if (!insertado) {%>
-               <a id="crea" href="insertarPregunta">Crear nueva pregunta</a>
+               <a id="crea" href="insertarPregunta">Guardar pregunta</a>
                <%}%>
                <%}%>
+               <%else {%>
+                <%if (preguntas.length>0) {%>             
+                        <div class="preguntasAleatorias">
+                            <!-- <%= amigos[0].nombre %> -->
+                            <ul>
+                                <% preguntas.forEach(function(pregunta) { %>
+                                <li>
+                                    <%= pregunta.texto %>
+                                </li>
+                                <% }); %>
+                            </ul>
            
+                    </div>
+                    <%}else{%>
+                    <h3>Preguntas no disponibles</h3>
+                    <%}%>
+
+                <%}%>
             <a id="creaPreguntaId" href="creaPregunta">Crear nueva pregunta</a>
  
     </div>
