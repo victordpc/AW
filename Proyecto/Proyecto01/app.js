@@ -318,3 +318,7 @@ app.post("crearPregunta", function(request, response){
         errores: textoError
     });
 });
+
+app.post("insertarPregunta", function(request, response){
+    daoPreguntas.createQuestion(request.body.);
+});

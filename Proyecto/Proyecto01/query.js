@@ -1,7 +1,7 @@
 "use strict";
 function anyadirElemento() {
-    let nuevoElemento = $("<input type=\"text\" >");
-    $("#listaNumerada").append(nuevoElemento);
+    let nuevoElemento = $("<li><input type=\"text\" > </li>");
+    $("#listaPreguntas").append(nuevoElemento);
 }
 
 $(function () {

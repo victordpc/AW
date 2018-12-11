@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="../css/preguntas.css" media="screen">
     <link rel="stylesheet" type="text/css" href="css/imprimir.css" media="print" />
     <link rel="icon" href="img/favicon.jpg" type="image/x-icon" />
-    <script src="app.js"></script>
+    <script src="query.js"></script>
 
 </head>
 
@@ -16,15 +16,12 @@
     <%- include("header_login") %>
     <div class=contenedor>
             <button id="anyadirElemento">Añadir elemento</button>
-            <%if (creandoPregunta) {%>
+            <%if (crearPregunta) {%>
                 Pregunta: <input type="text" name="pregunta" id="pregunta" placeholder="¿****?" />
-               <ol id="listaPreguntas">
-                   <ul><input type="text" name="respuesta1" id="respuesta1" /></ul>
-                   <ul><input type="text" name="respuesta2" id="respuesta2" /></ul>
-                   <ul><input type="text" name="respuesta3" id="respuesta3" /></ul>
-                   <ul><input type="text" name="respuesta4" id="respuesta4" /></ul>
+               <ol id="listaRespuestas">
+                    <button id="anyadirElemento">Añadir Pregunta</button>
                </ol>  
-               <a id="crea" href="insertar">Crear nueva pregunta</a>
+               <a id="crea" href="insertarPregunta">Crear nueva pregunta</a>
                <%}%>
                <%else {%>
             <a id="creaPreguntaId" href="creaPregunta">Crear nueva pregunta</a>
