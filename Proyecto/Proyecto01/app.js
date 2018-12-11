@@ -309,7 +309,6 @@ app.get("/editProfile.html", compruebaUsuario, function (request, response) {
     });
 });
 
-
 app.post('/updateProfile', multerFactory.single("foto"), (request, response) => {
     request.checkBody("email", "Dirección de correo no válida").isEmail();
     // request.checkBody("fechaNac", "Fecha de nacimiento no válida").isBefore();
@@ -325,7 +324,7 @@ app.post('/updateProfile', multerFactory.single("foto"), (request, response) => 
                 genero: request.body.sexo,
                 fechaNac: request.body.date,
                 foto: null,
-                id:request.session.currentUser
+                id: request.session.currentUser
             }
             if (request.file) {
                 usuario.foto = request.file.buffer;
@@ -351,6 +350,31 @@ app.post('/updateProfile', multerFactory.single("foto"), (request, response) => 
     });
 });
 
+/**My Profile */
+app.get("/user_profile.html", compruebaUsuario, function (request, response) {
+    let id= request.query.id;
+    daoU.getUserData(id, function (err, result) {
+        if (err) {
+            console.log(err.message);
+            response.status(500);
+            response.redirect("500.html")
+        } else {
+            response.status(200);
+            if (result[0].fechaNac != null) {
+                result[0].years = moment().diff(result[0].fechaNac, 'years', false) + ' años';
+            } else {
+                result[0].years = "";
+            }
+            app.locals.puntos = result[0].puntos;
+            response.render("user_profile", {
+                usuario: result,
+                usr: request.session.usuario,
+            });
+
+        }
+    });
+});
+
 //************************************************************* */
 //************************Amigos*****************************************
 //************************************************************************
@@ -369,7 +393,7 @@ app.get("/friends.html", compruebaUsuario, function (request, response) {
 });
 
 app.get("/procesarAmigos.html", function (request, response) {
-    daoA.friendsList(request.session.currentUser, function (err, result) {
+    daoA.friendsList(request.session.currentUser, function (err, datosAmigos) {
         if (err) {
             response.status(404);
         } else {
@@ -403,6 +427,34 @@ app.post("/searchAmigos", function (request, response) {
     });
 });
 
+
+app.post("/acceptFriend/:friendId", function (request, response) {
+    //daoU.friendsRequestList(_id, function (err, result) {
+    daoA.acceptFriend(request.session.currentUser, request.params.friendId, function (err, result) {
+        if (err) {
+            response.status(404);
+        } else {
+            response.status(200);
+            response.render("search", {
+                personas: result
+            });
+        }
+    });
+});
+
+app.post("/rejectFriend/:friendId", function (request, response) {
+    //daoU.friendsRequestList(_id, function (err, result) {
+    daoA.rejectFriend(request.session.currentUser, request.params.friendId, function (err, result) {
+        if (err) {
+            response.status(404);
+        } else {
+            response.status(200);
+            response.render("search", {
+                personas: result
+            });
+        }
+    });
+});
 
 //******************************************************************** */
 //****************************LOGOUT********************** */
