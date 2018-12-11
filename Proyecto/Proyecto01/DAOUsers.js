@@ -22,8 +22,8 @@ class DAOUsers {
             if (err) {
                 callback(new Error("Error de conexión a la base de datos"));
             } else {
-                const sql = `INSERT INTO usuarios  (nombre,password,fechaNac,email, genero,foto, puntos) VALUES (?,?,?,?,?,?,0)`;
-                connection.query(sql, [user.nombre, user.passw, user.date, user.correo, user.genero, user.foto], function (err, datos) {
+                const sql = `INSERT INTO usuarios  (nombre,apellidos,password,fechaNac,email, genero,foto, puntos) VALUES (?,?,?,?,?,?,0)`;
+                connection.query(sql, [user.nombre, user.apellidos, user.passw, user.date, user.correo, user.genero, user.foto], function (err, datos) {
                     connection.release();
                     if (err) {
                         callback(new Error(`Error al insertar usuario`));
@@ -34,6 +34,7 @@ class DAOUsers {
             }
         });
     }
+
     // comprueba si en la base de datos existe un usuario cuyo identificador es email y su password coincide con password.
     isUserCorrect(email, password, callback = function (err) {
         if (err) {
@@ -99,7 +100,7 @@ class DAOUsers {
             if (err) {
                 callback(new Error(`Error de conexión a la base de datos`));
             } else {
-                const sql = `SELECT nombre, fechaNac, genero, foto, puntos, email FROM  usuarios WHERE id = ?`;
+                const sql = `SELECT id, nombre, fechaNac, genero, puntos, email, apellidos FROM usuarios WHERE id = ?`;
                 connection.query(sql, [id], function (err, datos) {
                     connection.release();
                     if (err) {
@@ -127,9 +128,16 @@ class DAOUsers {
             if (err) {
                 callback(new Error(`Error de conexión a la base de datos`));
             } else {
-                const sql = `UPDATE usuarios SET Nombre = ?, fechaNac = ?, genero = ?, foto = ?, email = ? WHERE id = ?`;
+                var sql = `UPDATE usuarios SET nombre = ?, fechaNac = ?, genero = ?, email = ?`;
+                var datos = [usuario.nombre, usuario.fechaNac, usuario.genero, usuario.email];
+                if (usuario.foto !== null) {
+                    sql += `, foto = ?`;
+                    datos.push(usuario.foto);
+                }
+                sql += ` WHERE id = ?`;
+                datos.push(usuario.id);
 
-                connection.query(sql, [usuario.nombre, usuario.fechaNac, usuario.genero, usuario.foto, uausario.email, usuario.id], function (err, datos) {
+                connection.query(sql, datos, function (err, datos) {
                     connection.release();
                     if (err) {
                         callback(new Error(`Error de acceso a la base de datos`));
@@ -141,129 +149,6 @@ class DAOUsers {
         });
     }
 
-    friendsList(id, callback = function (err) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log("LISTA DE AMIGOS CARGADA CON ÉXITO");
-        }
-    }) {
-        this._pool.getConnection(function (err, connection) {
-            if (err) {
-                callback(new Error(`Error de conexión a la base de datos`));
-            } else { //busca en la tabla amigos en la columna que esté y con
-                const sql = `SELECT concat_ws(' ', nombre, apellidos) as nombre, email FROM usuarios u left join amigos a on a.amigo2 = u.id WHERE estado='aceptada' and a.amigo1 = ? union ALL SELECT concat_ws(' ', nombre, apellidos) as nombre, email FROM usuarios u left join amigos a on a.amigo1 = u.id WHERE estado='aceptada' and a.amigo2 = ?`;
-                // const sql = `SELECT amigo1, amigo2 FROM amigos WHERE estado='aceptada' and (amigo1=? or amigo2=?)`;
-                connection.query(sql, [id, id], function (err, datos) {
-                    connection.release();
-                    if (err) {
-                        callback(new Error(`Error de acceso a la base de datos`));
-                    } else {
-                        callback(null, datos);
-                    }
-                });
-            }
-        });
-
-    }
-
-    friendsRequestList(id, callback = function (err) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log("LISTA CARGADA CON ÉXITO");
-        }
-    }) {
-        this._pool.getConnection(function (err, connection) {
-            if (err) {
-                callback(new Error(`Error de conexión a la base de datos`));
-            } else { // obtiene la lista de usuarios que han enviado solicitud de amistad a este usuario
-                // const sql = `SELECT amigo1 FROM amigos WHERE estado='enviada' and  amigo2=?`;
-                const sql = `SELECT concat_ws(' ', nombre, apellidos) as nombre, email FROM usuarios u left join amigos a on a.amigo2 = u.id WHERE estado='enviada' and a.amigo2 = ?`;
-                connection.query(sql, [id], function (err, datos) {
-                    connection.release();
-                    if (err) {
-                        callback(new Error(`Error de acceso a la base de datos`));
-                    } else {
-                        callback(null, datos);
-                    }
-                });
-            }
-        });
-    }
-
-    searchFriends(nombre,id, callback = function (err) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log("LISTA CARGADA CON ÉXITO");
-        }
-    }) {
-        this._pool.getConnection(function (err, connection) {
-            if (err) {
-                callback(new Error(`Error de conexión a la base de datos`));
-            } else { // obtiene la lista de usuarios que han enviado solicitud de amistad a este usuario
-                // const sql = `SELECT amigo1 FROM amigos WHERE estado='enviada' and  amigo2=?`;
-                const sql = `SELECT concat_ws(' ', nombre, apellidos) as s_nombre, email FROM usuarios u `;
-                connection.query(sql, [id,id,nombre], function (err, datos) {
-                    connection.release();
-                    if (err) {
-                        callback(new Error(`Error de acceso a la base de datos`));
-                    } else {
-                        callback(null, datos);
-                    }
-                });
-            }
-        });
-    }
-
-    insertFriendsRequest(usuario, amigo, callback = function (err) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log("LISTA CARGADA CON ÉXITO");
-        }
-    }) {
-        this._pool.getConnection(function (err, connection) {
-            if (err) {
-                callback(new Error(`Error de conexión a la base de datos`));
-            } else { // obtiene la lista de usuarios que han enviado solicitud de amistad a este usuario
-                const sql = `INSERT INTO amigos (amigo1,amigo2,estado) VALUES (?,?,'enviada')`;
-                connection.query(sql, [usuario.id, amigo], function (err, datos) {
-                    connection.release();
-                    if (err) {
-                        callback(new Error(`Error de acceso a la base de datos`));
-                    } else {
-                        callback(null, datos);
-                    }
-                });
-            }
-        });
-    }
-
-    acceptFriend(usuario, amigo, callback = function (err) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log("LISTA CARGADA CON ÉXITO");
-        }
-    }) {
-        this._pool.getConnection(function (err, connection) {
-            if (err) {
-                callback(new Error(`Error de conexión a la base de datos`));
-            } else { // obtiene la lista de usuarios que han enviado solicitud de amistad a este usuario
-                const sql = `UPDATE amigos SET estado='aceptada' WHERE amigo1=? and amigo2=?`;
-                connection.query(sql, [amigo, usuario.id], function (err, datos) {
-                    connection.release();
-                    if (err) {
-                        callback(new Error(`Error de acceso a la base de datos`));
-                    } else {
-                        callback(null, datos);
-                    }
-                });
-            }
-        });
-    }
 }
 
 module.exports = DAOUsers;
