@@ -79,7 +79,7 @@ class DAOPreguntas {
                         callback(new Error(`Error al listar preguntas`));
                     } else {
 
-                        var listado: Array = datos;
+                        var listado = datos;
                         for (i = 0; i < 5; i++) {
                             aleatorio = Math.floor(Math.random() * (listado.length));
                             seleccion = listado[aleatorio];
@@ -93,7 +93,7 @@ class DAOPreguntas {
         });
     }
 
-    
+
 
 
 }

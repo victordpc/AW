@@ -81,11 +81,6 @@ function compruebaUsuario(request, response, next) {
         if (request.session.id === undefined) {
             response.redirect('login.html');
         } else {
-            daoU.getUserData(request.session.currentUser, function (err, result) {
-                if (!err){
-                    app.locals.puntos = result[0].puntos;
-                    }
-                });
                 next();
             }
     } else {
@@ -312,7 +307,9 @@ app.get("/desconectar", function (request, response) {
 /******************************************************** */
 app.get("/preguntas.html", compruebaUsuario, function (request, response) {
     response.status(200);
-    response.render("preguntas", {});
+    response.render("preguntas", {
+        preguntas :true
+    });
 });
 
 app.post("crearPregunta", function(request, response){

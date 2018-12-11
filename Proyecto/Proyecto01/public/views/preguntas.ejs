@@ -15,8 +15,19 @@
 <body>
     <%- include("header_login") %>
     <div class=contenedor>
-        <form id="crearPregunta" method="POST" name="perfil" action="crearPregunta">
-            <input type="submit" name="creaPregunta" id="creaPreguntaId" value="Crear nueva pregunta">
-        </form>
+            <button id="anyadirElemento">Añadir elemento</button>
+            <%if (creandoPregunta) {%>
+                Pregunta: <input type="text" name="pregunta" id="pregunta" placeholder="¿****?" />
+               <ol id="listaPreguntas">
+                   <ul><input type="text" name="respuesta1" id="respuesta1" /></ul>
+                   <ul><input type="text" name="respuesta2" id="respuesta2" /></ul>
+                   <ul><input type="text" name="respuesta3" id="respuesta3" /></ul>
+                   <ul><input type="text" name="respuesta4" id="respuesta4" /></ul>
+               </ol>  
+               <a id="crea" href="insertar">Crear nueva pregunta</a>
+               <%}%>
+               <%else {%>
+            <a id="creaPreguntaId" href="creaPregunta">Crear nueva pregunta</a>
+            <%}%>
     </div>
 </body>
