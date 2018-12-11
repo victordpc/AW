@@ -485,3 +485,38 @@ app.post("crearPregunta", function(request, response){
 app.post("insertarPregunta", function(request, response){
     daoPreguntas.createQuestion(request.body.);
 });
+app.get("/preguntas.html", compruebaUsuario, function (request, response) {
+    response.status(200);
+    response.render("preguntas", {
+        crearPregunta :true
+    });
+});
+
+app.post("crearPregunta", function(request, response){
+    response.status(200);
+    response.render("preguntas", {
+        crearPregunta :true
+    });
+});
+
+app.post("insertarPregunta", function(request, response){
+    daoPreguntas.createQuestion(request.body.pregunta, function(err, idPregunta){
+        if(err){
+            textoError="No se pudo crear la pregunta, inténtalo de nuevo más tarde";
+        }else{
+            let listaR = document.getElementById("listaRespuestas");
+            listaR.forEach(element => {
+                daoPreguntas.createAnswer(idPregunta,request.bodyParser, element, function(err, result){
+                    if(err){
+                        textoError="No se pudo crear la respuesta";
+                    }
+                });
+            });
+            response.status(200);
+            response.render("preguntas", {
+                errorMsg: textoError,
+                insertado:true
+            });
+        }
+    });
+});
