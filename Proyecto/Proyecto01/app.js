@@ -82,8 +82,8 @@ function compruebaUsuario(request, response, next) {
         if (request.session.id === undefined) {
             response.redirect('login.html');
         } else {
-                next();
-            }
+            next();
+        }
     } else {
         response.redirect('login.html');
     }
@@ -195,7 +195,7 @@ app.post("/newUser", multerFactory.single("foto"), function (request, response) 
                     request.session.currentUser = result.insertId;
                     response.redirect('my_profile.html');
                 } else {
-                    textoError = 'Error del sistema intentelo de nuevo más tarde';
+                    textoError = ['Error del sistema intentelo de nuevo más tarde'];
                     response.status(500);
                     response.redirect("/new_user.html");
                     console.log(err);
@@ -353,7 +353,7 @@ app.post('/updateProfile', multerFactory.single("foto"), (request, response) => 
 
 /**My Profile */
 app.get("/user_profile.html", compruebaUsuario, function (request, response) {
-    let id= request.query.id;
+    let id = request.query.id;
     daoU.getUserData(id, function (err, result) {
         if (err) {
             console.log(err.message);
@@ -471,53 +471,53 @@ app.get("/desconectar", function (request, response) {
 app.get("/preguntas.html", compruebaUsuario, function (request, response) {
     response.status(200);
     response.render("preguntas", {
-        crearPregunta :false
+        crearPregunta: false
     });
 });
 
-app.get("/creaPregunta", function(request, response){
+app.get("/creaPregunta", function (request, response) {
     response.status(200);
     response.render("preguntas", {
-        insertado : false,
-        crearPregunta :true
+        insertado: false,
+        crearPregunta: true
     });
 });
-app.get("/insertarPregunta", function(request, response){
+app.get("/insertarPregunta", function (request, response) {
     response.status(200);
     response.render("preguntas", {
-        insertado : false,
-        crearPregunta :true,
+        insertado: false,
+        crearPregunta: true,
         errorMsg: textoError
-    }); 
+    });
 });
-app.post("insertarPregunta", function(request, response){
-    daoPreguntas.createQuestion(request.body.pregunta, function(err, idPregunta){
-        if(err){
-            textoError="No se pudo crear la pregunta, inténtalo de nuevo más tarde";
-        }else{
+app.post("insertarPregunta", function (request, response) {
+    daoPreguntas.createQuestion(request.body.pregunta, function (err, idPregunta) {
+        if (err) {
+            textoError = "No se pudo crear la pregunta, inténtalo de nuevo más tarde";
+        } else {
             let listaR = document.getElementById("listaRespuestas");
-            if(listaR.length>1){
-            listaR.forEach(element => {
-                daoPreguntas.createAnswer(idPregunta,request.bodyParser, element, function(err, result){
-                    if(err){
-                        textoError="No se pudo crear la respuesta";
-                    }
+            if (listaR.length > 1) {
+                listaR.forEach(element => {
+                    daoPreguntas.createAnswer(idPregunta, request.bodyParser, element, function (err, result) {
+                        if (err) {
+                            textoError = "No se pudo crear la respuesta";
+                        }
+                    });
                 });
-            });
-        
-            response.status(200);
-            response.render("preguntas", {
-                errorMsg: textoError,
-                insertado:true
-            });
-        }else{
-            textoError="debes introducir al menos dos respuestas";
-            response.status(200);
-            response.render("preguntas", {
-                errorMsg: textoError,
-                insertado:true
-            });
-        }
+
+                response.status(200);
+                response.render("preguntas", {
+                    errorMsg: textoError,
+                    insertado: true
+                });
+            } else {
+                textoError = "debes introducir al menos dos respuestas";
+                response.status(200);
+                response.render("preguntas", {
+                    errorMsg: textoError,
+                    insertado: true
+                });
+            }
         }
     });
 });
