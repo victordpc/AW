@@ -10,19 +10,7 @@
     margin: 0;
     padding: 0;
     border: 1px dotted red;
-    /* font-family: 'chicle'; */
     color: white;
-}
-
-.contenedor {
-    padding-top: 220px;
-}
-
-.escudo {
-    border-radius: 200px 200px 200px 200px;
-    width: 150px;
-    height: 150px;
-    margin: 5px;
 }
 
 .header {
@@ -37,7 +25,15 @@
     display: grid;
     grid-template-rows: 2fr 50px;
     grid-template-columns: 160px 3fr 1fr;
-    /* grid-row-gap: 20px; */
+}
+
+.escudo {
+    border-radius: 200px 200px 200px 200px;
+    width: 150px;
+    height: 150px;
+    margin: 5px;
+    grid-row-start: 1;
+    grid-row-end: 3;
 }
 
 .titulo {
@@ -71,17 +67,17 @@
 
 .cabeceraDatosUsuario {
     display: grid;
-    grid-template-rows: 50px;
-    grid-template-columns: 70px 50px;
-
+    grid-template-rows: 65px 20px 20px 20px;
+    grid-template-columns: 90%;
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    align-self: end;
 }
 
 .cabeceraImagenPerfil {
-    align-self: center;
-}
-
-.puntos {
-    align-self: center;
+    align-self: start;
 }
 
 .cabeceraFotoPerfil {
@@ -89,6 +85,27 @@
     height: 50px;
     margin: 6px;
 }
+
+.puntos {
+    align-self: start;
+}
+
+.nombreUsuario {
+    display: inline-block;
+    align-self: start;
+}
+
+.botonCerrar {
+    align-self: start;
+}
+
+
+
+.contenedor {
+    margin: 0 auto;
+    padding-top: 220px;
+}
+
 
 .PaneltituloPagina {
     display: grid;

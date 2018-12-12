@@ -15,51 +15,49 @@
     <div class="contenedor">
         <div class="PaneltituloPagina">
             <h2 class="tituloAmigos">AMIGOS</h2>
-            <div class="buscardorAmigos">
-                <form action="searchAmigos" method="POST">
-                    <input type="search" name="nombre" placeholder="Buscar Amigos...">Buscar por nombre:
-                    <input type="submit" name="buscar" id="buscar" value="Buscar">
-                </form>
-            </div>
+            <form action="searchAmigos" class="buscardorAmigos" method="POST">
+                <input type="search" name="nombre" id="txtBuscar" placeholder="Buscar Amigos...">
+                <input type="submit" name="buscar" id="btnBuscar" value="Buscar">
+            </form>
         </div>
         <%- include("flash") %>
         <h2>Lista de solicitudes</h2>
         <%if (solicitudes.length>0) {%>
         <div class="panelSolocitudAmistad">
             <div class="solicitudes">
-                <!-- <%= amigos[0].nombre %> -->
                 <ul>
                     <% solicitudes.forEach(function(solicitud) { %>
                     <li>
-                        <%= solicitud.nombre %>
+                        <div class="solicitudesAmigos">
+                            <a href="user_profile?id=<%=solicitud.id%>">
+                                <img src="/imagen/<%=solicitud.email%>" class="imagenPerfil">
+                            </a>
+                            <a href="user_profile?id=<%=solicitud.id%>">
+                                <p class="nombreUsuario"><%=solicitud.nombre%>, <%= solicitud.apellidos%></p>
+                            </a>
+                            <a href="/acceptFriend?id=<%=solicitud.id%>" class="boton Verde">Aceptar</a>
+                            <a href="/rejectFriend?id=<%=solicitud.id%>" class="boton Rojo">Rechazar</a>
+                        </div>
                     </li>
                     <% }); %>
                 </ul>
-
             </div>
         </div>
         <%}else{%>
         <h3>No tienes solicitudes de momento</h3>
-        <%}%>
-        <div class="busquedaDeAmigos">
-
-            <ul id="listaBusqueda">
-
-            </ul>
-        </div>
+        <%}%> 
         <h2>Lista de amigos</h2>
         <%if (amigos.length>0) {%>
         <div class="amigos">
-            <!-- <%= amigos[0].nombre %> -->
             <ul>
                 <% amigos.forEach(function(amigo) { %>
                 <li>
-                    <tr>
-                        <td>
-                            <%= amigo.nombre %>
-                        </td>
-                        <td><img src="/imagen/<%=amigo.email%>" class="imagenPerfil"></td>
-                    </tr>
+                    <a href="user_profile?id=<%=amigo.id%>">
+                        <img src="/imagen/<%=amigo.email%>" class="imagenPerfil">
+                    </a>
+                    <a href="user_profile?id=<%=amigo.id%>">
+                        <p class="nombreUsuario"><%= amigo.nombre %>, <%= amigo.apellidos%></p>
+                    </a>
                 </li>
                 <% }); %>
             </ul>
