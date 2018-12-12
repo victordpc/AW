@@ -5,11 +5,11 @@
     <title>PhisicBook</title>
     <meta charset="utf-8">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="../query.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/principal.css" media="screen">
     <link rel="stylesheet" type="text/css" href="../css/preguntas.css" media="screen">
     <link rel="stylesheet" type="text/css" href="css/imprimir.css" media="print" />
     <link rel="icon" href="img/favicon.jpg" type="image/x-icon" />
+    <script src="jquery/query.js"></script>
 </head>
 
 <body>
@@ -28,31 +28,57 @@
                 <ul>
                     <% preguntas.forEach(function(pregunta) { %>
                     <li>
-                        <a name="pregunta" href="procesarPregunta"> <%= pregunta.texto %> </a>
+                        <a name="pregunta" href="procesarPregunta?id=<%=pregunta.id%>">
+                            <div>
+                                <%= pregunta.texto %>
+                            </div>
+                        </a>
                     </li>
                     <% }); %>
                 </ul>
             </div>
         </div>
         <%}%>
-
 
         <%if (respuestas.length>0) {%>
-        <div class="PanelPreguntasConRespuestas">
-            <%=pregunta.texto %>
-            <div class="elegirRespuestas">
-                <ul>
+        <%=pregunta.texto%>
+        <div class="elegirRespuestas">
+            <form action="responder" method="POST">
+                <input type="text" name="idPregunta" class="oculto" value=<%=pregunta.id%>>
+                <ul id="listaRespuestasDelSistema">
                     <% respuestas.forEach(function(respuesta) { %>
-                    <li>
-                        <input type="radio" class="radio" name="respuesta" value=<%=respuesta.id %>><%= respuesta.texto %>
+                    <li>    
+                        <input type="radio" class="radio" name="respuesta" value=<%=respuesta.id%>>
+                        <%= respuesta.texto %>
                     </li>
                     <% }); %>
                 </ul>
+                <div>
+                    <input type="submit" id="responder" name="responder" value="Responder">
+                </div>
+            </form>
+            <div>
+                    <button id="anyadirRespuestaPropia">Añadir mi respuesta</button>
             </div>
         </div>
         <%}%>
-        <%if (crearPregunta) {%>
-        <a id="creaPreguntaId" href="creaPregunta">Crear nueva pregunta</a>
+
+        <%if (sePuedeCrearPregunta) {%>
+        <div class=crearpregunta>
+            <a id="creaPreguntaId" href="creaPregunta">Crear nueva pregunta</a>
+        </div>
+        <%}%>
+        <%if (creandoPregunta) {%>
+            <form action="insertarPregunta" method="POST"> 
+                    <div>Pregunta:<input type="text" name="preguntaText" id="preguntaText" ></div>
+                    <div>Respuestas:</div>
+                    <ul id="listaRespuestas">
+                    </ul>
+                    <input type="submit" id="insertarP" name="insertarP" value="Insertar Pregunta">
+            </form>  
+            <div>   
+                    <button id="anyadirRespuesta"> Agregar Respuesta </button>
+            </div>
         <%}%>
     </div>
 </body>
