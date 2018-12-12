@@ -1,14 +1,24 @@
-.contenedor{
- background-color: black;
+.contenedor {
+    background-color: black;
 }
-.PanelPreguntas{
-    margin: 30%;
-}
-.PanelPreguntasConRespuestas{
 
-    margin: 30%;
+.oculto {
+    display: none;
 }
-#creaPreguntaId, #anyadirElemento{
+
+.PanelPreguntas {
+    margin: 5%;
+}
+
+.PanelPreguntasConRespuestas {
+
+    margin: 5%;
+}
+
+#creaPreguntaId,
+#responder,
+#anyadirRespuestaPropia,
+#insertarP {
     /* grid-row: 2;
     grid-column: 2; */
     border-radius: 13px 0px 13px 0px;
@@ -19,16 +29,22 @@
     margin: 0 auto;
     align-content: center;
     background-image: linear-gradient(to right, black, rgb(54, 4, 33), rgb(177, 9, 107), rgb(243, 26, 134), rgb(247, 19, 152), rgb(243, 26, 134), rgb(177, 9, 107), rgb(54, 4, 33), black);
-margin-top: 10px;
+    margin: 10px;
 }
+
 #creaPreguntaId:hover {
     background-image: linear-gradient(to right, rgb(247, 19, 152), rgb(243, 26, 134), rgb(177, 9, 107), rgb(54, 4, 33), black, rgb(54, 4, 33), rgb(177, 9, 107), rgb(243, 26, 134), rgb(247, 19, 152));
 
 }
 
-#anyadirElemento{
+#anyadirElemento {
     color: fuchsia;
 }
-.PanelPreguntasConRespuestas{
-    margin : 10px;
+
+.elegirRespuestas {
+    margin: 10px;
+}
+
+input {
+    color: black;
 }
