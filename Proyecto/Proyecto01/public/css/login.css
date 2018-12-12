@@ -1,28 +1,17 @@
 @import "https://fonts.googleapis.com/css?family=Frijole";
 @import "https://fonts.googleapis.com/css?family=Chicle";
 
-
 * {
     margin: 0;
     padding: 0;
-    /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
-    /* color:black; */
 }
-/* 
-@font-face {
-    font-family: "Scorched";
-    src: url("../font/ScorchedEarth/ScorchedEarthDEMO-KCFonts.ttf");
-    font-style: normal;
-} */
 
-/* h2 {
-    align-self: center;
-    font-family: chicle;
-    margin-top: 50px;
-
-} */
-html,body {
-    height:100%;
+.contenedor {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    margin: 0 auto;
+    padding-top: 220px;
 }
 
 div.panelFormulario {
@@ -35,14 +24,12 @@ div.panelFormulario {
     background-image: linear-gradient(315deg, #e84393 0%, #000000 74%);
     border-radius: 15px 0 15px 0;
     text-align: right;
-    /* width: 420px; */
     margin-left: 80px;
 }
 
-
 .panelFormulario label {
     margin: 5px 10px;
-    color : white;
+    color: white;
 }
 
 .panelFormulario #conectar {
@@ -53,39 +40,29 @@ div.panelFormulario {
     width: 200px;
     margin: 0 auto;
     align-content: center;
-    background-image: linear-gradient(to right, black,rgb(54, 4, 33),rgb(177, 9, 107),rgb(243, 26, 134),rgb(247, 19, 152),rgb(243, 26, 134),rgb(177, 9, 107),rgb(54, 4, 33), black);   
-
+    background-image: linear-gradient(to right, black, rgb(54, 4, 33), rgb(177, 9, 107), rgb(243, 26, 134), rgb(247, 19, 152), rgb(243, 26, 134), rgb(177, 9, 107), rgb(54, 4, 33), black);
 }
 
 .panelFormulario #email {
     grid-column-start: 2;
     grid-column-end: 4;
-    color:black;
+    color: black;
 }
 
 .panelFormulario #pass {
     grid-column-start: 2;
     grid-column-end: 4;
-    color:black;
-}
-
-.contenedor {
-    display: flex;
-    flex-direction: column;
-    width: 600px;
-    margin: 0 auto;
-    padding-top: 220px;
-
+    color: black;
 }
 
 div.caja_errores {
     background-color: rgba(255, 0, 0, 0.5);
-    color: RED;  
-    grid-column-start:1 ;
+    color: RED;
+    grid-column-start: 1;
     grid-column-end: 3;
     grid-row: 3;
 }
+
 .rojo {
     color: red;
 }
-

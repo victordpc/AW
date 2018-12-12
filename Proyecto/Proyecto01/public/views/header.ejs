@@ -5,11 +5,11 @@
             <h1 class="titulo">PHYSICBOOK</h1>
         </div>
         <div class="menu">
-            <% if(!locals.usuario){%>
+            <% if(!locals.usr){%>
             <a href="login">Entrar</a>
             <a href="new_user">Nuevo Usuario</a>
             <%}%>
-            <% if(locals.usuario){%>
+            <% if(locals.usr){%>
             <a href="my_profile">Perfil</a>
             <a href="friends">Amigos</a>
             <a href="preguntas">Preguntas</a>
