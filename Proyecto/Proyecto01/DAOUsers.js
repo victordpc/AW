@@ -22,7 +22,7 @@ class DAOUsers {
             if (err) {
                 callback(new Error("Error de conexión a la base de datos"));
             } else {
-                const sql = `INSERT INTO usuarios  (nombre,apellidos,password,fechaNac,email, genero,foto, puntos) VALUES (?,?,?,?,?,?,0)`;
+                const sql = `INSERT INTO usuarios  (nombre,apellidos,password,fechaNac,email, genero,foto, puntos) VALUES (?,?,?,?,?,?,?,0)`;
                 connection.query(sql, [user.nombre, user.apellidos, user.passw, user.date, user.correo, user.genero, user.foto], function (err, datos) {
                     connection.release();
                     if (err) {

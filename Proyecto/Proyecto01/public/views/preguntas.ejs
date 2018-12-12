@@ -4,16 +4,55 @@
 <head>
     <title>PhisicBook</title>
     <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="../query.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/principal.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="../css/my_profile.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="../css/preguntas.css" media="screen">
     <link rel="stylesheet" type="text/css" href="css/imprimir.css" media="print" />
     <link rel="icon" href="img/favicon.jpg" type="image/x-icon" />
 </head>
 
 <body>
-    <%- include("header_login") %>
+    <%- include("header") %>
     <div class=contenedor>
-        
-            <input type="submit" name="creaPregunta" id="creaPreguntaId" value="Crear nueva pregunta">
+
+        <% if(locals.errorMsg){%>
+        <div class="caja_errores">
+            <%= errorMsg %>
+        </div>
+        <%}%>
+        <div class="PanelPreguntas">
+            <%if (preguntas.length>0) {%>
+            <div class="preguntasAleatorias">
+                <p>Preguntas seleccionadas aleatoriamente</p>
+                <ul>
+                    <% preguntas.forEach(function(pregunta) { %>
+                    <li>
+                        <a name="pregunta" href="procesarPregunta"> <%= pregunta.texto %> </a>
+                    </li>
+                    <% }); %>
+                </ul>
+            </div>
+        </div>
+        <%}%>
+
+
+        <%if (respuestas.length>0) {%>
+        <div class="PanelPreguntasConRespuestas">
+            <%=pregunta.texto %>
+            <div class="elegirRespuestas">
+                <ul>
+                    <% respuestas.forEach(function(respuesta) { %>
+                    <li>
+                        <input type="radio" class="radio" name="respuesta" value=<%=respuesta.id %>><%= respuesta.texto %>
+                    </li>
+                    <% }); %>
+                </ul>
+            </div>
+        </div>
+        <%}%>
+        <%if (crearPregunta) {%>
+        <a id="creaPreguntaId" href="creaPregunta">Crear nueva pregunta</a>
+        <%}%>
     </div>
 </body>

@@ -2,7 +2,7 @@
 
 const mysql = require("mysql");
 
-class DAOUsers {
+class DAOPreguntas {
     constructor(pool) {
         if (pool == undefined) {
             throw "Pool not defined"
@@ -10,56 +10,171 @@ class DAOUsers {
         this._pool = pool;
     }
 
-    // comprueba si en la base de datos existe un usuario cuyo identificador es email y su password coincide con password.
-    isUserCorrect(email, password, callback = function (err) {
+    createQuestion(texto, callback = function (err) {
+        // createUser(Nombre, password, fechaNac, email, genero, foto, callback = function (err) {
         if (err) {
-            console.log(err.message);
-        } else if (result) {
-            console.log("Usuario y contraseña correctos");
+            console.log("Error creating question");
         } else {
-            console.log("Usuario y/o contraseña incorrectos");
+            console.log("question created");
         }
     }) {
         this._pool.getConnection(function (err, connection) {
             if (err) {
-                callback(new Error(`Error de conexión a la base de datos`));
+                callback(new Error("Error de conexión a la base de datos"));
             } else {
-                const sql = `Select 1 from  user where email = ? and password = ?`;
-                connection.query(sql, [email, password], function (err, datos) {
+                const sql = `INSERT INTO preguntas (texto) VALUES (?)`;
+                connection.query(sql, [texto], function (err, datos) {
                     connection.release();
                     if (err) {
-                        callback(new Error(`Error de acceso a la base de datos`));
+                        callback(new Error(`Error al insertar pregunta`));
                     } else {
-                        callback(null, datos.length != 0);
+                        callback(null, datos.insertId);
                     }
                 });
             }
         });
     }
 
-    // obtiene el nombre de fichero que contiene la imagen de perfil de un usuario cuyo identificador en la base de datos es email.
-    getUserImageName(email, callback = function (err) {
+    createAnswer(idPregunta, texto, callback = function (err) {
+        // createUser(Nombre, password, fechaNac, email, genero, foto, callback = function (err) {
         if (err) {
-            console.log(err);
+            console.log("Error creating question");
         } else {
-            console.log("OPERACION FINALIZADA CORRECTAMENTE");
+            console.log("question created");
         }
     }) {
         this._pool.getConnection(function (err, connection) {
             if (err) {
-                callback(new Error(`Error de conexión a la base de datos`));
+                callback(new Error("Error de conexión a la base de datos"));
             } else {
-                const sql = `Select img from  user where email = ?`;
-                connection.query(sql, [email], function (err, datos) {
+                const sql = `INSERT INTO respuestas  (idPregunta,texto) VALUES (?,?)`;
+                connection.query(sql, [idPregunta, texto], function (err, datos) {
                     connection.release();
                     if (err) {
-                        callback(new Error(`Error de acceso a la base de datos`));
+                        callback(new Error(`Error al insertar respuesta`));
                     } else {
-                        if (datos.length != 0) {
-                            callback(null, datos[0].img);
-                        } else {
-                            callback(new Error(`No existe el usuario`));
-                        }
+                        callback(null, datos.insertId);
+                    }
+                });
+            }
+        });
+    }
+    getQuestion(id, callback = function (err) {
+        // createUser(Nombre, password, fechaNac, email, genero, foto, callback = function (err) {
+        if (err) {
+            console.log("Error getting question");
+        } else {
+            console.log("question returned");
+        }
+    }) {
+        this._pool.getConnection(function (err, connection) {
+            if (err) {
+                callback(new Error("Error de conexión a la base de datos"));
+            } else {
+                const sql = `SELECT texto FROM preguntas WHERE id=?`;
+                connection.query(sql, [id], function (err, datos) {
+                    connection.release();
+                    if (err) {
+                        callback(new Error(`Error al buscar la pregunta`));
+                    } else {
+                        callback(null, datos);
+                    }
+                });
+            }
+        });
+    }
+
+    getQuestionList(callback = function (err) {
+        if (err) {
+            console.log("Error getting questions");
+        } else {
+            console.log("questions given");
+        }
+    }) {
+        this._pool.getConnection(function (err, connection) {
+            if (err) {
+                callback(new Error("Error de conexión a la base de datos"));
+            } else {
+                const sql = `SELECT * FROM preguntas`;
+                connection.query(sql, function (err, datos) {
+                    connection.release();
+                    if (err) {
+                        callback(new Error(`Error al listar preguntas`));
+                    } else {
+                        callback(null,datos);
+                    }
+                });
+            }
+        });
+    }
+
+    getAnswerList(idPregunta,callback = function (err) {
+        if (err) {
+            console.log("Error getting questions");
+        } else {
+            console.log("questions given");
+        }
+    }) {
+        this._pool.getConnection(function (err, connection) {
+            if (err) {
+                callback(new Error("Error de conexión a la base de datos"));
+            } else {
+                const sql = `SELECT * FROM respuestas WHERE idPregunta=?`;
+                connection.query(sql,[idPregunta], function (err, datos) {
+                    connection.release();
+                    if (err) {
+                        callback(new Error(`Error al listar respuestas`));
+                    } else {
+                        callback(null,datos);
+                    }
+                });
+            }
+        });
+    }
+
+    addMyAnswer( idUsuario,idPregunta, idRespuesta, texto,callback = function (err) {
+        if (err) {
+            console.log("Error getting questions");
+        } else {
+            console.log("questions given");
+        }
+    }) {
+        this._pool.getConnection(function (err, connection) {
+            if (err) {
+                callback(new Error("Error de conexión a la base de datos"));
+            } else {
+               
+                const sql =  `INSERT INTO listarespuestas (idPregunta, idRespuesta, idUsuario, texto) VALUES (?, ?, ?, ?)`;
+                connection.query(sql,[idPregunta, idRespuesta, idUsuario, texto], function (err, datos) {
+                    connection.release();
+                    if (err) {
+                        callback(new Error(`Error al insertar tu respuesta`));
+                    } else {
+                        callback(null,datos.insertId);
+                    }
+                });
+            }
+        });
+    }
+
+    getUserAnswer(idPregunta, idUsuario,callback = function (err) {
+        if (err) {
+            console.log("Error getting your answer");
+        } else {
+            console.log("question given");
+        }
+    }) {
+        this._pool.getConnection(function (err, connection) {
+            if (err) {
+                callback(new Error("Error de conexión a la base de datos"));
+            } else {
+                const sql = `SELECT * FROM listarespuestas WHERE idPregunta=? and idUsuario=?`;
+                connection.query(sql,[idPregunta, idUsuario], function (err, datos) {
+                    connection.release();
+                    if (err) {
+                        callback(new Error(`Error al listar respuestas`));
+                    } else {
+                        callback(null,datos);
                     }
                 });
             }
@@ -67,4 +182,4 @@ class DAOUsers {
     }
 }
 
-module.exports = DAOUsers;
+module.exports = DAOPreguntas;
