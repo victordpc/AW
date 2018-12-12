@@ -132,11 +132,7 @@ class DAOUsers {
                 var datos = [];
 
                 sql += `nombre = ?, apellidos=?,fechaNac = ?, genero = ?, email = ?`;
-                [usuario.nombre, usuario.apellidos, usuario.fechaNac, usuario.genero, usuario.email];
-                if (usuario.nombre !== null) {
-                    sql += `, nombre = ?`;
-                    datos.push(usuario.nombre);
-                }
+                datos = [usuario.nombre, usuario.apellidos, usuario.fechaNac, usuario.genero, usuario.email];
 
                 if (usuario.foto !== null) {
                     sql += `, foto = ?`;
