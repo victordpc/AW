@@ -15,39 +15,35 @@
 <body>
     <%- include("header") %>
     <div class=contenedor>
-        <% if(locals.errorMsg){%>
-            <div class="caja_errores">
-                <%= errorMsg %>
-            </div>
-            <%}%>
-            <%if (crearPregunta) {%>
-                Pregunta: <input type="text" name="pregunta" id="pregunta" placeholder="¿****?" />
-               <ol id="listaRespuestas">
-               </ol> 
-               <button id="anyadirElemento"> Añadir Respuesta</button>
-               <%if (!insertado) {%>
-               <a id="crea" href="insertarPregunta">Guardar pregunta</a>
-               <%}%>
-               <%}%>
-               <%else {%>
-                <%if (preguntas.length>0) {%>             
-                        <div class="preguntasAleatorias">
-                            <!-- <%= amigos[0].nombre %> -->
-                            <ul>
-                                <% preguntas.forEach(function(pregunta) { %>
-                                <li>
-                                    <%= pregunta.texto %>
-                                </li>
-                                <% }); %>
-                            </ul>
-           
-                    </div>
-                    <%}else{%>
-                    <h3>Preguntas no disponibles</h3>
-                    <%}%>
+        <%- include("flash") %>
+        <%if (crearPregunta) {%>
+        Pregunta: <input type="text" name="pregunta" id="pregunta" placeholder="¿****?" />
+        <ol id="listaRespuestas">
+        </ol>
+        <button id="anyadirElemento"> Añadir Respuesta</button>
+        <%if (!insertado) {%>
+        <a id="crea" href="insertarPregunta">Guardar pregunta</a>
+        <%}%>
+        <%}%>
+        <%else {%>
+        <%if (preguntas.length>0) {%>
+        <div class="preguntasAleatorias">
+            <!-- <%= amigos[0].nombre %> -->
+            <ul>
+                <% preguntas.forEach(function(pregunta) { %>
+                <li>
+                    <%= pregunta.texto %>
+                </li>
+                <% }); %>
+            </ul>
 
-                <%}%>
-            <a id="creaPreguntaId" href="creaPregunta">Crear nueva pregunta</a>
- 
+        </div>
+        <%}else{%>
+        <h3>Preguntas no disponibles</h3>
+        <%}%>
+
+        <%}%>
+        <a id="creaPreguntaId" href="creaPregunta">Crear nueva pregunta</a>
+
     </div>
 </body>

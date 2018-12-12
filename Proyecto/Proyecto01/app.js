@@ -65,7 +65,6 @@ function flashMiddleware(request, response, next) {
     next();
 };
 app.use(flashMiddleware);
-
 // Arrancar el servidor
 app.listen(config.port, function (err) {
     if (err) {
@@ -80,12 +79,12 @@ function compruebaUsuario(request, response, next) {
     if (request.session.currentUser) {
         //response.locals.userEmail = request.session.currentUser
         if (request.session.id === undefined) {
-            response.redirect('login.html');
+            response.redirect('login');
         } else {
             next();
         }
     } else {
-        response.redirect('login.html');
+        response.redirect('login');
     }
 }
 
@@ -138,30 +137,27 @@ function formatDate(date) {
 /**
  * Funciones auxiliares
  */
-/****************************************************************** */
-/**VARIABLE GLOBALES  de plantillas********************************************/
 
-let textoError = '';
 //****************************************************************** */
 /***************************Raiz*************************** */
-
 // Manejador para raiz
 app.get("/", function (request, response) {
     response.status(200);
-    response.redirect("/index.html");
+    response.redirect("/index");
 });
 
 /** Principal */
-app.get("/index.html", function (request, response) {
+app.get("/index", function (request, response) {
     response.status(200);
     response.render("index");
 });
 
 /**Nuevo Usuario */
-app.get("/new_user.html", function (request, response) {
+app.get("/new_user", function (request, response) {
     response.status(200);
+    let err = [];
     response.render("new_user", {
-        errores: textoError
+        errores: err
     });
 });
 
@@ -189,33 +185,34 @@ app.post("/newUser", multerFactory.single("foto"), function (request, response) 
             daoU.createUser(usuario, function (err, result) {
                 if (result) {
                     response.status(200);
-                    // response.redirect('login.html');
+                    // response.redirect('login');
 
                     request.session.puntos = 0;
                     request.session.currentUser = result.insertId;
-                    response.redirect('my_profile.html');
+                    response.redirect('my_profile');
                 } else {
-                    textoError = ['Error del sistema intentelo de nuevo más tarde'];
-                    response.status(500);
-                    response.redirect("/new_user.html");
+                    texto = 'Error del sistema intentelo de nuevo más tarde';
+
+                    response.setFlash([texto]);
+                    response.redirect("/new_user");
                     console.log(err);
                 }
             });
         } else {
             response.status(200);
-            response.render("new_user", {
-                errores: result.array()
-            });
+            response.setFlash(result.array());
+            response.redirect("/new_user");
         }
 
     });
 });
 
 //* control del login* */
-app.get("/login.html", function (request, response) {
+app.get("/login", function (request, response) {
     response.status(200);
+    let err = [];
     response.render("login", {
-        errorMsg: textoError
+        errorMsg: err
     });
 });
 
@@ -227,7 +224,7 @@ app.post("/login", function (request, response) {
         if (err) {
             console.log(err.message);
             response.status(500);
-            response.redirect("500.html")
+            response.redirect("500")
         } else if (data) {
             if (data.length != 0) {
                 // Tenemos un login correcto
@@ -236,7 +233,7 @@ app.post("/login", function (request, response) {
                     if (err) {
                         console.log(err.message);
                         response.status(500);
-                        response.redirect("500.html")
+                        response.redirect("500")
                     } else {
                         let usr = {
                             email: result[0].email,
@@ -245,30 +242,30 @@ app.post("/login", function (request, response) {
                         }
                         request.session.usuario = usr;
                         request.session.currentUser = result[0].id;
-                        response.redirect('my_profile.html');
+                        response.redirect('my_profile');
                     }
                 });
             } else {
-                textoError = 'Usuario y/o contraseña incorrectos';
+                response.setFlash(['', 'Usuario y/o contraseña incorrectos']);
                 response.status(200);
-                response.redirect("/login.html");
+                response.redirect("/login");
             }
         } else {
             console.log("Usuario y/o contraseña incorrectos - ?", request.body.email);
-            textoError = 'Usuario y/o contraseña incorrectos';
+            response.setFlash(['Usuario y/o contraseña incorrectos']);
             response.status(200);
-            response.redirect("/login.html");
+            response.redirect("/login");
         }
     });
 });
 
 /**My Profile */
-app.get("/my_profile.html", compruebaUsuario, function (request, response) {
+app.get("/my_profile", compruebaUsuario, function (request, response) {
     daoU.getUserData(request.session.currentUser, function (err, result) {
         if (err) {
             console.log(err.message);
             response.status(500);
-            response.redirect("500.html")
+            response.redirect("500")
         } else {
             response.status(200);
             if (result[0].fechaNac != null) {
@@ -281,13 +278,12 @@ app.get("/my_profile.html", compruebaUsuario, function (request, response) {
                 usuario: result,
                 usr: request.session.usuario,
             });
-
         }
     });
 });
 
 //**Modificar */
-app.get("/editProfile.html", compruebaUsuario, function (request, response) {
+app.get("/editProfile", compruebaUsuario, function (request, response) {
     daoU.getUserData(request.session.currentUser, function (err, result) {
         if (err) {
             console.log(err.message);
@@ -321,6 +317,7 @@ app.post('/updateProfile', multerFactory.single("foto"), (request, response) => 
             //let fecha =  $('#fechaNac .fechaNac').val();
             let usuario = {
                 email: request.body.email,
+                apellidos: request.body.apellidos,
                 nombre: request.body.nombre,
                 genero: request.body.sexo,
                 fechaNac: request.body.date,
@@ -333,17 +330,17 @@ app.post('/updateProfile', multerFactory.single("foto"), (request, response) => 
             daoU.updateUserData(usuario, function (err, result) {
                 if (result) {
                     response.status(200);
-                    response.redirect('my_profile.html');
+                    response.redirect('my_profile');
                 } else {
-                    textoError = 'Error del sistema intentelo de nuevo más tarde';
+                    response.setFlash(['Error del sistema intentelo de nuevo más tarde']);
                     response.status(500);
-                    response.redirect('editProfile.html');
+                    response.redirect('editProfile');
                     console.log(err);
                 }
             });
         } else {
             response.status(200);
-            response.render("editUser", {
+            response.render("editProfile", {
                 errores: result.array()
             });
         }
@@ -352,13 +349,13 @@ app.post('/updateProfile', multerFactory.single("foto"), (request, response) => 
 });
 
 /**My Profile */
-app.get("/user_profile.html", compruebaUsuario, function (request, response) {
+app.get("/user_profile", compruebaUsuario, function (request, response) {
     let id = request.query.id;
     daoU.getUserData(id, function (err, result) {
         if (err) {
             console.log(err.message);
             response.status(500);
-            response.redirect("500.html")
+            response.redirect("500")
         } else {
             response.status(200);
             if (result[0].fechaNac != null) {
@@ -380,7 +377,7 @@ app.get("/user_profile.html", compruebaUsuario, function (request, response) {
 //************************Amigos*****************************************
 //************************************************************************
 
-app.get("/friends.html", compruebaUsuario, function (request, response) {
+app.get("/friends", compruebaUsuario, function (request, response) {
     response.status(200);
     response.render("friends", {
         // amigos: _amigos,
@@ -393,7 +390,7 @@ app.get("/friends.html", compruebaUsuario, function (request, response) {
     // _solicitudes = [];
 });
 
-app.get("/procesarAmigos.html", function (request, response) {
+app.get("/procesarAmigos", function (request, response) {
     daoA.friendsList(request.session.currentUser, function (err, datosAmigos) {
         if (err) {
             response.status(404);
@@ -461,14 +458,14 @@ app.post("/rejectFriend/:friendId", function (request, response) {
 //****************************LOGOUT********************** */
 app.get("/desconectar", function (request, response) {
     response.status(200);
-    response.redirect("/index.html");
+    response.redirect("/index");
 });
 
 
 /******************************************************** */
 /****************PREGUNTAS ****************************** */
 /******************************************************** */
-app.get("/preguntas.html", compruebaUsuario, function (request, response) {
+app.get("/preguntas", compruebaUsuario, function (request, response) {
     response.status(200);
     response.render("preguntas", {
         crearPregunta: false
@@ -487,34 +484,31 @@ app.get("/insertarPregunta", function (request, response) {
     response.render("preguntas", {
         insertado: false,
         crearPregunta: true,
-        errorMsg: textoError
     });
 });
 app.post("insertarPregunta", function (request, response) {
     daoPreguntas.createQuestion(request.body.pregunta, function (err, idPregunta) {
         if (err) {
-            textoError = "No se pudo crear la pregunta, inténtalo de nuevo más tarde";
+            response.setFlash(['Error del sistema intentelo de nuevo más tarde']);
         } else {
             let listaR = document.getElementById("listaRespuestas");
             if (listaR.length > 1) {
                 listaR.forEach(element => {
                     daoPreguntas.createAnswer(idPregunta, request.bodyParser, element, function (err, result) {
                         if (err) {
-                            textoError = "No se pudo crear la respuesta";
+                            response.setFlash(["No se pudo crear la respuesta"]);
                         }
                     });
                 });
 
                 response.status(200);
                 response.render("preguntas", {
-                    errorMsg: textoError,
                     insertado: true
                 });
             } else {
-                textoError = "debes introducir al menos dos respuestas";
+                response.setFlash(["Debes introducir al menos dos respuestas"]);
                 response.status(200);
                 response.render("preguntas", {
-                    errorMsg: textoError,
                     insertado: true
                 });
             }
