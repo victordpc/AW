@@ -15,39 +15,44 @@
 <body>
     <%- include("header") %>
     <div class=contenedor>
-        <% if(locals.errorMsg){%>
-            <div class="caja_errores">
-                <%= errorMsg %>
-            </div>
-            <%}%>
-            <%if (crearPregunta) {%>
-                Pregunta: <input type="text" name="pregunta" id="pregunta" placeholder="¿****?" />
-               <ol id="listaRespuestas">
-               </ol> 
-               <button id="anyadirElemento"> Añadir Respuesta</button>
-               <%if (!insertado) {%>
-               <a id="crea" href="insertarPregunta">Guardar pregunta</a>
-               <%}%>
-               <%}%>
-               <%else {%>
-                <%if (preguntas.length>0) {%>             
-                        <div class="preguntasAleatorias">
-                            <!-- <%= amigos[0].nombre %> -->
-                            <ul>
-                                <% preguntas.forEach(function(pregunta) { %>
-                                <li>
-                                    <%= pregunta.texto %>
-                                </li>
-                                <% }); %>
-                            </ul>
-           
-                    </div>
-                    <%}else{%>
-                    <h3>Preguntas no disponibles</h3>
-                    <%}%>
 
-                <%}%>
-            <a id="creaPreguntaId" href="creaPregunta">Crear nueva pregunta</a>
- 
+        <% if(locals.errorMsg){%>
+        <div class="caja_errores">
+            <%= errorMsg %>
+        </div>
+        <%}%>
+        <div class="PanelPreguntas">
+            <%if (preguntas.length>0) {%>
+            <div class="preguntasAleatorias">
+                <p>Preguntas seleccionadas aleatoriamente</p>
+                <ul>
+                    <% preguntas.forEach(function(pregunta) { %>
+                    <li>
+                        <a name="pregunta" href="procesarPregunta"> <%= pregunta.texto %> </a>
+                    </li>
+                    <% }); %>
+                </ul>
+            </div>
+        </div>
+        <%}%>
+
+
+        <%if (respuestas.length>0) {%>
+        <div class="PanelPreguntasConRespuestas">
+            <%=pregunta.texto %>
+            <div class="elegirRespuestas">
+                <ul>
+                    <% respuestas.forEach(function(respuesta) { %>
+                    <li>
+                        <input type="radio" class="radio" name="respuesta" value=<%=respuesta.id %>><%= respuesta.texto %>
+                    </li>
+                    <% }); %>
+                </ul>
+            </div>
+        </div>
+        <%}%>
+        <%if (crearPregunta) {%>
+        <a id="creaPreguntaId" href="creaPregunta">Crear nueva pregunta</a>
+        <%}%>
     </div>
 </body>
