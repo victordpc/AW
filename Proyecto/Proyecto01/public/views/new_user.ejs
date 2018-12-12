@@ -13,8 +13,8 @@
 </head>
 
 <body>
-    <!-- <iframe src="../index.html" frameborder="0" class="contenedorCabecera"></iframe> -->
-    <!-- <object type="text/html" data="../index.html" class="contenedorCabecera"></object> -->
+    <!-- <iframe src="../index" frameborder="0" class="contenedorCabecera"></iframe> -->
+    <!-- <object type="text/html" data="../index" class="contenedorCabecera"></object> -->
     <%- include("header") %>
     <div class="contenedor">
         <div class="PaneltituloPagina">
@@ -22,18 +22,7 @@
         </div>
         <form action="newUser" id="new_user" method="POST" name="new_user" enctype="multipart/form-data">
             <div class="panelFormulario">
-                <%if (errores.length>0) {%>
-                <div class="caja_errores">
-                    Algo no fue bien:
-                    <ul>
-                        <% errores.forEach(function(error) { %>
-                        <li>
-                            <%= error.msg %>
-                        </li>
-                        <% }); %>
-                    </ul>
-                </div>
-                <%}%>
+                <%- include("flash") %>
                 <label for="email">E-Mail </label>
                 <input type="text" name="email" id="email" placeholder="pepito@physicbook.com " />
                 <label for="pass">Contraseña </label>

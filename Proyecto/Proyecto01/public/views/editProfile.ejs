@@ -18,7 +18,8 @@
                 <%=usuario.nombre%>
             </h2>
         </div>
-        <form id="formularioPerfil" method="POST" name="perfil" action="updateProfile">
+        <form id="formularioPerfil" method="POST" name="perfil" action="updateProfile" enctype="multipart/form-data">
+            <%- include("flash") %>            
             <div class="panelPerfil">
                 <div class="fotoPerfil">
                     <tr>
@@ -63,7 +64,7 @@
                     <input type="file" name="foto" id="foto" accept="image/x-png,image/gif,image/jpeg" />
                     <div>
                         <div>
-                            <a href="my_profile.html" class="modificarPerfil">Cancelar</a>
+                            <a href="my_profile" class="modificarPerfil">Cancelar</a>
                         </div>
                         <div>
                             <input type="submit" name="modificarPerfil" class="modificarPerfil" value="Guardar cambios">
