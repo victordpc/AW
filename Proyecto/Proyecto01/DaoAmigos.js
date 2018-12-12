@@ -21,20 +21,16 @@ class DAOUsers {
             if (err) {
                 callback(new Error(`Error de conexión a la base de datos`));
             } else { //busca en la tabla amigos en la columna que esté y con
-                const sql = `SELECT amigo1, amigo2 FROM amigos WHERE estado='aceptada' and (amigo1=? or amigo2=?)`;
+                var sql = ` SELECT amigo2 as id,usuarios.nombre,usuarios.apellidos,usuarios.email FROM amigos LEFT JOIN usuarios on amigos.amigo2=usuarios.id WHERE estado='aceptada' and amigo1=?`;
+                sql += ` UNION ALL`;
+                sql += ` SELECT amigo1 as id,usuarios.nombre,usuarios.apellidos,usuarios.email FROM amigos LEFT JOIN usuarios on amigos.amigo1=usuarios.id WHERE estado='aceptada' and amigo2=?`;
                 connection.query(sql, [id, id], function (err, datos) {
                     connection.release();
                     if (err) {
                         callback(new Error(`Error de acceso a la base de datos`));
                     } else {
                         //callback(null, datos.length != 0);
-                        var resultado = new Array();
-                        datos.forEach(element => {
-                            let amigo1 = element.amigo1;
-                            if (amigo1 == id) resultado.push(element.amigo2);
-                            else if (id == element.amigo2) resultado.push(element.amigo1);
-                        });
-                        callback(null, resultado);
+                        callback(null, datos);
                     }
                 });
             }
@@ -53,8 +49,11 @@ class DAOUsers {
             if (err) {
                 callback(new Error(`Error de conexión a la base de datos`));
             } else { // obtiene la lista de usuarios que han enviado solicitud de amistad a este usuario
-                const sql = `SELECT amigo1 FROM amigos WHERE estado='enviada' and  amigo2=?`;
-                connection.query(sql, [id], function (err, datos) {
+                var sql = ` SELECT amigo2 as id,usuarios.nombre,usuarios.apellidos,usuarios.email FROM amigos LEFT JOIN usuarios on amigos.amigo2=usuarios.id WHERE estado='enviada' and amigo1=?`;
+                sql += ` UNION ALL`;
+                sql += ` SELECT amigo1 as id,usuarios.nombre,usuarios.apellidos,usuarios.email FROM amigos LEFT JOIN usuarios on amigos.amigo1=usuarios.id WHERE estado='enviada' and amigo2=?`;
+
+                connection.query(sql, [id,id], function (err, datos) {
                     connection.release();
                     if (err) {
                         callback(new Error(`Error de acceso a la base de datos`));
@@ -101,8 +100,8 @@ class DAOUsers {
             if (err) {
                 callback(new Error(`Error de conexión a la base de datos`));
             } else { // obtiene la lista de usuarios que han enviado solicitud de amistad a este usuario
-                const sql = `UPDATE amigos SET estado='aceptada' WHERE amigo1=? AND amigo2=?`;
-                connection.query(sql, [amigo, usuario.id], function (err, datos) {
+                const sql = `UPDATE amigos SET estado='aceptada' WHERE amigo1=? AND amigo2=? OR amigo1=? AND amigo2=?`;
+                connection.query(sql, [amigo, usuario,usuario,amigo], function (err, datos) {
                     connection.release();
                     if (err) {
                         callback(new Error(`Error de acceso a la base de datos`));
@@ -125,8 +124,8 @@ class DAOUsers {
             if (err) {
                 callback(new Error(`Error de conexión a la base de datos`));
             } else { // obtiene la lista de usuarios que han enviado solicitud de amistad a este usuario
-                const sql = `DELETE FROM amigos WHERE amigo1=? AND amigo2=?`;
-                connection.query(sql, [amigo, usuario.id], function (err, datos) {
+                const sql = `DELETE FROM amigos WHERE amigo1=? AND amigo2=? OR amigo1=? AND amigo2=?`;
+                connection.query(sql, [amigo, usuario,usuario,amigo], function (err, datos) {
                     connection.release();
                     if (err) {
                         callback(new Error(`Error de acceso a la base de datos`));

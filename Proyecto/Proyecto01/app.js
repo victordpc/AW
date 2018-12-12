@@ -246,7 +246,7 @@ app.post("/login", function (request, response) {
                     }
                 });
             } else {
-                response.setFlash(['', 'Usuario y/o contraseña incorrectos']);
+                response.setFlash(['Usuario y/o contraseña incorrectos']);
                 response.status(200);
                 response.redirect("/login");
             }
@@ -341,7 +341,8 @@ app.post('/updateProfile', multerFactory.single("foto"), (request, response) => 
         } else {
             response.status(200);
             response.render("editProfile", {
-                errores: result.array()
+                errores: result.array(),
+                usr: request.session.usuario,
             });
         }
 
@@ -378,31 +379,22 @@ app.get("/user_profile", compruebaUsuario, function (request, response) {
 //************************************************************************
 
 app.get("/friends", compruebaUsuario, function (request, response) {
-    response.status(200);
-    response.render("friends", {
-        // amigos: _amigos,
-        // solicitudes: _solicitudes
-    });
-    // console.log(_amigos);
-    // console.log(_solicitudes);
-    // console.log(request.session.amigos);
-    // _amigos = []; //se limpia la lista
-    // _solicitudes = [];
-});
-
-app.get("/procesarAmigos", function (request, response) {
     daoA.friendsList(request.session.currentUser, function (err, datosAmigos) {
         if (err) {
-            response.status(404);
+            console.log(err.message);
+            response.status(500);
+            response.redirect("500")
         } else {
-            daoU.friendsRequestList(request.session.currentUser, function (err, datosSolicitudes) {
+            daoA.friendsRequestList(request.session.currentUser, function (err, datosSolicitudes) {
                 if (err) {
                     response.status(404);
+                    response.redirect("404")
                 } else {
                     response.status(200);
                     response.render("friends", {
                         amigos: datosAmigos,
-                        solicitudes: datosSolicitudes
+                        solicitudes: datosSolicitudes,
+                        usr: request.session.usuario,
                     });
                 }
             });
@@ -419,37 +411,34 @@ app.post("/searchAmigos", function (request, response) {
         } else {
             response.status(200);
             response.render("search", {
-                personas: result
+                personas: result,
+                usr: request.session.usuario,
             });
         }
     });
 });
 
 
-app.post("/acceptFriend/:friendId", function (request, response) {
-    //daoU.friendsRequestList(_id, function (err, result) {
-    daoA.acceptFriend(request.session.currentUser, request.params.friendId, function (err, result) {
+app.get("/acceptFriend", function (request, response) {
+    let id = request.query.id;
+    daoA.acceptFriend(request.session.currentUser, id, function (err, result) {
         if (err) {
             response.status(404);
         } else {
             response.status(200);
-            response.render("search", {
-                personas: result
-            });
+            response.redirect("friends");
         }
     });
 });
 
-app.post("/rejectFriend/:friendId", function (request, response) {
-    //daoU.friendsRequestList(_id, function (err, result) {
-    daoA.rejectFriend(request.session.currentUser, request.params.friendId, function (err, result) {
+app.get("/rejectFriend", function (request, response) {
+    let id = request.query.id;
+    daoA.rejectFriend(request.session.currentUser, id, function (err, result) {
         if (err) {
             response.status(404);
         } else {
             response.status(200);
-            response.render("search", {
-                personas: result
-            });
+            response.redirect("friends");
         }
     });
 });
@@ -477,7 +466,7 @@ app.get("/preguntas", compruebaUsuario, function (request, response) {
                 crearPregunta: true,
                 preguntas: preguntas,
                 pregunta: '',
-                contestado:true
+                contestado: true
             });
         }
     });
@@ -486,25 +475,25 @@ app.get("/preguntas", compruebaUsuario, function (request, response) {
 app.get("/procesarPregunta", function (request, response) {
     daoP.getUserAnswer(idPregunta, idUsuario, function (err, result) {
         if (!err) {
-            if(result.length >= 0){
+            if (result.length >= 0) {
                 response.status(200);
                 response.render("preguntas", {
                     respuestas: [],
                     crearPregunta: true,
                     preguntas: [],
                     pregunta: pregunta,
-                    contestado:true
+                    contestado: true
                 });
-            }else{
-            response.status(200);
-            response.render("preguntas", {
-                respuestas: respuestas,
-                crearPregunta: true,
-                preguntas: [],
-                pregunta: pregunta,
-                contestado:false
-            });
-        }
+            } else {
+                response.status(200);
+                response.render("preguntas", {
+                    respuestas: respuestas,
+                    crearPregunta: true,
+                    preguntas: [],
+                    pregunta: pregunta,
+                    contestado: false
+                });
+            }
         }
     });
 });
