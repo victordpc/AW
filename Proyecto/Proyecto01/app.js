@@ -466,9 +466,46 @@ app.get("/desconectar", function (request, response) {
 /****************PREGUNTAS ****************************** */
 /******************************************************** */
 app.get("/preguntas", compruebaUsuario, function (request, response) {
-    response.status(200);
-    response.render("preguntas", {
-        crearPregunta: false
+    daoP.getQuestionList(function (err, preguntas) {
+        if (err) {
+            console.log(err.message);
+            response.status(500);
+            response.redirect("500")
+        } else {
+            response.render("preguntas", {
+                respuestas: [],
+                crearPregunta: true,
+                preguntas: preguntas,
+                pregunta: '',
+                contestado:true
+            });
+        }
+    });
+
+});
+app.get("/procesarPregunta", function (request, response) {
+    daoP.getUserAnswer(idPregunta, idUsuario, function (err, result) {
+        if (!err) {
+            if(result.length >= 0){
+                response.status(200);
+                response.render("preguntas", {
+                    respuestas: [],
+                    crearPregunta: true,
+                    preguntas: [],
+                    pregunta: pregunta,
+                    contestado:true
+                });
+            }else{
+            response.status(200);
+            response.render("preguntas", {
+                respuestas: respuestas,
+                crearPregunta: true,
+                preguntas: [],
+                pregunta: pregunta,
+                contestado:false
+            });
+        }
+        }
     });
 });
 
@@ -476,7 +513,9 @@ app.get("/creaPregunta", function (request, response) {
     response.status(200);
     response.render("preguntas", {
         insertado: false,
-        crearPregunta: true
+        crearPregunta: false,
+        preguntas: [],
+        respuestas: []
     });
 });
 app.get("/insertarPregunta", function (request, response) {
@@ -487,14 +526,14 @@ app.get("/insertarPregunta", function (request, response) {
     });
 });
 app.post("insertarPregunta", function (request, response) {
-    daoPreguntas.createQuestion(request.body.pregunta, function (err, idPregunta) {
+    daoP.createQuestion(request.body.pregunta, function (err, idPregunta) {
         if (err) {
             response.setFlash(['Error del sistema intentelo de nuevo más tarde']);
         } else {
             let listaR = document.getElementById("listaRespuestas");
             if (listaR.length > 1) {
                 listaR.forEach(element => {
-                    daoPreguntas.createAnswer(idPregunta, request.bodyParser, element, function (err, result) {
+                    daoP.createAnswer(idPregunta, request.bodyParser, element, function (err, result) {
                         if (err) {
                             response.setFlash(["No se pudo crear la respuesta"]);
                         }

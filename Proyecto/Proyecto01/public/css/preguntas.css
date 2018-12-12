@@ -1,5 +1,12 @@
 .contenedor{
-    color :black
+ background-color: black;
+}
+.PanelPreguntas{
+    margin: 30%;
+}
+.PanelPreguntasConRespuestas{
+
+    margin: 30%;
 }
 #creaPreguntaId, #anyadirElemento{
     /* grid-row: 2;
@@ -21,4 +28,7 @@ margin-top: 10px;
 
 #anyadirElemento{
     color: fuchsia;
+}
+.PanelPreguntasConRespuestas{
+    margin : 10px;
 }
