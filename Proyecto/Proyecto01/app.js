@@ -1,5 +1,7 @@
 "use strict";
 
+const { formatDate } = require("./formatDate");
+
 const config = require("./config");
 const daoUser = require("./DaoUsers");
 const daoAmigos = require("./DaoAmigos");
@@ -118,22 +120,6 @@ app.get("/imagen/:email", function (request, response) {
         });
     }
 });
-/* Imagenes */
-
-/**
- * Funciones auxiliares
- */
-function formatDate(date) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-
-    return [year, month, day].join('-');
-}
 /**
  * Funciones auxiliares
  */
@@ -143,7 +129,7 @@ function formatDate(date) {
 // Manejador para raiz
 app.get("/", function (request, response) {
     response.status(200);
-    response.redirect("/index");
+    response.redirect("index");
 });
 
 /** Principal */
