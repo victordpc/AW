@@ -1,44 +1,50 @@
 <div class="header">
     <div class="cabecera">
-        <img src="../img/escudo.jpg" alt="imagen del escudo de rugby fisicas" class="escudo">
-        <div class="cajaTitulo">
-            <h1 class="titulo">PHYSICBOOK</h1>
-        </div>
-        <div class="menu">
-            <% if(!locals.usr){%>
-            <a href="login">Entrar</a>
-            <a href="new_user">Nuevo Usuario</a>
-            <%}%>
-            <% if(locals.usr){%>
-            <a href="my_profile">Perfil</a>
-            <a href="friends">Amigos</a>
-            <a href="preguntas">Preguntas</a>
-            <%}%>
-        </div>
-        <div class="cabeceraDatosUsuario">
-            <div class="cabeceraImagenPerfil">
+        <% if(!locals.usr){%>
+        <a href="/" class="enlace">
+            <%}else{%>
+            <a href="/my_profile" class="enlace">
+                <%}%>
+                <img src="../img/escudo.jpg" alt="imagen del escudo de rugby fisicas" class="escudo">
+            </a>
+            <div class="cajaTitulo">
+                <h1 class="titulo">PHYSICBOOK</h1>
+            </div>
+            <div class="menu">
+                <% if(!locals.usr){%>
+                <a href="login">Entrar</a>
+                <a href="new_user">Nuevo Usuario</a>
+                <%}%>
                 <% if(locals.usr){%>
-                <a href="/my_profile">
-                    <img src="/imagen/<%=usr.email%>" alt="Imagen de perfil" class="cabeceraFotoPerfil">
-                </a>
+                <a href="my_profile">Perfil</a>
+                <a href="friends">Amigos</a>
+                <a href="preguntas">Preguntas</a>
                 <%}%>
             </div>
-            <div class="puntos">
+            <div class="cabeceraDatosUsuario">
+                <div class="cabeceraImagenPerfil">
+                    <% if(locals.usr){%>
+                    <a href="/my_profile">
+                        <img src="/imagen/<%=usr.email%>" alt="Imagen de perfil" class="cabeceraFotoPerfil">
+                    </a>
+                    <%}%>
+                </div>
+                <div class="puntos">
+                    <% if(locals.usr){%>
+                    <p class="puntos">
+                        <%=usr.puntos%> puntos</p>
+                    <%}%>
+                </div>
                 <% if(locals.usr){%>
-                <p class="puntos">
-                    <%=usr.puntos%> puntos</p>
+                <div class="nombreUsuario">
+                    <p class="usuario textoCabecera">
+                        <%=usr.nombre%>
+                    </p>
+                </div>
+                <div class="botonCerrar">
+                    <a href="/desconectar" class="cerrarSesion textoCabecera">Desconectar</a>
+                </div>
                 <%}%>
             </div>
-            <% if(locals.usr){%>
-            <div class="nombreUsuario">
-                <p class="usuario textoCabecera">
-                    <%=usr.nombre%>
-                </p>
-            </div>
-            <div class="botonCerrar">
-                <a href="/desconectar" class="cerrarSesion textoCabecera">Desconectar</a>
-            </div>
-            <%}%>
-        </div>
     </div>
 </div>

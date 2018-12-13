@@ -1,0 +1,15 @@
+.panelCentral {
+    margin: 0 auto;
+    padding-top: 220px;
+    width: 80%;
+    /* background-image:url("/img/duende1.png"); */
+}
+
+#panelError {
+    margin-top: 10px;
+}
+
+h1,
+p {
+    font-family: Arial, Helvetica, sans-serif;
+}
