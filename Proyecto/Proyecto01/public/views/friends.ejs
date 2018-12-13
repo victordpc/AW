@@ -32,11 +32,11 @@
                             <a href="user_profile?id=<%=solicitud.id%>">
                                 <img src="/imagen/<%=solicitud.email%>" class="imagenPerfil">
                             </a>
-                            <a href="user_profile?id=<%=solicitud.id%>">
+                            <a href="user_profile?id=<%=solicitud.id%>" class="enlacePersona">
                                 <p class="nombreUsuario"><%=solicitud.nombre%>, <%= solicitud.apellidos%></p>
                             </a>
-                            <a href="/acceptFriend?id=<%=solicitud.id%>" class="boton Verde">Aceptar</a>
-                            <a href="/rejectFriend?id=<%=solicitud.id%>" class="boton Rojo">Rechazar</a>
+                            <a href="/acceptFriend?id=<%=solicitud.id%>" class="boton botonVerde botonSmall">Aceptar</a>
+                            <a href="/rejectFriend?id=<%=solicitud.id%>" class="boton botonRojo  botonSmall">Rechazar</a>
                         </div>
                     </li>
                     <% }); %>
