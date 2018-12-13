@@ -171,3 +171,16 @@ div.amigos {
 	margin-top: 10px;
 	color: black;
 }
+
+div.usuarioBusqueda{
+	display: grid;
+	grid-template-rows: 100%;
+    grid-template-columns: 65px 80% 100px;
+
+}
+
+.fotoUsuarioBusqueda {
+    width: 50px;
+    height: 50px;
+    margin: 6px;
+}

@@ -136,3 +136,32 @@ body {
     width: 100px;
     height: 100px;
 }
+
+.boton {
+    border-radius: 13px 0px 13px 0px;
+    padding: 10px;
+    width: 200px;
+    margin: 0 auto;
+    align-content: center;
+    background-image: linear-gradient(to right, black, rgb(54, 4, 33), rgb(177, 9, 107), rgb(243, 26, 134), rgb(247, 19, 152), rgb(243, 26, 134), rgb(177, 9, 107), rgb(54, 4, 33), black);
+}
+
+.boton:hover {
+    background-image: linear-gradient(to right, rgb(247, 19, 152), rgb(243, 26, 134), rgb(177, 9, 107), rgb(54, 4, 33), black, rgb(54, 4, 33), rgb(177, 9, 107), rgb(243, 26, 134), rgb(247, 19, 152));
+}
+
+.botonVerde{
+    background-image: linear-gradient(to right, black, rgb(54, 4, 33), rgb(23, 177, 9), rgb(44, 243, 26), rgb(122, 247, 19), rgb(44, 243, 26), rgb(23, 177, 9), rgb(54, 4, 33), black);
+}
+
+.botonVerde:hover{
+    background-image: linear-gradient(to right, rgb(122, 247, 19), rgb(44, 243, 26), rgb(23, 177, 9), rgb(54, 4, 33), black, rgb(54, 4, 33), rgb(23, 177, 9), rgb(44, 243, 26), rgb(122, 247, 19));
+}
+
+.botonRojo{
+    background-image: linear-gradient(to right, black, rgb(54, 4, 33), rgb(177, 9, 9), rgb(243, 26, 26), rgb(247, 19, 19), rgb(243, 26, 26), rgb(177, 9, 9), rgb(54, 4, 33), black);
+}
+
+.botonRojo:hover{
+    background-image: linear-gradient(to right, rgb(247, 19, 19), rgb(243, 26, 26), rgb(177, 9, 9), rgb(54, 4, 33), black, rgb(54, 4, 33), rgb(177, 9, 9), rgb(243, 26, 26), rgb(247, 19, 19));
+}

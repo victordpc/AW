@@ -358,7 +358,7 @@ app.get("/friends", compruebaUsuario, (request, response, next) => {
 });
 
 app.post("/searchAmigos", (request, response, next) => {
-    daoA.friendsRequestList(request.session.currentUser, (err, result) => {
+    daoA.friendsSearch(request.body.nombre,request.session.currentUser, (err, result) => {
         if (err) {
             next(err);
         } else {
@@ -367,6 +367,18 @@ app.post("/searchAmigos", (request, response, next) => {
                 personas: result,
                 usr: request.session.usuario,
             });
+        }
+    });
+});
+
+app.get("/makeFriends", (request, response, next) => {
+    let id = request.query.id;
+    daoA.insertFriendsRequest(request.session.currentUser, id, (err, result) => {
+        if (err) {
+            next(err);
+        } else {
+            response.status(200);
+            response.redirect("friends");
         }
     });
 });
