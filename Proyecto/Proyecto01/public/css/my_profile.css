@@ -30,7 +30,12 @@
     align-self: center;
     text-align: left;
     color: white;
-
+display: grid;
+grid-template-rows: auto auto auto auto auto auto auto;
+grid-auto-columns: auto auto auto auto;
+}
+.margen{
+    margin-top: 5px;
 }
 
 .panelPerfil>.modificarPerfil {

@@ -9,12 +9,14 @@
 * {
     margin: 0;
     padding: 0;
-    border: 1px dotted red;
+    /* border: 1px dotted red; */
     color: white;
 }
+
 body {
     background-color: black;
 }
+
 .header {
     position: fixed;
     width: 100%;
@@ -104,8 +106,6 @@ body {
     align-self: start;
 }
 
-
-
 .contenedor {
     margin: 0 auto;
     padding-top: 220px;
@@ -150,18 +150,34 @@ body {
     background-image: linear-gradient(to right, rgb(247, 19, 152), rgb(243, 26, 134), rgb(177, 9, 107), rgb(54, 4, 33), black, rgb(54, 4, 33), rgb(177, 9, 107), rgb(243, 26, 134), rgb(247, 19, 152));
 }
 
-.botonVerde{
+.botonVerde {
     background-image: linear-gradient(to right, black, rgb(54, 4, 33), rgb(23, 177, 9), rgb(44, 243, 26), rgb(122, 247, 19), rgb(44, 243, 26), rgb(23, 177, 9), rgb(54, 4, 33), black);
 }
 
-.botonVerde:hover{
+.botonVerde:hover {
     background-image: linear-gradient(to right, rgb(122, 247, 19), rgb(44, 243, 26), rgb(23, 177, 9), rgb(54, 4, 33), black, rgb(54, 4, 33), rgb(23, 177, 9), rgb(44, 243, 26), rgb(122, 247, 19));
 }
 
-.botonRojo{
+.botonRojo {
     background-image: linear-gradient(to right, black, rgb(54, 4, 33), rgb(177, 9, 9), rgb(243, 26, 26), rgb(247, 19, 19), rgb(243, 26, 26), rgb(177, 9, 9), rgb(54, 4, 33), black);
 }
 
-.botonRojo:hover{
+.botonRojo:hover {
     background-image: linear-gradient(to right, rgb(247, 19, 19), rgb(243, 26, 26), rgb(177, 9, 9), rgb(54, 4, 33), black, rgb(54, 4, 33), rgb(177, 9, 9), rgb(243, 26, 26), rgb(247, 19, 19));
+}
+
+div.caja_errores {
+    background-color: rgba(255, 0, 0, 0.5);
+    color: RED;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row: 3;
+}
+
+.rojo {
+    color: red;
+}
+
+.textoNegro {
+    color: black;
 }
