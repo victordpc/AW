@@ -21,8 +21,10 @@
                 <ul>
                     <% personas.forEach(function(per) { %>
                     <li>
-                        <%= per.s_nombre %>
-                        <a href="agregar/<%=per.email%>">Agregar</a>
+                       <div class="usuarioBusqueda"> <img src="/imagen/<%=per.email%>" class="fotoUsuarioBusqueda">
+                        <%=per.nombre%>,<%= per.apellidos%>
+                        <a href="makeFriends?id=<%=per.id%>" class="boton botonVerde">Agregar</a>
+                    </div>
                     </li>
                     <% }); %>
                 </ul>
