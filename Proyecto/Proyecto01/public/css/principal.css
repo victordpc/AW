@@ -12,7 +12,9 @@
     border: 1px dotted red;
     color: white;
 }
-
+body {
+    background-color: black;
+}
 .header {
     position: fixed;
     width: 100%;
@@ -27,13 +29,16 @@
     grid-template-columns: 160px 3fr 1fr;
 }
 
+.enlace {
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
 .escudo {
     border-radius: 200px 200px 200px 200px;
     width: 150px;
     height: 150px;
     margin: 5px;
-    grid-row-start: 1;
-    grid-row-end: 3;
 }
 
 .titulo {
