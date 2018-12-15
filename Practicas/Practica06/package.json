@@ -1,0 +1,24 @@
+{
+  "name": "practica06",
+  "version": "1.0.0",
+  "description": "Juego de cartas Memory",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Victor del Pino",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/victordpc/AW.git"
+  },
+  "bugs": {
+    "url": "https://github.com/victordpc/AW/issues"
+  },
+  "homepage": "https://github.com/victordpc/AW#readme",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "static": "^2.0.0"
+  }
+}

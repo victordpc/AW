@@ -1,0 +1,25 @@
+* {
+    margin: 0 auto;
+    padding: 0;
+}
+
+.contenido {
+    width: 80%;
+    height: 100%;
+}
+
+.cerebro {
+    background: url(../img/brain.png) no-repeat left top;
+}
+
+.mensaje {
+    margin-left: 250px;
+    margin-top: 100px;
+}
+
+.giro90{
+    -webkit-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	rotation: 90deg;
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+}
