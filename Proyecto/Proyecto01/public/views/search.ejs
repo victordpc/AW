@@ -13,6 +13,13 @@
 <body>
     <%- include("header") %>
     <div class="contenedor">
+            <div class="PaneltituloPagina">
+                    <h2 class="tituloAmigos">AMIGOS</h2>
+                    <form action="searchAmigos" class="buscardorAmigos" method="POST">
+                        <input type="search" name="nombre" id="txtBuscar" placeholder="Buscar Amigos...">
+                        <input type="submit" name="buscar" id="btnBuscar" value="Buscar">
+                    </form>
+                </div>
         <h2>Lista de personas encontradas</h2>
         <%- include("flash") %>
         <%if (personas.length>0) {%>

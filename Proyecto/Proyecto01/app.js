@@ -358,7 +358,7 @@ app.get("/friends", compruebaUsuario, (request, response, next) => {
         if (err) {
             next(err);
         } else {
-            daoA.friendsRequestList(request.session.currentUser, (err, datosSolicitudes) => {
+            daoA.friendsRequestList(request.session.currentUser, (err, datosSolicitudes,datosSolicitudEnviada) => {
                 if (err) {
                     next(err);
                 } else {
@@ -366,6 +366,7 @@ app.get("/friends", compruebaUsuario, (request, response, next) => {
                     response.render("friends", {
                         amigos: datosAmigos,
                         solicitudes: datosSolicitudes,
+                        solHechas:datosSolicitudEnviada,
                         usr: request.session.usuario,
                     });
                 }
