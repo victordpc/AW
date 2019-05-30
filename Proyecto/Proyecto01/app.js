@@ -113,7 +113,7 @@ app.get("/imagen/:email", (request, response, next) => {
 });
 
 //****************************************************************** */
-/***************************Raiz*************************** */
+//***************************Raiz*********************************** */
 // Manejador para raiz
 app.get("/", (request, response, next) => {
     response.status(200);
@@ -138,7 +138,10 @@ app.get("/new_user", (request, response, next) => {
 app.post("/newUser", multerFactory.single("foto"), (request, response, next) => {
     request.checkBody("email", "Dirección de correo no válida").isEmail();
     // request.checkBody("fechaNac", "Fecha de nacimiento no válida").isBefore();
-    // request.checkBody("pass","La contraseña debe contener entre 4-15 caracteres").isLength({ min: 4, max: 15 });
+    request.checkBody("pass", "La contraseña debe contener entre 4-15 caracteres").isLength({
+        min: 4,
+        max: 15
+    });
     request.checkBody("sexo", "Este campo género no debe de estar vacío").notEmpty();
     request.getValidationResult().then((result) => {
         // El método isEmpty() devuelve true si las comprobaciones no han detectado ningún error
@@ -158,10 +161,7 @@ app.post("/newUser", multerFactory.single("foto"), (request, response, next) => 
             }
             daoU.createUser(usuario, (err, result) => {
                 if (!err) {
-                    response.status(200);
-                    request.session.puntos = 0;
-                    request.session.currentUser = result.insertId;
-                    response.redirect('my_profile');
+                    cargarUsuarioRedirigePerfil(result,next, request, response);
                 } else {
                     texto = 'Error del sistema intentelo de nuevo más tarde';
                     response.setFlash([texto]);
@@ -358,7 +358,7 @@ app.get("/friends", compruebaUsuario, (request, response, next) => {
 });
 
 app.post("/searchAmigos", (request, response, next) => {
-    daoA.friendsSearch(request.body.nombre,request.session.currentUser, (err, result) => {
+    daoA.friendsSearch(request.body.nombre, request.session.currentUser, (err, result) => {
         if (err) {
             next(err);
         } else {
@@ -565,3 +565,21 @@ app.listen(config.port, (err) => {
         console.log(`Servidor arrancado en el puerto ${config.port}`);
     }
 });
+
+function cargarUsuarioRedirigePerfil(idUsuario,next, request, response) {
+    daoU.getUserData(idUsuario, (err, result) => {
+        if (err) {
+            next(err);
+        }
+        else {
+            let usr = {
+                email: result[0].email,
+                nombre: result[0].nombre,
+                puntos: result[0].puntos,
+            };
+            request.session.usuario = usr;
+            request.session.currentUser = result[0].id;
+            response.redirect('my_profile');
+        }
+    });
+}
