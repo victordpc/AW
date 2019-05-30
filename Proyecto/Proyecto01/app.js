@@ -112,6 +112,23 @@ app.get("/imagen/:email", (request, response, next) => {
     }
 });
 
+app.get("/imagen2/:email", (request, response, next) => {
+    if (request.session.currentUser == undefined) {
+        response.status(400);
+        response.end("Petición incorrecta");
+    } else {
+        ObtenerImagen(request.params.email, (err, imagen) => {
+            if (imagen) {
+                response.status(200);
+                response.end(imagen);
+            } else {
+                response.status(404);
+                response.end("Not found");
+            }
+        });
+    }
+});
+
 //****************************************************************** */
 //***************************Raiz*********************************** */
 // Manejador para raiz
@@ -576,6 +593,7 @@ function cargarUsuarioRedirigePerfil(idUsuario,next, request, response) {
                 email: result[0].email,
                 nombre: result[0].nombre,
                 puntos: result[0].puntos,
+                apellidos: result[0].apellidos
             };
             request.session.usuario = usr;
             request.session.currentUser = result[0].id;

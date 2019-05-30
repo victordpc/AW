@@ -47,7 +47,7 @@ class DAOUsers {
             if (err) {
                 callback(new Error(`Error de conexión a la base de datos`));
             } else { //devuelvo el id y los puntos para guardarlos en variables globales de la app
-                const sql = `SELECT id,puntos FROM usuarios WHERE email = ? and password = ?`;
+                const sql = `SELECT id,puntos FROM usuarios WHERE upper(email) = upper(?) and password = ?`;
                 connection.query(sql, [email, password], function (err, datos) {
                     connection.release();
                     if (err) {
@@ -74,14 +74,27 @@ class DAOUsers {
             } else {
                 const sql = `Select foto from usuarios where email = ?`;
                 connection.query(sql, [email], function (err, datos) {
-                    connection.release();
                     if (err) {
+                        connection.release();
                         callback(new Error(`Error de acceso a la base de datos`));
                     } else {
-                        if (datos.length != 0) {
+                        if (datos.length != 0 && datos[0].foto) {
+                            connection.release();
                             callback(null, datos[0].foto);
                         } else {
-                            callback(null, "../img/perfil.png");
+                            const sql2 = `Select foto from usuarios where email = ?`;
+                            connection.query(sql2, [`nadie`], function (err, datos) {
+                                connection.release();
+                                if (err) {
+                                    callback(new Error(`Error de acceso a la base de datos`));
+                                } else {
+                                    if (datos.length != 0 && datos[0].foto) {
+                                        callback(null, datos[0].foto);
+                                    } else {
+                                        callback(null, "../img/perfil.png");
+                                    }
+                                }
+                            });
                         }
                     }
                 });
