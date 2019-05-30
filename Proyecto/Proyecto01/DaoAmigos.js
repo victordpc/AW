@@ -49,16 +49,24 @@ class DAOUsers {
             if (err) {
                 callback(new Error(`Error de conexión a la base de datos`));
             } else { // obtiene la lista de usuarios que han enviado solicitud de amistad a este usuario
+               //a los que se ha enviado solicitud de amistad
                 var sql = ` SELECT amigo2 as id,usuarios.nombre,usuarios.apellidos,usuarios.email FROM amigos LEFT JOIN usuarios on amigos.amigo2=usuarios.id WHERE estado='enviada' and amigo1=?`;
-                sql += ` UNION ALL`;
-                sql += ` SELECT amigo1 as id,usuarios.nombre,usuarios.apellidos,usuarios.email FROM amigos LEFT JOIN usuarios on amigos.amigo1=usuarios.id WHERE estado='enviada' and amigo2=?`;
+         // los te han enviado solicitud de amistad
+                var sql2 = ` SELECT amigo1 as id,usuarios.nombre,usuarios.apellidos,usuarios.email FROM amigos LEFT JOIN usuarios on amigos.amigo1=usuarios.id WHERE estado='enviada' and amigo2=?`;
 
-                connection.query(sql, [id, id], function (err, datos) {
-                    connection.release();
+                connection.query(sql2, [id], function (err, datos) {
+                    // connection.release();
                     if (err) {
                         callback(new Error(`Error de acceso a la base de datos`));
                     } else {
-                        callback(null, datos);
+                       connection.query(sql, [id], function (err, datos2) {
+                            connection.release();
+                            if (err) {
+                                callback(new Error(`Error de acceso a la base de datos`));
+                            } else {
+                                callback(null, datos,datos2);
+                            }
+                        });
                     }
                 });
             }
@@ -76,7 +84,7 @@ class DAOUsers {
             if (err) {
                 callback(new Error(`Error de conexión a la base de datos`));
             } else { // obtiene la lista de usuarios que han enviado solicitud de amistad a este usuario
-                const sql = `SELECT u.nombre,u.apellidos,u.email, u.id, a1.amigo1 as a1, a1.amigo2 as a2, a2.amigo1 as a3, a2.amigo2 as a4 FROM usuarios as u left join amigos as a1 on a1.amigo1=u.id left join amigos as a2 on a2.amigo2=u.id where nombre like ?`;
+                const sql = `SELECT u.nombre,u.apellidos,u.email, u.id, a1.amigo1 as a1, a1.amigo2 as a2, a2.amigo1 as a3, a2.amigo2 as a4 FROM usuarios as u left join amigos as a1 on a1.amigo1=u.id left join amigos as a2 on a2.amigo2=u.id where UPPER(nombre) like UPPER(?)`;
                 connection.query(sql, ['%' + busqueda + '%'], function (err, datos) {
                     connection.release();
                     if (err) {
