@@ -37,6 +37,19 @@
             </div>
             <a href="editProfile" class="modificarPerfil">Modificar Perfil</a>
         </div>
+        <div class="panelFotos">
+            <div class="carrouselFotos"></div>
+            <div class="subirfoto">
+                <form id="formularioPerfil" method="POST" name="perfil" action="uploadPhoto" enctype="multipart/form-data">
+                    <%- include("flash") %>
+                    <input type="text" name="descripcion" id="descripcion" placeholder="Descripcion foto" class="textoNegro" />
+                    <input type="file" name="foto" id="foto" accept="image/x-png,image/gif,image/jpeg" />
+                    <div class="margen">
+                        <input type="submit" name="modificarPerfil" class="boton botonVerde modificarPerfil" value="Subir">
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </body>
 
