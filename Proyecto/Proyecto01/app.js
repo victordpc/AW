@@ -381,7 +381,7 @@ app.post("/searchAmigos", (request, response, next) => {
             next(err);
         } else {
             response.status(200);
-            response.render("search", {
+            response.render("friends", {
                 personas: result,
                 usr: request.session.usuario,
             });
