@@ -384,10 +384,10 @@ app.post("/searchAmigos", (request, response, next) => {
                 response.render("search", {
                     personas: result,
                     usr: request.session.usuario,
-                
+                    busqueda:request.body.nombre,
                             });
-                        }
-                    });               
+                   }
+            });               
  });
 
 app.get("/makeFriends", (request, response, next) => {
