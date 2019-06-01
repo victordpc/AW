@@ -380,14 +380,15 @@ app.post("/searchAmigos", (request, response, next) => {
         if (err) {
             next(err);
         } else {
-            response.status(200);
-            response.render("friends", {
-                personas: result,
-                usr: request.session.usuario,
-            });
-        }
-    });
-});
+                response.status(200);
+                response.render("search", {
+                    personas: result,
+                    usr: request.session.usuario,
+                
+                            });
+                        }
+                    });               
+ });
 
 app.get("/makeFriends", (request, response, next) => {
     let id = request.query.id;

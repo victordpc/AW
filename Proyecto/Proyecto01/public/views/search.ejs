@@ -21,9 +21,10 @@
                         <input type="submit" name="buscar" id="btnBuscar" value="Buscar">
                     </form>
                 </div>
-        <h2>Lista de personas encontradas</h2>
+        
         <%- include("flash") %>
         <%if (personas.length>0) {%>
+        <h2>Lista de personas encontradas</h2>
         <div class="panelSolocitudAmistad">
             <div class="solicitudes">
                 <ul>
@@ -39,5 +40,8 @@
             </div>
         </div>
         <%}%>
+        <%if (personas.length==0) {%>     
+        <h2>No existe ningún usuario con ese nombre</h2> 
+         <%}%>
     </div>
 </body>

@@ -21,24 +21,8 @@
             </form>
         </div>
         <%- include("flash") %>
-        <h2>Lista de solicitudes</h2>
-        <%if (personas.length>0) {%>
-            <div class="panelSolocitudAmistad">
-                <div class="solicitudes">
-                    <ul>
-                        <% personas.forEach(function(per) { %>
-                        <li>
-                           <div class="usuarioBusqueda"> <img src="/imagen/<%=per.email%>" class="fotoUsuarioBusqueda">
-                            <%=per.nombre%>,<%= per.apellidos%>
-                            <a href="makeFriends?id=<%=per.id%>" class="boton botonVerde">Agregar</a>
-                        </div>
-                        </li>
-                        <% }); %>
-                    </ul>
-                </div>
-            </div>
-            <%}%>
         <%if (solicitudes.length>0) {%>
+            <h2>Lista de solicitudes</h2>
         <div class="panelSolocitudAmistad">
             <div class="solicitudes">
                 <ul>
