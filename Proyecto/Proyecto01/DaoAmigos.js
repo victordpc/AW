@@ -49,9 +49,9 @@ class DAOUsers {
             if (err) {
                 callback(new Error(`Error de conexión a la base de datos`));
             } else { // obtiene la lista de usuarios que han enviado solicitud de amistad a este usuario
-               //a los que se ha enviado solicitud de amistad
+                //a los que se ha enviado solicitud de amistad
                 var sql = ` SELECT amigo2 as id,usuarios.nombre,usuarios.apellidos,usuarios.email FROM amigos LEFT JOIN usuarios on amigos.amigo2=usuarios.id WHERE estado='enviada' and amigo1=?`;
-         // los te han enviado solicitud de amistad
+                // los te han enviado solicitud de amistad
                 var sql2 = ` SELECT amigo1 as id,usuarios.nombre,usuarios.apellidos,usuarios.email FROM amigos LEFT JOIN usuarios on amigos.amigo1=usuarios.id WHERE estado='enviada' and amigo2=?`;
 
                 connection.query(sql2, [id], function (err, datos) {
@@ -59,12 +59,12 @@ class DAOUsers {
                     if (err) {
                         callback(new Error(`Error de acceso a la base de datos`));
                     } else {
-                       connection.query(sql, [id], function (err, datos2) {
+                        connection.query(sql, [id], function (err, datos2) {
                             connection.release();
                             if (err) {
                                 callback(new Error(`Error de acceso a la base de datos`));
                             } else {
-                                callback(null, datos,datos2);
+                                callback(null, datos, datos2);
                             }
                         });
                     }
@@ -94,21 +94,19 @@ class DAOUsers {
                         datos.forEach(persona => {
                             if (persona.a1 == usuario || persona.a2 == usuario ||
                                 persona.a3 == usuario || persona.a4 == usuario) {
-                                resultados = resultados.filter(elem => {return elem.email != persona.email});
+                                resultados = resultados.filter(elem => {
+                                    return elem.email != persona.email
+                                });
                             } else {
-                                if (resultados.length == 0 || resultados.some(elem > elem.nombre == persona.nombre) == false) {
-                                    let encontrado = {
-                                        nombre: persona.nombre,
-                                        apellidos: persona.apellidos,
-                                        id: persona.id,
-                                        email: persona.email,
-                                    };
-                                    resultados.push(encontrado);
-                                }
+                                let encontrado = {
+                                    nombre: persona.nombre,
+                                    apellidos: persona.apellidos,
+                                    id: persona.id,
+                                    email: persona.email,
+                                };
+                                resultados.push(encontrado);
                             }
                         });
-
-
                         callback(null, resultados);
                     }
                 });

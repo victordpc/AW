@@ -49,13 +49,12 @@ class DAOPreguntas {
             } else {
                 var sql = `INSERT INTO respuestas  (idPregunta,texto) VALUES `;
                 var params = []
-                if(Array.isArray(respuestas)) {
+                if (Array.isArray(respuestas)) {
                     respuestas.forEach(element => {
                         sql += '(?,?),';
                         params.push(idpregunta, element);
                     });
-                }
-                else {
+                } else {
                     sql += '(?,?),';
                     params.push(idpregunta, respuestas);
 
