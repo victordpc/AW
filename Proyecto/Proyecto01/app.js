@@ -529,10 +529,11 @@ app.get("/creaPregunta", (request, response, next) => {
 });
 
 app.post("/insertarPregunta", (request, response, next) => {
+    if (request.body.respuesta != undefined){
     daoP.createQuestion(request.body.preguntaText, (err, idPregunta) => {
         if (!err) {
-            if (request.body.respuesta.length >= 0) {
-                daoP.createAnswer(idPregunta, request.body.respuesta, (err, result) => {
+            if (request.body.respuesta != undefined) {
+                daoP.createAnswer(idPregunta, request.body.respuestas, (err, result) => {
                     if (err) {
                         next(err);
                     } else {
@@ -548,6 +549,11 @@ app.post("/insertarPregunta", (request, response, next) => {
             next(err);
         }
     });
+}else{
+    response.setFlash(["Debes introducir al menos dos respuestas"]);
+    response.status(200);
+    response.redirect("/preguntas");  
+}
 });
 
 // Si nadie captura la llamada es un 404
