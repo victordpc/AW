@@ -529,11 +529,11 @@ app.get("/creaPregunta", (request, response, next) => {
 });
 
 app.post("/insertarPregunta", (request, response, next) => {
-    if (request.body.respuesta != undefined){
+    if (request.body.respuesta != undefined && request.body.respuesta.length>=2){
     daoP.createQuestion(request.body.preguntaText, (err, idPregunta) => {
         if (!err) {
             if (request.body.respuesta != undefined) {
-                daoP.createAnswer(idPregunta, request.body.respuestas, (err, result) => {
+                daoP.createAnswer(idPregunta, request.body.respuesta, (err, result) => {
                     if (err) {
                         next(err);
                     } else {
