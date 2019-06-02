@@ -273,7 +273,7 @@ app.get("/my_profile", compruebaUsuario, (request, response, next) => {
             response.render("my_profile", {
                 usuario: result,
                 usr: request.session.usuario,
-                imagenes:result[0].imagenes
+                imagenes: result[0].imagenes
             });
         }
     });
@@ -380,7 +380,7 @@ app.post('/uploadPhoto', multerFactory.single("foto"), (request, response, next)
                     msg: 'Debe adjuntar una fotografía.'
                 });
             }
-            if(request.file.size >= 409600){
+            if (request.file.size >= 409600) {
                 errores.push('El máximo es de 400 kb.');
             }
             response.status(200);
@@ -407,7 +407,7 @@ app.get("/user_profile", compruebaUsuario, (request, response, next) => {
             response.render("user_profile", {
                 usuario: result,
                 usr: request.session.usuario,
-                imagenes:result[0].imagenes
+                imagenes: result[0].imagenes
             });
         }
     });
@@ -501,11 +501,11 @@ app.get("/desconectar", (request, response, next) => {
 /****************PREGUNTAS ****************************** */
 /******************************************************** */
 app.get("/preguntas", compruebaUsuario, (request, response, next) => {
-    daoP.getQuestionList(request.session.currentUser,(err, preguntas) => {
+    daoP.getQuestionList(request.session.currentUser, (err, preguntas) => {
         if (err) {
             next(err);
         } else {
-            var preguntasEscogidas =ObtenerPreguntasAleatorias(preguntas);
+            var preguntasEscogidas = ObtenerPreguntasAleatorias(preguntas);
             response.status(200);
             response.render("preguntas", {
                 respuestas: [],
@@ -545,7 +545,7 @@ app.get("/procesarPregunta", (request, response, next) => {
 });
 
 app.post("/responder", (request, response, next) => {
-    if (request.body.respuesta != Number) { 
+    if (request.body.respuesta != Number) {
         daoP.createAnswer(request.body.idPregunta, request.body.respuesta, (err, respuesta) => {
             if (!err) {
                 let resp = {
@@ -594,53 +594,53 @@ app.get("/creaPregunta", (request, response, next) => {
 });
 
 app.post("/insertarPregunta", (request, response, next) => {
-    if (request.body.respuesta != undefined && request.body.respuesta.length>=2){
-    daoP.createQuestion(request.body.preguntaText, (err, idPregunta) => {
-        if (!err) {
-            if (request.body.respuesta != undefined) {
-                daoP.createAnswer(idPregunta, request.body.respuesta, (err, result) => {
-                    if (err) {
-                        next(err);
-                    } else {
-                        response.redirect("/preguntas");
-                    }
-                });
+    if (request.body.respuesta != undefined && request.body.respuesta.length >= 2) {
+        daoP.createQuestion(request.body.preguntaText, (err, idPregunta) => {
+            if (!err) {
+                if (request.body.respuesta != undefined) {
+                    daoP.createAnswer(idPregunta, request.body.respuesta, (err, result) => {
+                        if (err) {
+                            next(err);
+                        } else {
+                            response.redirect("/preguntas");
+                        }
+                    });
+                } else {
+                    response.setFlash([{
+                        msg: "Debes introducir al menos dos respuestas"
+                    }]);
+                    response.status(200);
+                    response.redirect("/preguntas");
+                }
             } else {
-                response.setFlash([{
-                    msg: "Debes introducir al menos dos respuestas"
-                }]);
-                response.status(200);
-                response.redirect("/preguntas");
+                next(err);
             }
-        } else {
-            next(err);
-        }
-    });
-}else{
-    response.setFlash(["Debes introducir al menos dos respuestas"]);
-    response.status(200);
-    response.redirect("/preguntas");  
-}
+        });
+    } else {
+        response.setFlash(["Debes introducir al menos dos respuestas"]);
+        response.status(200);
+        response.redirect("/preguntas");
+    }
 });
 //**********FUNCION RANDOM PARA MOSTRAR PREGUNTAS *** */
 /************************************************** */
-function ObtenerPreguntasAleatorias(listaPreguntas ) {
-           var random=0; //numero random entre 1 y el numero de preguntas que haya 
-           var listaRandom=[];
-           var preguntasEscogidas=[];
-            while(listaRandom.length!=5){
-                random = Math.floor(Math.random() * listaPreguntas.length) + 1;
-                var isIn=listaRandom.find(function(element) { 
-                    return element ===random; 
-                  });//busco si ya tengo este número random
-               if( isIn == undefined ){ //si no está lo añado a PreguntasEscogidas
-                    listaRandom.push(random);
-               }
-            }
-            for (var i=0;i<listaRandom.length;i++ ){
-                preguntasEscogidas.push(listaPreguntas[i]);
-            }
-           return preguntasEscogidas;
+function ObtenerPreguntasAleatorias(listaPreguntas) {
+    var random = 0; //numero random entre 1 y el numero de preguntas que haya 
+    var listaRandom = [];
+    var preguntasEscogidas = [];
+    while (listaRandom.length != 5) {
+        random = Math.floor(Math.random() * listaPreguntas.length) + 1;
+        var isIn = listaRandom.find(function (element) {
+            return element === random;
+        }); //busco si ya tengo este número random
+        if (isIn == undefined) { //si no está lo añado a PreguntasEscogidas
+            listaRandom.push(random);
+        }
+    }
+    for (var i = 0; i < listaRandom.length; i++) {
+        preguntasEscogidas.push(listaPreguntas[i]);
+    }
+    return preguntasEscogidas;
 }
 
 // Si nadie captura la llamada es un 404

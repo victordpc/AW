@@ -126,10 +126,10 @@ class DaoUsers {
                             const sql2 = `SELECT fotografias.id FROM fotografias WHERE fotografias.idUsuario= ?`;
                             connection.query(sql2, [id], function (err, datos2) {
                                 connection.release();
-                                if(err){
+                                if (err) {
                                     callback(new Error(`Error de acceso a la base de datos`));
-                                }else{
-                                    datos[0].imagenes=datos2;
+                                } else {
+                                    datos[0].imagenes = datos2;
                                     callback(null, datos);
                                 }
                             });
@@ -193,11 +193,19 @@ class DaoUsers {
             } else {
                 const sql = `INSERT INTO fotografias (idUsuario, comentario, foto) VALUES (?,?,?)`;
                 connection.query(sql, [foto.id, foto.descripcion, foto.foto], function (err, datos) {
-                    connection.release();
                     if (err) {
+                        connection.release();
                         callback(new Error(`Error al insertar usuario`));
                     } else {
-                        callback(null, datos.insertId);
+                        const sql2 = `UPDATE usuarios set puntos=puntos-100 where id=?`;
+                        connection.query(sql2, [foto.id], function (err) {
+                            connection.release();
+                            if (err) {
+                                callback(new Error(`Error al insertar usuario`));
+                            } else {
+                                callback(null, datos.insertId);
+                            }
+                        });
                     }
                 });
             }
@@ -228,7 +236,7 @@ class DaoUsers {
             }
         });
     }
-    
+
 }
 
 module.exports = DaoUsers;
