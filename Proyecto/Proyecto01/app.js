@@ -501,15 +501,16 @@ app.get("/desconectar", (request, response, next) => {
 /****************PREGUNTAS ****************************** */
 /******************************************************** */
 app.get("/preguntas", compruebaUsuario, (request, response, next) => {
-    daoP.getQuestionList((err, preguntas) => {
+    daoP.getQuestionList(request.session.currentUser,(err, preguntas) => {
         if (err) {
             next(err);
         } else {
+            var preguntasEscogidas =ObtenerPreguntasAleatorias(preguntas);
             response.status(200);
             response.render("preguntas", {
                 respuestas: [],
                 sePuedeCrearPregunta: true,
-                preguntas: preguntas,
+                preguntas: preguntasEscogidas,
                 pregunta: '',
                 creandoPregunta: false,
                 usr: request.session.usuario,
@@ -544,7 +545,7 @@ app.get("/procesarPregunta", (request, response, next) => {
 });
 
 app.post("/responder", (request, response, next) => {
-    if (request.body.respuesta != Number) {
+    if (request.body.respuesta != Number) { 
         daoP.createAnswer(request.body.idPregunta, request.body.respuesta, (err, respuesta) => {
             if (!err) {
                 let resp = {
@@ -621,6 +622,26 @@ app.post("/insertarPregunta", (request, response, next) => {
     response.redirect("/preguntas");  
 }
 });
+//**********FUNCION RANDOM PARA MOSTRAR PREGUNTAS *** */
+/************************************************** */
+function ObtenerPreguntasAleatorias(listaPreguntas ) {
+           var random=0; //numero random entre 1 y el numero de preguntas que haya 
+           var listaRandom=[];
+           var preguntasEscogidas=[];
+            while(listaRandom.length!=5){
+                random = Math.floor(Math.random() * listaPreguntas.length) + 1;
+                var isIn=listaRandom.find(function(element) { 
+                    return element ===random; 
+                  });//busco si ya tengo este número random
+               if( isIn == undefined ){ //si no está lo añado a PreguntasEscogidas
+                    listaRandom.push(random);
+               }
+            }
+            for (var i=0;i<listaRandom.length;i++ ){
+                preguntasEscogidas.push(listaPreguntas[i]);
+            }
+           return preguntasEscogidas;
+}
 
 // Si nadie captura la llamada es un 404
 app.use(function (request, response, next) {

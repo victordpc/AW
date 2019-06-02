@@ -50,11 +50,13 @@ CREATE TABLE listaRespuestas(
 CREATE TABLE listaAdivinanzas(
   id int(11) NOT NULL AUTO_INCREMENT,
   idListaRespuesta int NOT NULL,
-  idUsuarioAdivina int NOT NULL, 
-  estado BOOLEAN NOT NULL,
+  idAdivinador int NOT NULL, 
+  idAdivinado int NOT NULL, 
+  estado BIT NOT NULL DEFAULT 0,
   PRIMARY KEY (id),
   FOREIGN KEY (idListaRespuesta) REFERENCES listaRespuestas(id),
-  FOREIGN KEY (idUsuarioAdivina) REFERENCES usuarios(id)
+  FOREIGN KEY (idAdivinador) REFERENCES usuarios(id),
+  FOREIGN KEY (idAdivinado) REFERENCES usuarios(id)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE fotografias(
