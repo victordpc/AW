@@ -141,6 +141,8 @@ app.get("/imagen2/:id", (request, response, next) => {
 
 //******************************************************* */
 //***************************Raiz************************ */
+//******************************************************* */
+
 // Manejador para raiz
 app.get("/", (request, response, next) => {
     response.status(200);
@@ -492,6 +494,8 @@ app.get("/rejectFriend", (request, response, next) => {
 
 //******************************************************* */
 //****************************LOGOUT********************* */
+//******************************************************* */
+
 app.get("/desconectar", (request, response, next) => {
     response.status(200);
     response.redirect("/index");
@@ -500,6 +504,7 @@ app.get("/desconectar", (request, response, next) => {
 /******************************************************** */
 /****************PREGUNTAS ****************************** */
 /******************************************************** */
+
 app.get("/preguntas", compruebaUsuario, (request, response, next) => {
     daoP.getQuestionList(request.session.currentUser, (err, preguntas) => {
         if (err) {
@@ -622,8 +627,11 @@ app.post("/insertarPregunta", (request, response, next) => {
         response.redirect("/preguntas");
     }
 });
-//**********FUNCION RANDOM PARA MOSTRAR PREGUNTAS *** */
-/************************************************** */
+
+//******************************************************* */
+//**********FUNCION RANDOM PARA MOSTRAR PREGUNTAS******** */
+//******************************************************* */
+
 function ObtenerPreguntasAleatorias(listaPreguntas) {
     var random = 0; //numero random entre 1 y el numero de preguntas que haya 
     var listaRandom = [];
