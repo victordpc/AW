@@ -115,13 +115,26 @@ class DaoUsers {
             } else {
                 const sql = `SELECT id, nombre, fechaNac, genero, puntos, email, apellidos FROM usuarios WHERE id = ?`;
                 connection.query(sql, [id], function (err, datos) {
-                    connection.release();
                     if (err) {
+                        connection.release();
                         callback(new Error(`Error de acceso a la base de datos`));
                     } else {
                         if (datos.length != 0) {
-                            callback(null, datos);
+
+                            //Cogemos las fotos que ha subido el usuario
+                            // SELECT fotografias.id FROM fotografias left join usuarios on usuarios.id=fotografias.idUsuario WHERE usuarios.email='vic@tor.com'
+                            const sql2 = `SELECT fotografias.id FROM fotografias WHERE fotografias.idUsuario= ?`;
+                            connection.query(sql2, [id], function (err, datos2) {
+                                connection.release();
+                                if(err){
+                                    callback(new Error(`Error de acceso a la base de datos`));
+                                }else{
+                                    datos[0].imagenes=datos2;
+                                    callback(null, datos);
+                                }
+                            });
                         } else {
+                            connection.release();
                             callback(new Error(`No existe el usuario`));
                         }
                     }
@@ -190,6 +203,32 @@ class DaoUsers {
             }
         });
     }
+
+    // obtiene el nombre de fichero que contiene la imagen de perfil de un usuario cuyo identificador en la base de datos es email.
+    getUploadedPhoto(email, callback = function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("OPERACION FINALIZADA CORRECTAMENTE");
+        }
+    }) {
+        this._pool.getConnection(function (err, connection) {
+            if (err) {
+                callback(new Error(`Error de conexión a la base de datos`));
+            } else {
+                const sql = `Select foto from fotografias where id = ?`;
+                connection.query(sql, [email], function (err, datos) {
+                    connection.release();
+                    if (err) {
+                        callback(new Error(`Error de acceso a la base de datos`));
+                    } else {
+                        callback(null, datos[0].foto);
+                    }
+                });
+            }
+        });
+    }
+    
 }
 
 module.exports = DaoUsers;

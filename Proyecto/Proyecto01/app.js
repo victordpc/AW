@@ -112,12 +112,22 @@ app.get("/imagen/:email", (request, response, next) => {
     }
 });
 
-app.get("/imagen2/:email", (request, response, next) => {
+function obtenerImagenPerfil(id, callback) {
+    daoU.getUploadedPhoto(id, (err, imagen) => {
+        if (err) {
+            console.log(err.message);
+        } else {
+            callback(null, imagen);
+        }
+    });
+}
+
+app.get("/imagen2/:id", (request, response, next) => {
     if (request.session.currentUser == undefined) {
         response.status(400);
         response.end("Petición incorrecta");
     } else {
-        ObtenerImagen(request.params.email, (err, imagen) => {
+        obtenerImagenPerfil(request.params.id, (err, imagen) => {
             if (imagen) {
                 response.status(200);
                 response.end(imagen);
@@ -263,6 +273,7 @@ app.get("/my_profile", compruebaUsuario, (request, response, next) => {
             response.render("my_profile", {
                 usuario: result,
                 usr: request.session.usuario,
+                imagenes:result[0].imagenes
             });
         }
     });
@@ -338,7 +349,7 @@ app.post('/uploadPhoto', multerFactory.single("foto"), (request, response, next)
 
     request.getValidationResult().then((result) => {
         // El método isEmpty() devuelve true si las comprobaciones no han detectado ningún error
-        if (result.isEmpty() && request.file) {
+        if (result.isEmpty() && request.file && request.file.size < 409600) {
             let upFoto = {
                 id: request.session.currentUser,
                 descripcion: request.body.descripcion,
@@ -369,6 +380,9 @@ app.post('/uploadPhoto', multerFactory.single("foto"), (request, response, next)
                     msg: 'Debe adjuntar una fotografía.'
                 });
             }
+            if(request.file.size >= 409600){
+                errores.push('El máximo es de 400 kb.');
+            }
             response.status(200);
             response.setFlash(errores);
             response.redirect('my_profile');
@@ -393,8 +407,8 @@ app.get("/user_profile", compruebaUsuario, (request, response, next) => {
             response.render("user_profile", {
                 usuario: result,
                 usr: request.session.usuario,
+                imagenes:result[0].imagenes
             });
-
         }
     });
 });

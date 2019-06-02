@@ -6,7 +6,8 @@
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="../css/principal.css" media="screen">
     <link rel="stylesheet" type="text/css" href="../css/my_profile.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="css/imprimir.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="../css/carrousel.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="../css/imprimir.css" media="print" />
     <link rel="icon" href="img/favicon.jpg" type="image/x-icon" />
 </head>
 
@@ -29,9 +30,7 @@
                 <p class="puntos"><%=usuario[0].puntos%> puntos</p>
             </div>
         </div>
-        <div class="Fotos">
-            <div class="carrouselFotos"></div>
-        </div>
+        <%- include('carrousel') %>
     </div>
 </body>
 
