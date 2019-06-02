@@ -39,7 +39,7 @@
             </div>
         </div>
         <%}%>
-
+        <%if (pregunta.respondido ==0) {%>
         <%if (respuestas.length>0) {%>
         <%=pregunta.texto%>
         <div class="elegirRespuestas">
@@ -62,6 +62,53 @@
             </div>
         </div>
         <%}%>
+        <%}%>
+        <div>
+            <%if (amigosQueHanContestado.length > 0) {%>
+                <div class="PanelAmigosComunAPregunta">
+                    <div class="AmigosQueHanContestado">
+                        <ul>
+                            <% amigosQueHanContestado.forEach(function(amigo) { %>
+                            <li>
+                                <div class="RespuestasAmigos">
+                                    <a href="user_profile?id=<%=amigo.id%>">
+                                        <img src="/imagen/<%=amigo.email%>" class="imagenPerfil">
+                                    </a>
+                                    <a href="user_profile?id=<%=amigo.id%>" class="enlacePersona">
+                                        <p class="nombreUsuario"><%=amigo.nombre%>, <%= amigo.apellidos%></p>
+                                    </a>
+                                    <a href="/Adivinar?id=<%=amigo.id%>" class="boton botonVerde botonSmall">Adivinar</a>
+                                </div>
+                            </li>
+                            <% }); %>
+                        </ul>
+                    </div>
+                </div>
+            <%}%>    
+        </div>
+        <%if (AmigosAdivinados.length > 0) {%>
+        <div class="amigosAlosQueHeAdivinado">
+            <ul>
+                <% AmigosAdivinados.forEach(function(amigo) { %>
+                <li>
+                    <div class="solicitudesAmigos">
+                        <a href="user_profile?id=<%=amigo.id%>">
+                            <img src="/imagen/<%=amigo.email%>" class="imagenPerfil">
+                        </a>
+                        <a href="user_profile?id=<%=amigo.id%>" class="enlacePersona">
+                            <p class="nombreUsuario"><%=amigo.nombre%>, <%= amigo.apellidos%></p>
+                        </a>
+                        <%if (amigo.estado== 0) {%>
+                            Has fallado
+                            <%}else{%>
+                                Has acertado
+                                <%}%>
+                  </div>
+                </li>
+                <% }); %>
+            </ul>
+        </div>
+        <%}%> 
 
         <%if (sePuedeCrearPregunta) {%>
         <div class=crearpregunta>
@@ -80,5 +127,6 @@
                     <button id="anyadirRespuesta"> Agregar Respuesta </button>
             </div>
         <%}%>
+
     </div>
 </body>

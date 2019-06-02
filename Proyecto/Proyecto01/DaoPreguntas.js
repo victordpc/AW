@@ -80,7 +80,7 @@ class DAOPreguntas {
             }
         });
     }
-    getQuestion(id, callback = function (err) {
+    getQuestion(id,idUsuario, callback = function (err) {
         if (err) {
             console.log("Error getting question");
         } else {
@@ -91,8 +91,8 @@ class DAOPreguntas {
             if (err) {
                 callback(new Error("Error de conexión a la base de datos"));
             } else {
-                const sql = `SELECT * FROM preguntas WHERE id=?`;
-                connection.query(sql, [id], function (err, datos) {
+                const sql = `SELECT id,texto,CASE WHEN (SELECT id FROM listarespuestas WHERE idUsuario = ? AND idPregunta=p.id) THEN 1 ELSE 0 END as respondido FROM preguntas p WHERE p.id=?`;
+                connection.query(sql, [idUsuario,id], function (err, datos) {
                     connection.release();
                     if (err) {
                         callback(new Error(`Error al buscar la pregunta`));
@@ -139,12 +139,34 @@ class DAOPreguntas {
             if (err) {
                 callback(new Error("Error de conexión a la base de datos"));
             } else {// seleccionar preguntas que no han sido respondidas por el usuario actual
-                const sql = `SELECT * FROM preguntas WHERE id NOT IN (SELECT idPregunta FROM listarespuestas
-                   WHERE idUsuario = ?)`
+                const sql = `SELECT id,texto,CASE WHEN (SELECT id FROM listarespuestas WHERE idUsuario = ? AND idPregunta=p.id) THEN 1 ELSE 0 END as respondido FROM preguntas p`
                 connection.query(sql, [id],function (err, datos) {
                     connection.release();
                     if (err) {
                         callback(new Error(`Error al listar preguntas`));
+                    } else {
+                        callback(null, datos);
+                    }
+                });
+            }
+        });
+    }
+    isAlreadyAnswered(idUsuario, idPregunta,callback = function (err) {
+        if (err) {
+            console.log("Error getting questions");
+        } else {
+            console.log("questions given");
+        }
+    }) {
+        this._pool.getConnection(function (err, connection) {
+            if (err) {
+                callback(new Error("Error de conexión a la base de datos"));
+            } else {// seleccionar preguntas que no han sido respondidas por el usuario actual
+                const sql = `SELECT * FROM listarespuestas WHERE idUsuario = ? AND idPregunta=?)`
+                connection.query(sql, [idUsuario,idPregunta],function (err, datos) {
+                    connection.release();
+                    if (err) {
+                        callback(new Error(`Error al intentar saber si el usuario había contestado esta pregunta`));
                     } else {
                         callback(null, datos);
                     }
@@ -218,6 +240,30 @@ class DAOPreguntas {
                     connection.release();
                     if (err) {
                         callback(new Error(`Error al listar respuestas`));
+                    } else {
+                        callback(null, datos);
+                    }
+                });
+            }
+        });
+    }
+
+    getGuessList(idUsuario, callback = function(err){
+        if (!error){
+            console.log("Guess list given");
+        }
+    }){
+        this._pool.getConnection(function (err, connection) {
+            if (err) {
+                callback(new Error("Error de conexión a la base de datos"));
+            } else {
+
+                const sql = `SELECT adiv.idAdivinado, adiv.estado FROM  listaadivinanzas adiv JOIN amigos a ON (adiv.idAdivinador=a.amigo1 AND adiv.idAdivinado= a.amigo2)	OR  (adiv.idAdivinador=a.amigo2 AND adiv.idAdivinado= a.amigo1)	AND a.estado = 'aceptada'	
+                WHERE adiv.idAdivinador = ? `;
+                connection.query(sql, [idUsuario], function (err, datos) {
+                    connection.release();
+                    if (err) {
+                        callback(new Error(`Error al lista adivinanzas`));
                     } else {
                         callback(null, datos);
                     }
