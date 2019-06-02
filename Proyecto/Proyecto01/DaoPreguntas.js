@@ -81,7 +81,6 @@ class DAOPreguntas {
         });
     }
     getQuestion(id, callback = function (err) {
-        // createUser(Nombre, password, fechaNac, email, genero, foto, callback = function (err) {
         if (err) {
             console.log("Error getting question");
         } else {

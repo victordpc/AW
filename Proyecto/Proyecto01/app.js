@@ -555,6 +555,33 @@ app.post("/insertarPregunta", (request, response, next) => {
     response.redirect("/preguntas");  
 }
 });
+//**********FUNCION RANDOM PARA MOSTRAR PREGUNTAS *** */
+/************************************************** */
+
+function ObtenerPreguntasAleatorias( callback) {
+    daoU.getQuestionList((err, listaPreguntas) => {
+        if (err) {
+            console.log(err.message);
+        } else {
+           var random=0;; //numero random entre 1 y el numero de preguntas que haya 
+           var listaRandom=[];
+           var preguntasEscogidas=[];
+            while(listaRandom.length!=5){
+                random = Math.floor(Math.random() * listaPreguntas.length) + 1;
+                var isIn=listaRandom.find(function(element) { 
+                    return element ===random; 
+                  });//busco si ya tengo este número random
+               if( isIn == undefinded ){ //si no está lo añado a PreguntasEscogidas
+                    listaRandom.push(random);
+               }
+            }
+            for (var i=0;i<listaRandom.length;i++ ){
+                preguntasEscogidas.push(listaPreguntas[i]);
+            }
+            callback(null,preguntasEscogidas);
+        }
+    });
+}
 
 // Si nadie captura la llamada es un 404
 app.use(function (request, response, next) {
