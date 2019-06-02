@@ -52,6 +52,7 @@ CREATE TABLE listaAdivinanzas(
   idListaRespuesta int NOT NULL,
   idAdivinador int NOT NULL, 
   idAdivinado int NOT NULL, 
+  estado BIT NOT NULL DEFAULT 0,
   PRIMARY KEY (id),
   FOREIGN KEY (idListaRespuesta) REFERENCES listaRespuestas(id),
   FOREIGN KEY (idAdivinador) REFERENCES usuarios(id),
