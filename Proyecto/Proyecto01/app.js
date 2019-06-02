@@ -487,7 +487,7 @@ app.get("/desconectar", (request, response, next) => {
 /****************PREGUNTAS ****************************** */
 /******************************************************** */
 app.get("/preguntas", compruebaUsuario, (request, response, next) => {
-    daoP.getQuestionList((err, preguntas) => {
+    daoP.getQuestionList(request.session.currentUser,(err, preguntas) => {
         if (err) {
             next(err);
         } else {
