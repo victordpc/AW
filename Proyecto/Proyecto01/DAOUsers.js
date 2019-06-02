@@ -2,7 +2,7 @@
 
 //const mysql = require("mysql");
 
-class DAOUsers {
+class DaoUsers {
     constructor(pool) {
         if (pool == undefined) {
             throw "Pool not defined"
@@ -167,6 +167,29 @@ class DAOUsers {
         });
     }
 
+    uploadFoto(foto, callback = function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("OPERACION FINALIZADA CORRECTAMENTE");
+        }
+    }) {
+        this._pool.getConnection(function (err, connection) {
+            if (err) {
+                callback(new Error("Error de conexión a la base de datos"));
+            } else {
+                const sql = `INSERT INTO fotografias (idUsuario, comentario, foto) VALUES (?,?,?)`;
+                connection.query(sql, [foto.id, foto.descripcion, foto.foto], function (err, datos) {
+                    connection.release();
+                    if (err) {
+                        callback(new Error(`Error al insertar usuario`));
+                    } else {
+                        callback(null, datos.insertId);
+                    }
+                });
+            }
+        });
+    }
 }
 
-module.exports = DAOUsers;
+module.exports = DaoUsers;

@@ -57,6 +57,15 @@ CREATE TABLE listaAdivinanzas(
   FOREIGN KEY (idUsuarioAdivina) REFERENCES usuarios(id)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE fotografias(
+  id int(11) NOT NULL AUTO_INCREMENT,
+  idUsuario int(11) NOT NULL,
+  comentario  varchar(2000) NOT NULL,
+  foto BLOB,
+  PRIMARY KEY (id),
+  FOREIGN KEY (idUsuario) REFERENCES usuarios(id)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 INSERT INTO `preguntas`(`texto`) VALUES ('en un golpe de castigo a 15 a favor, ¿por qué tipo de jugada te decantarías?');
 INSERT INTO `preguntas`(`texto`) VALUES ('lo mejor de los terceros tiempos es... ');
 INSERT INTO `respuestas`(`idPregunta`, `texto`) VALUES ('1', 'ensayo de maul');

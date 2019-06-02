@@ -129,8 +129,8 @@ app.get("/imagen2/:email", (request, response, next) => {
     }
 });
 
-//****************************************************************** */
-//***************************Raiz*********************************** */
+//******************************************************* */
+//***************************Raiz************************ */
 // Manejador para raiz
 app.get("/", (request, response, next) => {
     response.status(200);
@@ -178,10 +178,11 @@ app.post("/newUser", multerFactory.single("foto"), (request, response, next) => 
             }
             daoU.createUser(usuario, (err, result) => {
                 if (!err) {
-                    cargarUsuarioRedirigePerfil(result,next, request, response);
+                    cargarUsuarioRedirigePerfil(result, next, request, response);
                 } else {
-                    texto = 'Error del sistema intentelo de nuevo más tarde';
-                    response.setFlash([texto]);
+                    response.setFlash([{
+                        msg: 'Error del sistema intentelo de nuevo más tarde'
+                    }]);
                     response.redirect("/new_user");
                     console.log(err);
                 }
@@ -229,13 +230,17 @@ app.post("/login", (request, response, next) => {
                     }
                 });
             } else {
-                response.setFlash(['Usuario y/o contraseña incorrectos']);
+                response.setFlash([{
+                    msg: 'Usuario y/o contraseña incorrectos'
+                }]);
                 response.status(200);
                 response.redirect("/login");
             }
         } else {
             console.log("Usuario y/o contraseña incorrectos - ?", request.body.email);
-            response.setFlash(['Usuario y/o contraseña incorrectos']);
+            response.setFlash([{
+                msg: 'Usuario y/o contraseña incorrectos'
+            }]);
             response.status(200);
             response.redirect("/login");
         }
@@ -313,7 +318,9 @@ app.post('/updateProfile', multerFactory.single("foto"), (request, response, nex
                     response.status(200);
                     response.redirect('my_profile');
                 } else {
-                    response.setFlash(['Error del sistema intentelo de nuevo más tarde']);
+                    response.setFlash([{
+                        msg: 'Error del sistema intentelo de nuevo más tarde'
+                    }]);
                     response.status(500);
                     response.redirect('editProfile');
                 }
@@ -322,6 +329,49 @@ app.post('/updateProfile', multerFactory.single("foto"), (request, response, nex
             response.status(200);
             response.setFlash(result.array());
             response.redirect('editProfile');
+        }
+    });
+});
+
+app.post('/uploadPhoto', multerFactory.single("foto"), (request, response, next) => {
+    request.checkBody("descripcion", "Debe incluir una descripción").notEmpty();
+
+    request.getValidationResult().then((result) => {
+        // El método isEmpty() devuelve true si las comprobaciones no han detectado ningún error
+        if (result.isEmpty() && request.file) {
+            let upFoto = {
+                id: request.session.currentUser,
+                descripcion: request.body.descripcion,
+                foto: request.file.buffer
+            }
+
+            daoU.uploadFoto(upFoto, (err, result) => {
+                if (result) {
+                    response.status(200);
+                    response.redirect('my_profile');
+                } else {
+                    response.setFlash([{
+                        msg: 'Error del sistema intentelo de nuevo más tarde'
+                    }]);
+                    response.status(500);
+                    response.redirect('my_profile');
+                }
+            });
+        } else {
+            var errores = [];
+            if (result.array().length > 0) {
+                for (let index = 0; index < result.array().length; index++) {
+                    errores.push(result.array()[index]);
+                }
+            }
+            if (!request.file) {
+                errores.push({
+                    msg: 'Debe adjuntar una fotografía.'
+                });
+            }
+            response.status(200);
+            response.setFlash(errores);
+            response.redirect('my_profile');
         }
     });
 });
@@ -349,16 +399,16 @@ app.get("/user_profile", compruebaUsuario, (request, response, next) => {
     });
 });
 
-//************************************************************* */
-//************************Amigos*****************************************
-//************************************************************************
+//******************************************************* */
+//************************Amigos************************* */
+//******************************************************* */
 
 app.get("/friends", compruebaUsuario, (request, response, next) => {
     daoA.friendsList(request.session.currentUser, (err, datosAmigos) => {
         if (err) {
             next(err);
         } else {
-            daoA.friendsRequestList(request.session.currentUser, (err, datosSolicitudes,datosSolicitudEnviada) => {
+            daoA.friendsRequestList(request.session.currentUser, (err, datosSolicitudes, datosSolicitudEnviada) => {
                 if (err) {
                     next(err);
                 } else {
@@ -366,7 +416,7 @@ app.get("/friends", compruebaUsuario, (request, response, next) => {
                     response.render("friends", {
                         amigos: datosAmigos,
                         solicitudes: datosSolicitudes,
-                        solHechas:datosSolicitudEnviada,
+                        solHechas: datosSolicitudEnviada,
                         usr: request.session.usuario,
                     });
                 }
@@ -380,15 +430,15 @@ app.post("/searchAmigos", (request, response, next) => {
         if (err) {
             next(err);
         } else {
-                response.status(200);
-                response.render("search", {
-                    personas: result,
-                    usr: request.session.usuario,
-                    busqueda:request.body.nombre,
-                            });
-                   }
-            });               
- });
+            response.status(200);
+            response.render("search", {
+                personas: result,
+                usr: request.session.usuario,
+                busqueda: request.body.nombre,
+            });
+        }
+    });
+});
 
 app.get("/makeFriends", (request, response, next) => {
     let id = request.query.id;
@@ -426,8 +476,8 @@ app.get("/rejectFriend", (request, response, next) => {
     });
 });
 
-//******************************************************************** */
-//****************************LOGOUT********************** */
+//******************************************************* */
+//****************************LOGOUT********************* */
 app.get("/desconectar", (request, response, next) => {
     response.status(200);
     response.redirect("/index");
@@ -541,7 +591,9 @@ app.post("/insertarPregunta", (request, response, next) => {
                     }
                 });
             } else {
-                response.setFlash(["Debes introducir al menos dos respuestas"]);
+                response.setFlash([{
+                    msg: "Debes introducir al menos dos respuestas"
+                }]);
                 response.status(200);
                 response.redirect("/preguntas");
             }
@@ -618,12 +670,11 @@ app.listen(config.port, (err) => {
     }
 });
 
-function cargarUsuarioRedirigePerfil(idUsuario,next, request, response) {
+function cargarUsuarioRedirigePerfil(idUsuario, next, request, response) {
     daoU.getUserData(idUsuario, (err, result) => {
         if (err) {
             next(err);
-        }
-        else {
+        } else {
             let usr = {
                 email: result[0].email,
                 nombre: result[0].nombre,
