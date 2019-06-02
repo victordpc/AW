@@ -579,7 +579,35 @@ app.post("/responder", (request, response, next) => {
         });
     }
 });
+app.get("/mostrarRespuestas", (request,response, next)=>{
+    let id = request.query.id;
+    daoP.getQuestion(id, request.session.currentUser, (err, pregunta) => {
+        if (!err) {
+            daoP.getAnswerList(id, (err, respuestas) => {
+                if (!err) {
+                    daoP.getGuessList(request.session.currentUser, (err, listaAdivinados) => {
+                        if (err) {
+                            next(err);
+                        } else {
+                            response.status(200);
+                            response.render("preguntas", {
+                                respuestas: respuestas,
+                                amigosQueHanContestado: [],
+                                AmigosAdivinados: listaAdivinados,
+                                sePuedeCrearPregunta: false,
+                                preguntas: [],
+                                pregunta: pregunta[0],
+                                creandoPregunta: false,
+                                usr: request.session.usuario,
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    });
 
+}); 
 app.get("/creaPregunta", (request, response, next) => {
     response.status(200);
     response.render("preguntas", {
@@ -629,9 +657,7 @@ function ObtenerPreguntasAleatorias(listaPreguntas) {
     var random = 0; //numero random entre 1 y el numero de preguntas que haya 
     var listaRandom = [];
     var preguntasEscogidas = [];
-    var max = listaPreguntas.length; // por si acaso hay menos preguntas 
-    if (max >= 5) max = 5;
-    while (listaRandom.length != max) {
+    while (listaRandom.length != 5) {
         random = Math.floor(Math.random() * listaPreguntas.length) + 1;
         var isIn = listaRandom.find(function (element) {
             return element === random;
@@ -641,7 +667,7 @@ function ObtenerPreguntasAleatorias(listaPreguntas) {
         }
     }
     for (var i = 0; i < listaRandom.length; i++) {
-        preguntasEscogidas.push(listaPreguntas[i]);
+        preguntasEscogidas.push(listaPreguntas[listaRandom[i]]);
     }
     return preguntasEscogidas;
 }

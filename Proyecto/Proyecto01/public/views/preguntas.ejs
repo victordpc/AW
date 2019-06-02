@@ -40,9 +40,13 @@
         </div>
         <%}%>
         <%if (pregunta.respondido ==0) {%>
-        <%if (respuestas.length>0) {%>
-        <%=pregunta.texto%>
-        <div class="elegirRespuestas">
+            No has contestado a esta pregunta
+            <div class=mostrarRespuestas>
+                <a id="mostrarRespuestas" href="mostrarRespuestas" value="Responder"></a>
+            </div>
+            <%if (respuestas.length>0) {%>
+            <%=pregunta.texto%>
+            <div class="elegirRespuestas">
             <form action="responder" method="POST">
                 <input type="text" name="idPregunta" class="oculto" value=<%=pregunta.id%>>
                 <ul id="listaRespuestasDelSistema">
@@ -60,8 +64,8 @@
             <div>
                     <button id="anyadirRespuestaPropia">Añadir mi respuesta</button>
             </div>
-        </div>
-        <%}%>
+             </div>
+            <%}%>
         <%}%>
         <div>
             <%if (amigosQueHanContestado.length > 0) {%>
