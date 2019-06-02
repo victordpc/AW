@@ -128,7 +128,7 @@ class DAOPreguntas {
             }
         });
     }
-    getQuestionList(id,callback = function (err) {
+    getQuestionList(id, callback = function (err) {
         if (err) {
             console.log("Error getting questions");
         } else {
@@ -138,9 +138,16 @@ class DAOPreguntas {
         this._pool.getConnection(function (err, connection) {
             if (err) {
                 callback(new Error("Error de conexión a la base de datos"));
+<<<<<<< HEAD
             } else {// seleccionar preguntas que no han sido respondidas por el usuario actual
                 const sql = `SELECT id,texto,CASE WHEN (SELECT id FROM listarespuestas WHERE idUsuario = ? AND idPregunta=p.id) THEN 1 ELSE 0 END as respondido FROM preguntas p`
                 connection.query(sql, [id],function (err, datos) {
+=======
+            } else { // seleccionar preguntas que no han sido respondidas por el usuario actual
+                const sql = `SELECT * FROM preguntas WHERE id NOT IN (SELECT idPregunta FROM listarespuestas
+                   WHERE idUsuario = ?)`
+                connection.query(sql, [id], function (err, datos) {
+>>>>>>> 1437064872747ed4d48702d390273681f1caa70b
                     connection.release();
                     if (err) {
                         callback(new Error(`Error al listar preguntas`));

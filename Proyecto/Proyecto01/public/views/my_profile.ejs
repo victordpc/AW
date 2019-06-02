@@ -6,7 +6,8 @@
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="../css/principal.css" media="screen">
     <link rel="stylesheet" type="text/css" href="../css/my_profile.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="css/imprimir.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="../css/carrousel.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="../css/imprimir.css" media="print" />
     <link rel="icon" href="img/favicon.jpg" type="image/x-icon" />
 </head>
 
@@ -38,17 +39,17 @@
             <a href="editProfile" class="modificarPerfil">Modificar Perfil</a>
         </div>
         <div class="panelFotos">
-            <div class="carrouselFotos"></div>
             <div class="subirfoto">
                 <form id="formularioPerfil" method="POST" name="perfil" action="uploadPhoto" enctype="multipart/form-data">
                     <%- include("flash") %>
                     <input type="text" name="descripcion" id="descripcion" placeholder="Descripcion foto" class="textoNegro" />
                     <input type="file" name="foto" id="foto" accept="image/x-png,image/gif,image/jpeg" />
                     <div class="margen">
-                        <input type="submit" name="modificarPerfil" class="boton botonVerde modificarPerfil" value="Subir">
+                        <input type="submit" name="subirFoto" class="boton botonVerde modificarPerfil" value="Subir">
                     </div>
                 </form>
             </div>
+            <%- include('carrousel') %>
         </div>
     </div>
 </body>

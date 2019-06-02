@@ -112,12 +112,22 @@ app.get("/imagen/:email", (request, response, next) => {
     }
 });
 
-app.get("/imagen2/:email", (request, response, next) => {
+function obtenerImagenPerfil(id, callback) {
+    daoU.getUploadedPhoto(id, (err, imagen) => {
+        if (err) {
+            console.log(err.message);
+        } else {
+            callback(null, imagen);
+        }
+    });
+}
+
+app.get("/imagen2/:id", (request, response, next) => {
     if (request.session.currentUser == undefined) {
         response.status(400);
         response.end("Petición incorrecta");
     } else {
-        ObtenerImagen(request.params.email, (err, imagen) => {
+        obtenerImagenPerfil(request.params.id, (err, imagen) => {
             if (imagen) {
                 response.status(200);
                 response.end(imagen);
@@ -131,6 +141,8 @@ app.get("/imagen2/:email", (request, response, next) => {
 
 //******************************************************* */
 //***************************Raiz************************ */
+//******************************************************* */
+
 // Manejador para raiz
 app.get("/", (request, response, next) => {
     response.status(200);
@@ -263,6 +275,7 @@ app.get("/my_profile", compruebaUsuario, (request, response, next) => {
             response.render("my_profile", {
                 usuario: result,
                 usr: request.session.usuario,
+                imagenes: result[0].imagenes
             });
         }
     });
@@ -338,7 +351,7 @@ app.post('/uploadPhoto', multerFactory.single("foto"), (request, response, next)
 
     request.getValidationResult().then((result) => {
         // El método isEmpty() devuelve true si las comprobaciones no han detectado ningún error
-        if (result.isEmpty() && request.file) {
+        if (result.isEmpty() && request.file && request.file.size < 409600) {
             let upFoto = {
                 id: request.session.currentUser,
                 descripcion: request.body.descripcion,
@@ -369,6 +382,9 @@ app.post('/uploadPhoto', multerFactory.single("foto"), (request, response, next)
                     msg: 'Debe adjuntar una fotografía.'
                 });
             }
+            if (request.file.size >= 409600) {
+                errores.push('El máximo es de 400 kb.');
+            }
             response.status(200);
             response.setFlash(errores);
             response.redirect('my_profile');
@@ -393,8 +409,8 @@ app.get("/user_profile", compruebaUsuario, (request, response, next) => {
             response.render("user_profile", {
                 usuario: result,
                 usr: request.session.usuario,
+                imagenes: result[0].imagenes
             });
-
         }
     });
 });
@@ -478,6 +494,8 @@ app.get("/rejectFriend", (request, response, next) => {
 
 //******************************************************* */
 //****************************LOGOUT********************* */
+//******************************************************* */
+
 app.get("/desconectar", (request, response, next) => {
     response.status(200);
     response.redirect("/index");
@@ -486,11 +504,13 @@ app.get("/desconectar", (request, response, next) => {
 /******************************************************** */
 /****************PREGUNTAS ****************************** */
 /******************************************************** */
+
 app.get("/preguntas", compruebaUsuario, (request, response, next) => {
     daoP.getQuestionList(request.session.currentUser, (err, preguntas) => {
         if (err) {
             next(err);
         } else {
+<<<<<<< HEAD
             daoP.getGuessList(request.session.currentUser, (err, listaAdivinados) => {
                 if (err) {
                     next(err);
@@ -508,6 +528,17 @@ app.get("/preguntas", compruebaUsuario, (request, response, next) => {
                         usr: request.session.usuario,
                     });
                 }
+=======
+            var preguntasEscogidas = ObtenerPreguntasAleatorias(preguntas);
+            response.status(200);
+            response.render("preguntas", {
+                respuestas: [],
+                sePuedeCrearPregunta: true,
+                preguntas: preguntasEscogidas,
+                pregunta: '',
+                creandoPregunta: false,
+                usr: request.session.usuario,
+>>>>>>> 1437064872747ed4d48702d390273681f1caa70b
             });
         }
     });
@@ -651,8 +682,16 @@ app.post("/insertarPregunta", (request, response, next) => {
         response.redirect("/preguntas");
     }
 });
+<<<<<<< HEAD
 //**********FUNCION RANDOM PARA MOSTRAR PREGUNTAS *** */
 /************************************************** */
+=======
+
+//******************************************************* */
+//**********FUNCION RANDOM PARA MOSTRAR PREGUNTAS******** */
+//******************************************************* */
+
+>>>>>>> 1437064872747ed4d48702d390273681f1caa70b
 function ObtenerPreguntasAleatorias(listaPreguntas) {
     var random = 0; //numero random entre 1 y el numero de preguntas que haya 
     var listaRandom = [];
@@ -667,6 +706,7 @@ function ObtenerPreguntasAleatorias(listaPreguntas) {
         }
     }
     for (var i = 0; i < listaRandom.length; i++) {
+<<<<<<< HEAD
         preguntasEscogidas.push(listaPreguntas[listaRandom[i]]);
     }
     return preguntasEscogidas;
@@ -674,6 +714,11 @@ function ObtenerPreguntasAleatorias(listaPreguntas) {
 //*** Amigos a los que he adivinado */
 function ListaAmigosAdivinados() {
     getGuessList
+=======
+        preguntasEscogidas.push(listaPreguntas[i]);
+    }
+    return preguntasEscogidas;
+>>>>>>> 1437064872747ed4d48702d390273681f1caa70b
 }
 // Si nadie captura la llamada es un 404
 app.use(function (request, response, next) {
