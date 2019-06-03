@@ -22,59 +22,60 @@
         </div>
         <%- include("flash") %>
         <%if (solicitudes.length>0) {%>
-            <h2>Lista de solicitudes</h2>
+        <h2 class="indentacion">Lista de solicitudes</h2>
         <div class="panelSolocitudAmistad">
             <div class="solicitudes">
-                <ul>
+                <ul class="indentacion">
                     <% solicitudes.forEach(function(solicitud) { %>
                     <li>
                         <div class="solicitudesAmigos">
                             <a href="user_profile?id=<%=solicitud.id%>">
-                                <img src="/imagen/<%=solicitud.email%>" class="imagenPerfil">
+                                <img src="/imagen/<%=solicitud.email%>" class="imagenListaUsuarios">
                             </a>
                             <a href="user_profile?id=<%=solicitud.id%>" class="enlacePersona">
                                 <p class="nombreUsuario"><%=solicitud.nombre%>, <%= solicitud.apellidos%></p>
                             </a>
                             <a href="/acceptFriend?id=<%=solicitud.id%>" class="boton botonVerde botonSmall">Aceptar</a>
-                            <a href="/rejectFriend?id=<%=solicitud.id%>" class="boton botonRojo  botonSmall">Rechazar</a>
+                            <a href="/rejectFriend?id=<%=solicitud.id%>"
+                                class="boton botonRojo  botonSmall">Rechazar</a>
                         </div>
                     </li>
                     <% }); %>
                 </ul>
             </div>
             <div class="solicitudesEnviadas">
-                    <ul>
-                        <% solHechas.forEach(function(solicitud) { %>
-                        <li>
-                            <div class="solicitudesAmigos">
-                                <a href="user_profile?id=<%=solicitud.id%>">
-                                    <img src="/imagen/<%=solicitud.email%>" class="imagenPerfil">
-                                </a>
-                                <a href="user_profile?id=<%=solicitud.id%>" class="enlacePersona">
-                                    <p class="nombreUsuario"><%=solicitud.nombre%>, <%= solicitud.apellidos%></p>
-                                </a>
-                                solicitud enviada
-                                <!-- <a href="/acceptFriend?id=<%=solicitud.id%>" class="boton botonVerde botonSmall">Aceptar</a> -->
-                                <!-- <a href="/rejectFriend?id=<%=solicitud.id%>" class="boton botonRojo  botonSmall">Rechazar</a> -->
-                            </div>
-                        </li>
-                        <% }); %>
-                    </ul>
-                </div>
+                <ul class="indentacion">
+                    <% solHechas.forEach(function(solicitud) { %>
+                    <li>
+                        <div class="solicitudesAmigos">
+                            <a href="user_profile?id=<%=solicitud.id%>">
+                                <img src="/imagen/<%=solicitud.email%>" class="imagenListaUsuarios">
+                            </a>
+                            <a href="user_profile?id=<%=solicitud.id%>" class="enlacePersona">
+                                <p class="nombreUsuario"><%=solicitud.nombre%>, <%= solicitud.apellidos%></p>
+                            </a>
+                            Solicitud enviada
+                        </div>
+                    </li>
+                    <% }); %>
+                </ul>
+            </div>
         </div>
         <%}%>
-        <h2>Lista de amigos</h2>
+        <h2 class="indentacion" >Lista de amigos</h2>
         <%if (amigos.length>0) {%>
         <div class="amigos">
-            <ul>
+            <ul class="indentacion">
                 <% amigos.forEach(function(amigo) { %>
                 <li>
-                    <a href="user_profile?id=<%=amigo.id%>">
-                        <img src="/imagen/<%=amigo.email%>" class="imagenPerfil">
-                    </a>
-                    <a href="user_profile?id=<%=amigo.id%>">
-                        <p class="nombreUsuario"><%= amigo.nombre %>, <%= amigo.apellidos%></p>
-                    </a>
+                    <div class="solicitudesAmigos">
+                        <a href="user_profile?id=<%=amigo.id%>">
+                            <img src="/imagen/<%=amigo.email%>" class="imagenListaUsuarios">
+                        </a>
+                        <a href="user_profile?id=<%=amigo.id%>" class="enlacePersona">
+                            <p class="nombreUsuario"><%= amigo.nombre %>, <%= amigo.apellidos%></p>
+                        </a>
+                    </div>
                 </li>
                 <% }); %>
             </ul>

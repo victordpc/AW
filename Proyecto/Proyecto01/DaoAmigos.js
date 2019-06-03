@@ -84,30 +84,13 @@ class DAOUsers {
             if (err) {
                 callback(new Error(`Error de conexión a la base de datos`));
             } else { // obtiene la lista de usuarios que han enviado solicitud de amistad a este usuario
-                const sql = `SELECT u.nombre,u.apellidos,u.email, u.id, a1.amigo1 as a1, a1.amigo2 as a2, a2.amigo1 as a3, a2.amigo2 as a4 FROM usuarios as u left join amigos as a1 on a1.amigo1=u.id left join amigos as a2 on a2.amigo2=u.id where UPPER(nombre) like UPPER(?)`;
-                connection.query(sql, ['%' + busqueda + '%'], function (err, datos) {
+                const sql = 'select u.nombre,u.apellidos,u.email, u.id, (SELECT count(1) FROM amigos WHERE (amigos.amigo1=u.id and amigos.amigo2=? ) or (amigos.amigo1=? and amigos.amigo2=u.id)) as amigos from usuarios  as u where UPPER(nombre) like UPPER(?)';
+                connection.query(sql, [usuario, usuario, '%' + busqueda + '%'], function (err, datos) {
                     connection.release();
                     if (err) {
                         callback(new Error(`Error de acceso a la base de datos`));
                     } else {
-                        let resultados = [];
-                        datos.forEach(persona => {
-                            if (persona.a1 == usuario || persona.a2 == usuario ||
-                                persona.a3 == usuario || persona.a4 == usuario) {
-                                resultados = resultados.filter(elem => {
-                                    return elem.email != persona.email
-                                });
-                            } else {
-                                let encontrado = {
-                                    nombre: persona.nombre,
-                                    apellidos: persona.apellidos,
-                                    id: persona.id,
-                                    email: persona.email,
-                                };
-                                resultados.push(encontrado);
-                            }
-                        });
-                        callback(null, resultados);
+                        callback(null, datos);
                     }
                 });
             }
