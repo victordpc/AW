@@ -701,7 +701,7 @@ function ObtenerPreguntasAleatorias(listaPreguntas) {
     var random = 0; //numero random entre 1 y el numero de preguntas que haya 
     var listaRandom = [];
     var preguntasEscogidas = [];
-    while (listaRandom.length != 5) {
+    while (listaRandom.length != 5 && listaRandom.length!=listaPreguntas.length) {
         random = Math.floor(Math.random() * listaPreguntas.length);
         var isIn = listaRandom.find(function (element) {
             return element === random;

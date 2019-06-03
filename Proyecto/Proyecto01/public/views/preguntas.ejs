@@ -16,45 +16,39 @@
     <%- include("header") %>
     <div class=contenedor>
         <%- include("flash") %>
-        <% if(locals.errorMsg){%>
-        <div class="caja_errores">
-            <%= errorMsg %>
+        <div class="PaneltituloPagina">
+            <h2>Preguntas</h2>
         </div>
-        <%}%>
-        <div class="PanelPreguntas">
-            <%if (preguntas.length>0) {%>
-            <div class="preguntasAleatorias">
-                <p>Preguntas seleccionadas aleatoriamente</p>
-                <ul>
-                    <% preguntas.forEach(function(p) { %>
-                    <li>
-                        <a name="pregunta" href="mostrarRespuestas?id=<%=p.id%>">
-                            <div>
-                                <%= p.texto %>
-                            </div>
-                        </a>
-                    </li>
-                    <% }); %>
-                </ul>
-            </div>
+        <%if (preguntas.length>0) {%>
+        <div>
+            <h2 class="espaciadoTitulo">Preguntas seleccionadas aleatoriamente</h2>
+            <ul class="preguntasAleatorias">
+                <% preguntas.forEach(function(p) { %>
+                <li class="margen enlace">
+                    <a name="pregunta" href="mostrarRespuestas?id=<%=p.id%>">
+                        <div class="entraPregunta"><%= p.texto %></div>
+                    </a>
+                </li>
+                <% }); %>
+            </ul>
         </div>
         <%}%>
         <%if (sePuedeCrearPregunta) {%>
-        <div class=crearpregunta>
-            <a id="creaPreguntaId" href="creaPregunta">Crear nueva pregunta</a>
+        <div class="crearpregunta margen">
+            <a class="boton botonFormularioEstrecho" id="creaPreguntaId" href="creaPregunta">Crear nueva pregunta</a>
         </div>
         <%}%>
         <%if (creandoPregunta) {%>
-            <form action="insertarPregunta" method="POST"> 
-                    <div>Pregunta:<input type="text" name="preguntaText" id="preguntaText" ></div>
-                    <div>Respuestas:</div>
-                    <ul id="listaRespuestas">
-                    </ul>
-                    <input type="submit" id="insertarP" name="insertarP" value="Insertar Pregunta">
-            </form>  
-            <div>   
-                    <button id="anyadirRespuesta"> Agregar Respuesta </button>
-            </div>
+        <form action="insertarPregunta" method="POST">
+            <div>Pregunta:<input type="text" name="preguntaText" id="preguntaText"></div>
+            <div>Respuestas:</div>
+            <ul id="listaRespuestas">
+            </ul>
+            <input type="submit" id="insertarP" name="insertarP" value="Insertar Pregunta">
+        </form>
+        <div>
+            <button id="anyadirRespuesta"> Agregar Respuesta </button>
+        </div>
         <%}%>
 
     </div>

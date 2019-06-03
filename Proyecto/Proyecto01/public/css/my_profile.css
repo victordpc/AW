@@ -54,10 +54,6 @@
     grid-auto-columns: auto auto auto auto;
 }
 
-.margen {
-    margin-top: 5px;
-}
-
 .panelPerfil>.modificarPerfil {
     grid-row: 2;
     grid-column: 2;

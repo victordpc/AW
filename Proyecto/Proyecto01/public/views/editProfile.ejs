@@ -14,9 +14,7 @@
     <%- include("header") %>
     <div class="contenedor">
         <div class="PaneltituloPagina">
-            <h2>TU PERFIL
-                <%=usuario.nombre%>
-            </h2>
+            <h2>Tu perfil <%=usuario.nombre%></h2>
         </div>
         <form id="formularioPerfil" method="POST" name="perfil" action="updateProfile" enctype="multipart/form-data">
             <%- include("flash") %>

@@ -1,5 +1,5 @@
 .contenedor {
-    background-color: black;
+    width: 80%;
 }
 
 .oculto {
@@ -15,7 +15,7 @@
     margin: 5%;
 }
 
-#creaPreguntaId,
+/* #creaPreguntaId, */
 #responder,
 #anyadirRespuestaPropia,
 #insertarP {
@@ -37,6 +37,12 @@
 
 }
 
+.entraPregunta:hover {
+    padding: 3px;
+    border: 1px dotted;
+    border-radius: 13px 0px 13px 0px;
+}
+
 #anyadirElemento {
     color: fuchsia;
 }
@@ -47,4 +53,25 @@
 
 input {
     color: black;
+}
+
+.preguntasAleatorias {
+    margin-left: 20%;
+}
+
+.botonFormularioEstrecho {
+    padding: 6px;
+    margin-left: 40%;
+    margin-right: 40%;
+    width: 20%;
+    border-radius: 0 15px 0 15px;
+}
+
+.margen {
+    margin-top: 25px;
+}
+
+.espaciadoTitulo {
+    margin-bottom: 15px;
+    margin-left: 25%;
 }

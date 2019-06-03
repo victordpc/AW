@@ -68,15 +68,15 @@ CREATE TABLE fotografias(
   FOREIGN KEY (idUsuario) REFERENCES usuarios(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `preguntas`(`texto`) VALUES ('en un golpe de castigo a 15 a favor, ¿por qué tipo de jugada te decantarías?');
-INSERT INTO `preguntas`(`texto`) VALUES ('lo mejor de los terceros tiempos es... ');
+INSERT INTO `preguntas`(`texto`) VALUES ('En un golpe de castigo a 15 a favor, ¿por qué tipo de jugada te decantarías?');
+INSERT INTO `preguntas`(`texto`) VALUES ('Lo mejor de los terceros tiempos es... ');
 INSERT INTO `respuestas`(`idPregunta`, `texto`) VALUES ('1', 'ensayo de maul');
 INSERT INTO `respuestas`(`idPregunta`, `texto`) VALUES ('1', 'dos fases de delanteras y en la última fase sacar el balón rápido a la línea ');
 INSERT INTO `respuestas`(`idPregunta`, `texto`) VALUES ('1', 'buscar la touche, así estaremos más cerca');
 INSERT INTO `respuestas`(`idPregunta`, `texto`) VALUES ('1', 'muchas fases de contacto hasta llegar a ensayo');
 INSERT INTO `respuestas`(`idPregunta`, `texto`) VALUES ('2', 'la touche');
 INSERT INTO `respuestas`(`idPregunta`, `texto`) VALUES ('2', 'cantar');
-INSERT INTO `respuestas`(`idPregunta`, `texto`) VALUES ('2', 'borracheras');
+INSERT INTO `respuestas`(`idPregunta`, `texto`) VALUES ('2', 'los compañeros');
 INSERT INTO `respuestas`(`idPregunta`, `texto`) VALUES ('2', 'puños fuera');
 
 INSERT INTO `usuarios` (`id`, `nombre`, `apellidos`, `password`, `fechaNac`, `email`, `genero`, `foto`, `puntos`) VALUES (NULL, 'nadie', 'nadie', 'nadie', NULL, 'nadie', 'Otro'
