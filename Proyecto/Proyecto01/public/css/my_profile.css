@@ -7,7 +7,7 @@
 }
 
 .panelPerfil {
-    margin-left: 300px;
+    margin-left: 30%;
     display: grid;
     width: 500px;
     grid-template-rows: 3fr 1fr;
@@ -16,6 +16,16 @@
     color: white;
     background-image: linear-gradient(to right, black, rgb(54, 4, 33), rgb(177, 9, 107), rgb(243, 26, 134), rgb(247, 19, 152), rgb(243, 26, 134), rgb(177, 9, 107), rgb(54, 4, 33), black);
     border-radius: 15px 0 15px 0;
+}
+
+.panelFotos {
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-row-gap: 20px;
+    /* grid-template-columns: 40%; */
+    margin-left: 30%;
+    margin-right: 30%;
+    margin-top: 10px;
 }
 
 .panelPerfil>.fotoPerfil {
@@ -30,11 +40,12 @@
     align-self: center;
     text-align: left;
     color: white;
-display: grid;
-grid-template-rows: auto auto auto auto auto auto auto;
-grid-auto-columns: auto auto auto auto;
+    display: grid;
+    grid-template-rows: auto auto auto auto auto auto auto;
+    grid-auto-columns: auto auto auto auto;
 }
-.margen{
+
+.margen {
     margin-top: 5px;
 }
 

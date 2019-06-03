@@ -1,17 +1,11 @@
-.wrapper {
-    overflow:hidden;
-    width:320px;
-}
-.wrapper div {
-    /* cualquier altura mayor que el total de sumar la anchura de las img */
-    width:330px;
- 
+.fotografias {
     /* para evitar el margen superior de la primera fila */
-    margin-top:-10px;
+    margin-top: -10px;
 }
+
 .imgCarrousel {
-    width:100px;
-    height:75px;
-    float:left;
-    margin:10px 10px 0 0;
+    width: 100px;
+    height: 100px;
+    float: left;
+    margin: 10px 10px 0 0;
 }

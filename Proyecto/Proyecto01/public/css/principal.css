@@ -181,3 +181,7 @@ div.caja_errores {
 .textoNegro {
     color: black;
 }
+
+.todoAncho {
+    width: 100%
+}

@@ -19,37 +19,33 @@
         </div>
         <div class="panelPerfil">
             <div class="fotoPerfil">
-                <tr>
-                    <td><img src="/imagen/<%=usuario[0].email%>" class="imagenPerfil"></td>
-                </tr>
+                <img src="/imagen/<%=usuario[0].email%>" class="imagenPerfil">
             </div>
             <div class="datosPerfil">
-                <p class="nombre">
-                    <%=usuario[0].nombre%> <%=usuario[0].apellidos%> 
-                </p>
-                <p class="sexo">
-                    <%=usuario[0].genero%>
-                </p>
-                <p class="edad">
-                    <%=usuario[0].years%>
-                </p>
-                <p class="puntos">
-                    <%=usuario[0].puntos%> puntos</p>
+                <p class="nombre"><%=usuario[0].nombre%> <%=usuario[0].apellidos%></p>
+                <p class="sexo"><%=usuario[0].genero%></p>
+                <p class="edad"><%=usuario[0].years%></p>
+                <p class="puntos"><%=usuario[0].puntos%> puntos</p>
             </div>
             <a href="editProfile" class="modificarPerfil">Modificar Perfil</a>
         </div>
         <div class="panelFotos">
             <div class="subirfoto">
-                <form id="formularioPerfil" method="POST" name="perfil" action="uploadPhoto" enctype="multipart/form-data">
+                <form id="formularioPerfil" method="POST" name="perfil" action="uploadPhoto"
+                    enctype="multipart/form-data">
                     <%- include("flash") %>
-                    <input type="text" name="descripcion" id="descripcion" placeholder="Descripcion foto" class="textoNegro" />
-                    <input type="file" name="foto" id="foto" accept="image/x-png,image/gif,image/jpeg" />
+                    <input class="todoAncho" type="text" name="descripcion" id="descripcion"
+                        placeholder="Descripcion foto" class="textoNegro" />
+                    <input class="todoAncho" type="file" name="foto" id="foto"
+                        accept="image/x-png,image/gif,image/jpeg" />
                     <div class="margen">
-                        <input type="submit" name="subirFoto" class="boton botonVerde modificarPerfil" value="Subir">
+                        <input type="submit" name="subirFoto" class="boton botonVerde" value="Subir">
                     </div>
                 </form>
             </div>
-            <%- include('carrousel') %>
+            <div class="wrapper">
+                <%- include('carrousel') %>
+            </div>
         </div>
     </div>
 </body>
