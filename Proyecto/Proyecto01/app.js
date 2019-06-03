@@ -528,7 +528,6 @@ app.get("/preguntas", compruebaUsuario, (request, response, next) => {
             response.render("preguntas", {
                 sePuedeCrearPregunta: true,
                 preguntas: preguntasEscogidas,
-                pregunta: preguntasEscogidas[0],
                 creandoPregunta: false,
                 usr: request.session.usuario,
             });
@@ -680,7 +679,7 @@ function ObtenerPreguntasAleatorias(listaPreguntas) {
     var listaRandom = [];
     var preguntasEscogidas = [];
     while (listaRandom.length != 5) {
-        random = Math.floor(Math.random() * listaPreguntas.length) + 1;
+        random = Math.floor(Math.random() * listaPreguntas.length) ;
         var isIn = listaRandom.find(function (element) {
             return element === random;
         }); //busco si ya tengo este número random
@@ -688,7 +687,7 @@ function ObtenerPreguntasAleatorias(listaPreguntas) {
             listaRandom.push(random);
         }
     }
-    for (var i = 0; i < listaRandom.length; i++) {
+    for (var i=0; i < listaRandom.length; i++) {
         preguntasEscogidas.push(listaPreguntas[listaRandom[i]]);
     }
     return preguntasEscogidas;

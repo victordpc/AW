@@ -26,11 +26,11 @@
             <div class="preguntasAleatorias">
                 <p>Preguntas seleccionadas aleatoriamente</p>
                 <ul>
-                    <% preguntas.forEach(function(pregunta) { %>
+                    <% preguntas.forEach(function(p) { %>
                     <li>
-                        <a name="pregunta" href="mostrarRespuestas?id=<%=pregunta.id%>">
+                        <a name="pregunta" href="mostrarRespuestas?id=<%=p.id%>">
                             <div>
-                                <%= pregunta.texto %>
+                                <%= p.texto %>
                             </div>
                         </a>
                     </li>
