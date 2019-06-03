@@ -47,7 +47,7 @@
 .solicitudesAmigos {
 	display: grid;
 	grid-template-rows: 100%;
-	grid-template-columns: 100px 500px 100px 100px
+	grid-template-columns: 60px 400px 100px 100px
 }
 
 .botonSmall {
@@ -202,4 +202,13 @@ div.usuarioBusqueda {
 	width: 50px;
 	height: 50px;
 	margin: 6px;
+}
+
+.imagenListaUsuarios{
+	height: 50px;
+	width: 50px;
+}
+
+.indentacion{
+	margin-left: 20%;
 }
