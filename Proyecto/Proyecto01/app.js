@@ -522,6 +522,29 @@ app.get("/preguntas", compruebaUsuario, (request, response, next) => {
         }
     });
 });
+// app.get("/respuestas", compruebaUsuario, (request, response, next) => {
+//     let id = request.query.id;
+//     daoP.getQuestion(id, request.session.currentUser, (err, preguntadb) => {
+//         if (!err) {
+//             daoP.getAnswerList(request.body.idPregunta, (err, respuestasdb) => {
+//                 if (!err) {
+//                     next(err);
+//                 } else {
+//                     response.status(200);
+//                     response.render("respuestas", {
+//                         respuestas: respuestasdb,
+//                         amigosQueHanContestado: [],
+//                         AmigosAdivinados: [],
+//                         sePuedeCrearPregunta: false,
+//                         pregunta: preguntadb,
+//                         creandoPregunta: false,
+//                         usr: request.session.usuario,
+//                     });
+//                 }
+//             });
+//         }
+//     });
+// });
 
 app.get("/procesarPregunta", compruebaUsuario, (request, response, next) => {
     let id = request.query.id;
@@ -553,6 +576,7 @@ app.get("/procesarPregunta", compruebaUsuario, (request, response, next) => {
 
 app.post("/responder", (request, response, next) => {
     if (request.body.respuesta != Number) {
+        if(request.body.respuesta!= ""){
         daoP.createAnswer(request.body.idPregunta, request.body.respuesta, (err, respuesta) => {
             if (!err) {
                 let resp = {
@@ -564,14 +588,13 @@ app.post("/responder", (request, response, next) => {
                     if (!err) {
                         response.status(200);
                         response.redirect("/preguntas");
-                    } else {
-                        next(err);
                     }
                 });
             } else {
                 next(err);
             }
         });
+    }
     } else {
         let resp = {
             idPregunta: request.body.idPregunta,
@@ -581,7 +604,7 @@ app.post("/responder", (request, response, next) => {
         daoP.addMyAnswer(resp, (err, result) => {
             if (!err) {
                 response.status(200);
-                response.redirect("/preguntas");
+                response.redirect("preguntas");
             } else {
                 next(err);
             }
@@ -667,7 +690,7 @@ function ObtenerPreguntasAleatorias(listaPreguntas) {
     var listaRandom = [];
     var preguntasEscogidas = [];
     while (listaRandom.length != 5) {
-        random = Math.floor(Math.random() * listaPreguntas.length) ;
+        random = Math.floor(Math.random() * listaPreguntas.length);
         var isIn = listaRandom.find(function (element) {
             return element === random;
         }); //busco si ya tengo este número random
@@ -675,7 +698,7 @@ function ObtenerPreguntasAleatorias(listaPreguntas) {
             listaRandom.push(random);
         }
     }
-    for (var i=0; i < listaRandom.length; i++) {
+    for (var i = 0; i < listaRandom.length; i++) {
         preguntasEscogidas.push(listaPreguntas[listaRandom[i]]);
     }
     return preguntasEscogidas;
