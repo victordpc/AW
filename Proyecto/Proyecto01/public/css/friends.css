@@ -186,6 +186,10 @@
 	}
 }
 
+div.solicitudes {
+	margin-top: 10px;
+}
+
 div.amigos {
 	margin-top: 10px;
 	color: black;
@@ -204,11 +208,11 @@ div.usuarioBusqueda {
 	margin: 6px;
 }
 
-.imagenListaUsuarios{
+.imagenListaUsuarios {
 	height: 50px;
 	width: 50px;
 }
 
-.indentacion{
+.indentacion {
 	margin-left: 20%;
 }
