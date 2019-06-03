@@ -28,6 +28,13 @@
     margin-top: 10px;
 }
 
+.botonFormularioEstrecho {
+    padding: 3px;
+    margin-left: 40%;
+    margin-right: 40%;
+    width: 20%;
+}
+
 .panelPerfil>.fotoPerfil {
     grid-column: 1;
     grid-row: 1;
