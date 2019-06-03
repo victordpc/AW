@@ -15,63 +15,56 @@
 <body>
     <%- include("header") %>
     <div class=contenedor>
-        <% if(locals.errorMsg){%>
-        <div class="caja_errores">
-            <%= errorMsg %>
-        </div>
-        <%}%>
-        <div class="PanelRespuestas">
-            <div><%=pregunta.texto%></div>
-    <%if (pregunta.respondido ==0) {%>
-    No has contestado a esta pregunta
-    <div class=mostrarRespuestas>
-        <a id="mostrarRespuestas" href="mostrarRespuestas" value="Responder"></a>
-    </div>
-    <%if (respuestas.length>0) {%>
-    <div class="elegirRespuestas">
-        <form action="responder" method="POST">
-            <input type="text" name="idPregunta" class="oculto" value=<%=pregunta.id%>>
-            <ul id="listaRespuestasDelSistema">
-                <% respuestas.forEach(function(respuesta) { %>
-                <li>
-                    <input type="radio" class="radio" name="respuesta" value=<%=respuesta.id%>>
-                    <%= respuesta.texto %>
-                </li>
-                <% }); %>
-            </ul>
-            <div>
-                <button id="anyadirRespuestaPropia">Añadir mi respuesta</button>
-            </div>
-            <div>
-                <input type="submit" id="responder" name="responder" value="Responder">
-            </div>
-        </form>
-    </div>
-</div>
-    <%}%>
-            <%}%>
-    <div>
-        <%if (amigosQueHanContestado.length > 0) {%>
-        <div class="PanelAmigosComunAPregunta">
-            <div class="AmigosQueHanContestado">
-                <ul>
-                    <% amigosQueHanContestado.forEach(function(amigo) { %>
+        <%- include("flash") %>
+        <h2 class="espaciadoTitulo"><%=pregunta.texto%></h2>
+
+        <%if (pregunta.respondido ==0) {%>
+        <div class="elegirRespuestas">
+            <form action="responder" method="POST">
+                <input type="text" name="idPregunta" class="oculto" value=<%=pregunta.id%>>
+                <ul class="indentacion">
+                    <% respuestas.forEach(function(respuesta) { %>
                     <li>
-                        <div class="RespuestasAmigos">
-                            <a href="user_profile?id=<%=amigo.id%>">
-                                <img src="/imagen/<%=amigo.email%>" class="imagenPerfil">
-                            </a>
-                            <a href="user_profile?id=<%=amigo.id%>" class="enlacePersona">
-                                <p class="nombreUsuario"><%=amigo.nombre%>, <%= amigo.apellidos%></p>
-                            </a>
-                            <a href="/Adivinar?id=<%=amigo.id%>" class="boton botonVerde botonSmall">Adivinar</a>
-                        </div>
+                        <input type="radio" class="radio" name="respuesta" value=<%=respuesta.id%>>
+                        <%= respuesta.texto %>
                     </li>
                     <% }); %>
                 </ul>
-            </div>
+                <div>
+                    <button class="boton botonFormularioEstrecho" id="anyadirRespuestaPropia">Añadir mi respuesta</button>
+                </div>
+                <hr>
+                <div>
+                    <input class="boton botonFormularioEstrecho" type="submit" id="responder" name="responder" value="Responder">
+                </div>
+            </form>
         </div>
-        <%}%>    
+        <%} else {%>
+        <h2 class="espaciadoTitulo yaRespondida">Ya has contestado a esta pregunta</h2>
+        <%}%>
+        <%if (amigosQueHanContestado.length > 0) {%>
+            <div class="PanelAmigosComunAPregunta">
+                <div class="AmigosQueHanContestado">
+                    <ul>
+                        <% amigosQueHanContestado.forEach(function(amigo) { %>
+                        <li>
+                            <div class="RespuestasAmigos">
+                                <a href="user_profile?id=<%=amigo.id%>">
+                                    <img src="/imagen/<%=amigo.email%>" class="imagenPerfil">
+                                </a>
+                                <a href="user_profile?id=<%=amigo.id%>" class="enlacePersona">
+                                    <p class="nombreUsuario"><%=amigo.nombre%>, <%= amigo.apellidos%></p>
+                                </a>
+                                <a href="/Adivinar?id=<%=amigo.id%>" class="boton botonVerde botonSmall">Adivinar</a>
+                            </div>
+                        </li>
+                        <% }); %>
+                    </ul>
+                </div>
+            </div>
+            <%}%> 
+        
+ 
                 </div>
     
 

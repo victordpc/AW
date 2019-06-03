@@ -22,7 +22,7 @@
         <%if (preguntas.length>0) {%>
         <div>
             <h2 class="espaciadoTitulo">Preguntas seleccionadas aleatoriamente</h2>
-            <ul class="preguntasAleatorias">
+            <ul class="indentacion">
                 <% preguntas.forEach(function(p) { %>
                 <li class="margen enlace">
                     <a name="pregunta" href="mostrarRespuestas?id=<%=p.id%>">
@@ -39,15 +39,15 @@
         </div>
         <%}%>
         <%if (creandoPregunta) {%>
-        <form action="insertarPregunta" method="POST">
+        <form class="indentacion" action="insertarPregunta" method="POST">
+            <input class="boton botonFormularioEstrecho"  type="submit" id="insertarP" name="insertarP" value="Insertar Pregunta">
             <div>Pregunta:<input type="text" name="preguntaText" id="preguntaText"></div>
             <div>Respuestas:</div>
             <ul id="listaRespuestas">
             </ul>
-            <input type="submit" id="insertarP" name="insertarP" value="Insertar Pregunta">
         </form>
         <div>
-            <button id="anyadirRespuesta"> Agregar Respuesta </button>
+            <button class="boton botonFormularioEstrecho2"  id="anyadirRespuesta"> Agregar Respuesta </button>
         </div>
         <%}%>
 
