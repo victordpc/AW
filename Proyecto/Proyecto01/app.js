@@ -266,10 +266,10 @@ app.get("/my_profile", compruebaUsuario, (request, response, next) => {
             next(err);
         } else {
             response.status(200);
-            if (result[0].fechaNac != null) {
+            if (result[0].fechaNac != '0000-00-00') {
                 result[0].years = moment().diff(result[0].fechaNac, 'years', false) + ' años';
             } else {
-                result[0].years = "";
+                result[0].years = "0-99 años";
             }
             app.locals.puntos = result[0].puntos;
             response.render("my_profile", {
@@ -360,8 +360,21 @@ app.post('/uploadPhoto', multerFactory.single("foto"), (request, response, next)
 
             daoU.uploadFoto(upFoto, (err, result) => {
                 if (result) {
-                    response.status(200);
-                    response.redirect('my_profile');
+                    daoU.getUserData(request.session.currentUser, (err, result) => {
+                        if (err) {
+                            next(err);
+                        } else {
+                            let usr = {
+                                email: result[0].email,
+                                nombre: result[0].nombre,
+                                puntos: result[0].puntos,
+                            }
+                            request.session.usuario = usr;
+                            request.session.currentUser = result[0].id;
+                            response.status(200);
+                            response.redirect('my_profile');
+                        }
+                    });
                 } else {
                     response.setFlash([{
                         msg: 'Error del sistema intentelo de nuevo más tarde'
@@ -381,8 +394,7 @@ app.post('/uploadPhoto', multerFactory.single("foto"), (request, response, next)
                 errores.push({
                     msg: 'Debe adjuntar una fotografía.'
                 });
-            }
-            if (request.file.size >= 409600) {
+            } else if (request.file.size >= 409600) {
                 errores.push('El máximo es de 400 kb.');
             }
             response.status(200);
