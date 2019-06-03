@@ -139,7 +139,7 @@ class DAOPreguntas {
             if (err) {
                 callback(new Error("Error de conexión a la base de datos"));
             } else {// seleccionar preguntas que no han sido respondidas por el usuario actual
-                const sql = `SELECT id,texto,CASE WHEN (SELECT id FROM listarespuestas WHERE idUsuario = ? AND idPregunta=p.id) THEN 1 ELSE 0 END as respondido FROM preguntas p`
+                const sql = `SELECT id,texto,CASE WHEN (SELECT COUNT(id) FROM listarespuestas WHERE idUsuario = ? AND idPregunta=p.id) THEN 1 ELSE 0 END as respondido FROM preguntas p`
                 connection.query(sql, [id],function (err, datos) {
                     connection.release();
                     if (err) {
