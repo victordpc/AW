@@ -510,6 +510,25 @@ app.get("/preguntas", compruebaUsuario, (request, response, next) => {
         if (err) {
             next(err);
         } else {
+<<<<<<< HEAD
+            daoP.getGuessList(request.session.currentUser, (err, listaAdivinados) => {
+                if (err) {
+                    next(err);
+                } else {
+                    var preguntasEscogidas = ObtenerPreguntasAleatorias(preguntas);
+                    response.status(200);
+                    response.render("preguntas", {
+                        respuestas: [],
+                        amigosQueHanContestado: [],
+                        AmigosAdivinados: listaAdivinados,
+                        sePuedeCrearPregunta: true,
+                        preguntas: preguntasEscogidas,
+                        pregunta: '',
+                        creandoPregunta: false,
+                        usr: request.session.usuario,
+                    });
+                }
+=======
             var preguntasEscogidas = ObtenerPreguntasAleatorias(preguntas);
             response.status(200);
             response.render("preguntas", {
@@ -519,32 +538,37 @@ app.get("/preguntas", compruebaUsuario, (request, response, next) => {
                 pregunta: '',
                 creandoPregunta: false,
                 usr: request.session.usuario,
+>>>>>>> 1437064872747ed4d48702d390273681f1caa70b
             });
         }
     });
 });
 
-app.get("/procesarPregunta", (request, response, next) => {
+app.get("/procesarPregunta", compruebaUsuario, (request, response, next) => {
     let id = request.query.id;
-    daoP.getQuestion(id, (err, pregunta) => {
+    daoP.getQuestion(id, request.session.currentUser, (err, pregunta) => {
         if (!err) {
             daoP.getAnswerList(id, (err, respuestas) => {
                 if (!err) {
-                    response.status(200);
-                    response.render("preguntas", {
-                        respuestas: respuestas,
-                        sePuedeCrearPregunta: true,
-                        preguntas: [],
-                        pregunta: pregunta[0],
-                        creandoPregunta: false,
-                        usr: request.session.usuario,
+                    daoP.getGuessList(request.session.currentUser, (err, listaAdivinados) => {
+                        if (err) {
+                            next(err);
+                        } else {
+                            response.status(200);
+                            response.render("preguntas", {
+                                respuestas: respuestas,
+                                amigosQueHanContestado: [],
+                                AmigosAdivinados: listaAdivinados,
+                                sePuedeCrearPregunta: false,
+                                preguntas: [],
+                                pregunta: pregunta[0],
+                                creandoPregunta: false,
+                                usr: request.session.usuario,
+                            });
+                        }
                     });
-                } else {
-                    next(err);
                 }
             });
-        } else {
-            next(err);
         }
     });
 });
@@ -586,7 +610,35 @@ app.post("/responder", (request, response, next) => {
         });
     }
 });
+app.get("/mostrarRespuestas", (request,response, next)=>{
+    let id = request.query.id;
+    daoP.getQuestion(id, request.session.currentUser, (err, pregunta) => {
+        if (!err) {
+            daoP.getAnswerList(id, (err, respuestas) => {
+                if (!err) {
+                    daoP.getGuessList(request.session.currentUser, (err, listaAdivinados) => {
+                        if (err) {
+                            next(err);
+                        } else {
+                            response.status(200);
+                            response.render("preguntas", {
+                                respuestas: respuestas,
+                                amigosQueHanContestado: [],
+                                AmigosAdivinados: listaAdivinados,
+                                sePuedeCrearPregunta: false,
+                                preguntas: [],
+                                pregunta: pregunta[0],
+                                creandoPregunta: false,
+                                usr: request.session.usuario,
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    });
 
+}); 
 app.get("/creaPregunta", (request, response, next) => {
     response.status(200);
     response.render("preguntas", {
@@ -594,6 +646,9 @@ app.get("/creaPregunta", (request, response, next) => {
         respuestas: [],
         sePuedeCrearPregunta: false,
         creandoPregunta: true,
+        pregunta: '',
+        AmigosAdivinados:[],
+        amigosQueHanContestado:[],
         usr: request.session.usuario,
     });
 });
@@ -627,11 +682,16 @@ app.post("/insertarPregunta", (request, response, next) => {
         response.redirect("/preguntas");
     }
 });
+<<<<<<< HEAD
+//**********FUNCION RANDOM PARA MOSTRAR PREGUNTAS *** */
+/************************************************** */
+=======
 
 //******************************************************* */
 //**********FUNCION RANDOM PARA MOSTRAR PREGUNTAS******** */
 //******************************************************* */
 
+>>>>>>> 1437064872747ed4d48702d390273681f1caa70b
 function ObtenerPreguntasAleatorias(listaPreguntas) {
     var random = 0; //numero random entre 1 y el numero de preguntas que haya 
     var listaRandom = [];
@@ -646,11 +706,20 @@ function ObtenerPreguntasAleatorias(listaPreguntas) {
         }
     }
     for (var i = 0; i < listaRandom.length; i++) {
-        preguntasEscogidas.push(listaPreguntas[i]);
+<<<<<<< HEAD
+        preguntasEscogidas.push(listaPreguntas[listaRandom[i]]);
     }
     return preguntasEscogidas;
 }
-
+//*** Amigos a los que he adivinado */
+function ListaAmigosAdivinados() {
+    getGuessList
+=======
+        preguntasEscogidas.push(listaPreguntas[i]);
+    }
+    return preguntasEscogidas;
+>>>>>>> 1437064872747ed4d48702d390273681f1caa70b
+}
 // Si nadie captura la llamada es un 404
 app.use(function (request, response, next) {
     response.status(404);
