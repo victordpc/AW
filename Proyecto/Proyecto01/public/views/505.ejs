@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="css/principal.css" media="screen">
     <link rel="stylesheet" type="text/css" href="css/error.css" media="screen">
     <link rel="icon" href="img/favicon.jpg" type="image/x-icon" />
- </head>
+</head>
 
 <body>
     <%- include("header") %>
@@ -16,7 +16,7 @@
     <h1>!Ha ocurrido un error interno en el servidor.¡</h1>
     <p>Te recomendamos que vuelvas al inicio pulsando <a href="/">este enlace</a>.</p>
     <% if(locals.mensaje){%>
-        <p id="mostrarError">Si tienes curiosidad este es el error que se ha producido:</p>
+    <p id="mostrarError">Si tienes curiosidad este es el error que se ha producido:</p>
     <div id="panelError">
         <p>
             <%=locals.mensaje%>
@@ -28,6 +28,6 @@
         <%}%>
     </div>
     <%}%>
-</div>
+    </div>
 
 </html>

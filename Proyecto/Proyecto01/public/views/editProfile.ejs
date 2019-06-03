@@ -32,29 +32,28 @@
                     <label for="nombre">Nombre</label>
                     <input type="text" name="nombre" id="nombre" value="<%=usuario.nombre%>" class="textoNegro" />
                     <label for="apellidos">Apellidos</label>
-                    <input type="text" name="apellidos" id="apellidos" value="<%=usuario.apellidos%>" class="textoNegro" />
+                    <input type="text" name="apellidos" id="apellidos" value="<%=usuario.apellidos%>"
+                        class="textoNegro" />
                     <label for="sexo" name="sexo">Sexo</label>
                     <div class="radios">
                         <input type="radio" class="radioB" name="sexo" value="Mujer" id="femenino" <%if (usuario.genero=="Mujer"
-                            ) {%>checked
-                        <%}%> >Mujer
+                            ) {%>checked <%}%> >Mujer
                         <input type="radio" class="radioB" name="sexo" value="Hombre" id="masculino" <%if
-                            (usuario.genero=="Hombre" ) {%>checked
-                        <%}%> >Hombre
+                            (usuario.genero=="Hombre" ) {%>checked <%}%> >Hombre
                         <input type="radio" class="radioB" name="sexo" value="otro" id="otro" <%if (usuario.genero=="otro"
-                            ) {%>checked
-                        <%}%> >Otro
+                            ) {%>checked <%}%> >Otro
                     </div>
                     <label for="fechaNac">Fecha de Nacimiento</label>
                     <input type="date" name="date" id="fechaNac" value="<%=usuario.dateBirth%>" class="textoNegro">
-                    <label for="foto">Imagen de perfil</label>
-                    <input type="file" name="foto" id="foto" accept="image/x-png,image/gif,image/jpeg" />
-                    <div class="margen">
-                        <a href="my_profile" class="boton botonRojo modificarPerfil">Cancelar</a>
-                        <input type="submit" name="modificarPerfil" class="boton botonVerde modificarPerfil" value="Guardar cambios">
+                        <label for="foto">Imagen de perfil</label>
+                        <input type="file" name="foto" id="foto" accept="image/x-png,image/gif,image/jpeg" />
+                        <div class="margen">
+                            <a href="my_profile" class="boton botonRojo modificarPerfil">Cancelar</a>
+                            <input type="submit" name="modificarPerfil" class="boton botonVerde modificarPerfil"
+                                value="Guardar cambios">
+                        </div>
                     </div>
                 </div>
-            </div>
         </form>
     </div>
 </body>
