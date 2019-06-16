@@ -510,6 +510,8 @@ app.get("/rejectFriend", (request, response, next) => {
 
 app.get("/desconectar", (request, response, next) => {
     response.status(200);
+    request.session.usuario = undefined;
+    request.session.currentUser = undefined;
     response.redirect("/index");
 });
 
@@ -534,29 +536,6 @@ app.get("/preguntas", compruebaUsuario, (request, response, next) => {
         }
     });
 });
-// app.get("/respuestas", compruebaUsuario, (request, response, next) => {
-//     let id = request.query.id;
-//     daoP.getQuestion(id, request.session.currentUser, (err, preguntadb) => {
-//         if (!err) {
-//             daoP.getAnswerList(request.body.idPregunta, (err, respuestasdb) => {
-//                 if (!err) {
-//                     next(err);
-//                 } else {
-//                     response.status(200);
-//                     response.render("respuestas", {
-//                         respuestas: respuestasdb,
-//                         amigosQueHanContestado: [],
-//                         AmigosAdivinados: [],
-//                         sePuedeCrearPregunta: false,
-//                         pregunta: preguntadb,
-//                         creandoPregunta: false,
-//                         usr: request.session.usuario,
-//                     });
-//                 }
-//             });
-//         }
-//     });
-// });
 
 app.get("/procesarPregunta", compruebaUsuario, (request, response, next) => {
     let id = request.query.id;
@@ -588,25 +567,25 @@ app.get("/procesarPregunta", compruebaUsuario, (request, response, next) => {
 
 app.post("/responder", (request, response, next) => {
     if (request.body.respuesta != Number) {
-        if(request.body.respuesta!= ""){
-        daoP.createAnswer(request.body.idPregunta, request.body.respuesta, (err, respuesta) => {
-            if (!err) {
-                let resp = {
-                    idPregunta: respuesta[0].idPregunta,
-                    idRespuesta: respuesta[0].id,
-                    idUsuario: request.session.currentUser
-                }
-                daoP.addMyAnswer(resp, (err, result) => {
-                    if (!err) {
-                        response.status(200);
-                        response.redirect("/preguntas");
+        if (request.body.respuesta != "") {
+            daoP.createAnswer(request.body.idPregunta, request.body.respuesta, (err, respuesta) => {
+                if (!err) {
+                    let resp = {
+                        idPregunta: respuesta[0].idPregunta,
+                        idRespuesta: respuesta[0].id,
+                        idUsuario: request.session.currentUser
                     }
-                });
-            } else {
-                next(err);
-            }
-        });
-    }
+                    daoP.addMyAnswer(resp, (err, result) => {
+                        if (!err) {
+                            response.status(200);
+                            response.redirect("/preguntas");
+                        }
+                    });
+                } else {
+                    next(err);
+                }
+            });
+        }
     } else {
         let resp = {
             idPregunta: request.body.idPregunta,
@@ -623,6 +602,7 @@ app.post("/responder", (request, response, next) => {
         });
     }
 });
+
 app.get("/mostrarRespuestas", (request, response, next) => {
     let id = request.query.id;
     daoP.getQuestion(id, request.session.currentUser, (err, pregunta) => {
@@ -652,6 +632,7 @@ app.get("/mostrarRespuestas", (request, response, next) => {
     });
 
 });
+
 app.get("/creaPregunta", (request, response, next) => {
     response.status(200);
     response.render("preguntas", {
@@ -695,13 +676,15 @@ app.post("/insertarPregunta", (request, response, next) => {
         response.redirect("/preguntas");
     }
 });
+
 //**********FUNCION RANDOM PARA MOSTRAR PREGUNTAS *** */
-/************************************************** */
+//*************************************************** */
+
 function ObtenerPreguntasAleatorias(listaPreguntas) {
     var random = 0; //numero random entre 1 y el numero de preguntas que haya 
     var listaRandom = [];
     var preguntasEscogidas = [];
-    while (listaRandom.length != 5 && listaRandom.length!=listaPreguntas.length) {
+    while (listaRandom.length != 5 && listaRandom.length != listaPreguntas.length) {
         random = Math.floor(Math.random() * listaPreguntas.length);
         var isIn = listaRandom.find(function (element) {
             return element === random;
@@ -715,6 +698,7 @@ function ObtenerPreguntasAleatorias(listaPreguntas) {
     }
     return preguntasEscogidas;
 }
+
 // Si nadie captura la llamada es un 404
 app.use(function (request, response, next) {
     response.status(404);
