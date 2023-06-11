@@ -4,13 +4,13 @@ mkdir public/img
 mkdir public/css
 
 
-npm install express --save
-npm install ejs --save
-npm install mysql --save
-npm install static --save
+npm install express --save &&
+npm install ejs --save &&
+npm install mysql --save &&
+npm install static --save &&
 npm install body-parser --save
 # Sesiones
-npm install express-session --save
+npm install express-session --save &&
 npm install express-mysql-session --save
 # Extraer datos del cuerpo en POST en formato 
 npm install multer --save
